@@ -1,4 +1,36 @@
 
+class PsNtfsAccessRule {
+    # Just like [System.Security.AccessControl.FileSystemAccessRule] but with a Path property representing the file/folder associated with the Access Control Entry
+    [System.String]$Path
+    [System.Boolean]$PathAreAccessRulesProtected
+    [System.Security.AccessControl.FileSystemRights]$FileSystemRights
+    [System.Security.AccessControl.AccessControlType]$AccessControlType
+    [System.Security.Principal.IdentityReference]$IdentityReference # Both the [System.Security.Principal.NTAccount] and [System.Security.Principal.SecurityIdentifier] classes derive from this class
+    [System.Boolean]$IsInherited
+    [System.Security.AccessControl.InheritanceFlags]$InheritanceFlags
+    [System.Security.AccessControl.PropagationFlags]$PropagationFlags
+
+    PsNtfsAccessRule (
+        [System.String]$Path,
+        [System.Boolean]$PathAreAccessRulesProtected,
+        [System.Security.AccessControl.FileSystemRights]$FileSystemRights,
+        [System.Security.AccessControl.AccessControlType]$AccessControlType,
+        [System.Security.Principal.IdentityReference]$IdentityReference,
+        [System.Boolean]$IsInherited,
+        [System.Security.AccessControl.InheritanceFlags]$InheritanceFlags,
+        [System.Security.AccessControl.PropagationFlags]$PropagationFlags
+    ) {
+        $this.Path = $Path
+        $this.PathAreAccessRulesProtected = $PathAreAccessRulesProtected
+        $this.FileSystemRights = $FileSystemRights
+        $this.AccessControlType = $AccessControlType
+        $this.IdentityReference = $IdentityReference
+        $this.IsInherited = $IsInherited
+        $this.InheritanceFlags = $InheritanceFlags
+        $this.PropagationFlags = $PropagationFlags
+    }
+
+}
 function Format-FolderPermission {
 
 
@@ -162,12 +194,44 @@ function Format-SecurityPrincipal {
     #Write-Progress -Activity ("Total Security Principals: " + $TotalCount) -Completed
 
 }
-function Get-CustomFolderPermissions {
+function Get-FolderTarget {
+
+    param (
+        [string[]]$FolderPath
+    )
+
+    process {
+        foreach ($TargetPath in $FolderPath) {
+        
+            $RegEx = '^(?<DriveLetter>\w):'
+            if ($TargetPath -match $RegEx) {
+                $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"                
+            }
+            else {
+                #$DFSDetails = [NetApi32Dll]::NetDfsGetInfo($TargetPath) # Can't use this because it doesn't work if the provided path is a subfolder of a DFS folder
+                $AllDfs = Get-NetDfsEnum -Verbose -FolderPath $TargetPath
+                $DfsDetails = $AllDfs |
+                    Group-Object -Property DfsEntryPath |
+                        Where-Object -FilterScript {"$TargetPath" -like "$($_.Name)\*"} |
+                            Sort-Object -Property Name
+                $DfsNamespaceRoot = $DfsDetails |
+                    Select-Object -First 1
+                $DfsDetails |
+                    Select-Object -Last 1 -ExpandProperty Group |
+                        ForEach-Object {
+                            $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
+                        }
+            }
+        }
+    }
+
+}
+function Get-NtfsAccessRule {
     <#
     .INPUTS
     [System.String]$DirectoryPath
     .OUTPUTS
-    [System.Security.AccessControl.AuthorizationRuleCollection]
+    [PsNtfs.PsNtfsAccessRule]
     #>
 
     [CmdletBinding(
@@ -200,59 +264,40 @@ function Get-CustomFolderPermissions {
             if ($DirectoryInfo) {
 
                 # New method for modern versions of PowerShell
-                [System.Security.AccessControl.FileSecurity]::new(
+                $FileSecurity = [System.Security.AccessControl.FileSecurity]::new(
                     $DirectoryInfo,
                     $Sections
-                ).GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
+                )
+                $FileSecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
                 ForEach-Object {
+                    [PsNtfs.PsNtfsAccessRule]::new(
+                        $CurrentPath,
+                        $FileSecurity.AreAccessRulesProtected,
+                        $_.FileSystemRights,
+                        $_.AccessControlType,
+                        $_.IdentityReference,
+                        $_.IsInherited,
+                        $_.InheritanceFlags,
+                        $_.PropagationFlags
+                    )
+                    <#
                     [pscustomobject]@{
-                        Path                    = $CurrentPath
-                        AreAccessRulesProtected = $_.AreAccessRulesProtected
-                        FileSystemRights        = $_.FileSystemRights
-                        AccessControlType       = $_.AccessControlType
-                        IdentityReference       = $_.IdentityReference
-                        IsInherited             = $_.IsInherited
-                        InheritanceFlags        = $_.InheritanceFlags
-                        PropagationFlags        = $_.PropagationFlags
+                        Path                        = $CurrentPath
+                        PathAreAccessRulesProtected = $FileSecurity.AreAccessRulesProtected
+                        FileSystemRights            = $_.FileSystemRights
+                        AccessControlType           = $_.AccessControlType
+                        IdentityReference           = $_.IdentityReference
+                        IsInherited                 = $_.IsInherited
+                        InheritanceFlags            = $_.InheritanceFlags
+                        PropagationFlags            = $_.PropagationFlags
                     }
+                    #>
                 }
 
             }
 
         }
 
-    }
-
-}
-function Get-FolderTarget {
-
-    param (
-        [string[]]$FolderPath
-    )
-
-    process {
-        foreach ($TargetPath in $FolderPath) {
-        
-            $RegEx = '^(?<DriveLetter>\w):'
-            if ($TargetPath -match $RegEx) {
-                $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"                
-            }
-            else {
-                #$DFSDetails = [NetApi32Dll]::NetDfsGetInfo($TargetPath) # Can't use this because it doesn't work if the provided path is a subfolder of a DFS folder
-                $AllDfs = Get-NetDfsEnum -Verbose -FolderPath $TargetPath
-                $DfsDetails = $AllDfs |
-                    Group-Object -Property DfsEntryPath |
-                        Where-Object -FilterScript {"$TargetPath" -like "$($_.Name)\*"} |
-                            Sort-Object -Property Name
-                $DfsNamespaceRoot = $DfsDetails |
-                    Select-Object -First 1
-                $DfsDetails |
-                    Select-Object -Last 1 -ExpandProperty Group |
-                        ForEach-Object {
-                            $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
-                        }
-            }
-        }
     }
 
 }
@@ -514,12 +559,8 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
     ($_.PSParentPath | Split-Path -Leaf) -eq 'public'
 }
 $publicFunctions = $PublicScriptFiles.BaseName
-Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-CustomFolderPermissions','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
 
-
-
-
-
+Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
 
 
 

@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.7
+Help Version: 1.0.10
 Locale: en-US
 ---
 
@@ -21,12 +21,12 @@ Format-FolderPermission [[-UserPermission] <Object>] [[-FileSystemRightsToIgnore
 Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
 
 
-### [Get-CustomFolderPermissions](Get-CustomFolderPermissions.md)
-
-
 ### [Get-FolderTarget](Get-FolderTarget.md)
 
 Get-FolderTarget [[-FolderPath] <string[]>]
+
+
+### [Get-NtfsAccessRule](Get-NtfsAccessRule.md)
 
 
 ### [Get-Subfolder](Get-Subfolder.md)

@@ -5,14 +5,14 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-CustomFolderPermissions
+# Get-NtfsAccessRule
 
 ## SYNOPSIS
 
 ## SYNTAX
 
 ```
-Get-CustomFolderPermissions [[-DirectoryPath] <String[]>] [-IncludeInherited] [<CommonParameters>]
+Get-NtfsAccessRule [[-DirectoryPath] <String[]>] [-IncludeInherited] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -67,7 +67,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### [System.String]$DirectoryPath
 ## OUTPUTS
 
-### [System.Security.AccessControl.AuthorizationRuleCollection]
+### [PsNtfs.PsNtfsAccessRule]
 ## NOTES
 
 ## RELATED LINKS
