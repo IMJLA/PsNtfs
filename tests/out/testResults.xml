@@ -1,174 +1,652 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
-<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="40" errors="0" failures="14" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2022-06-19" time="05:25:45">
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="124" errors="0" failures="23" not-run="0" inconclusive="0" ignored="0" skipped="2" invalid="0" date="2022-06-19" time="05:35:17">
   <environment platform="Microsoft Windows 10 Pro|C:\WINDOWS|\Device\Harddisk0\Partition2" user-domain="JLA-LoftHTPC" clr-version="Unknown" cwd="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests" os-version="10.0.19044" user="Owner" nunit-version="2.5.8.0" machine-name="JLA-LOFTHTPC" />
   <culture-info current-culture="en-US" current-uiculture="en-US" />
-  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="0.8048" asserts="0" description="Pester">
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="1.8443" asserts="0" description="Pester">
     <results>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1" executed="True" result="Failure" success="False" time="0.1195" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Function.tests.ps1" executed="True" result="Success" success="True" time="0.2461" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Function.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="Module manifest" executed="True" result="Failure" success="False" time="0" asserts="0" description="Module manifest">
+          <test-suite type="TestFixture" name="function 'Format-FolderPermission.ps1'" executed="True" result="Success" success="True" time="0.0193" asserts="0" description="function 'Format-FolderPermission.ps1'">
             <results>
-              <test-suite type="TestFixture" name="Module manifest.Validation" executed="True" result="Failure" success="False" time="0" asserts="0" description="Module manifest.Validation">
+              <test-suite type="ParameterizedTest" name="function 'Format-FolderPermission.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0074" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
                 <results>
-                  <test-case description="Has a valid manifest" name="Module manifest.Validation.Has a valid manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid name in the manifest" name="Module manifest.Validation.Has a valid name in the manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid root module" name="Module manifest.Validation.Has a valid root module" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid version in the manifest" name="Module manifest.Validation.Has a valid version in the manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid description" name="Module manifest.Validation.Has a valid description" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid author" name="Module manifest.Validation.Has a valid author" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid guid" name="Module manifest.Validation.Has a valid guid" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid copyright" name="Module manifest.Validation.Has a valid copyright" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Has a valid version in the changelog" name="Module manifest.Validation.Has a valid version in the changelog" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
-                  <test-case description="Changelog and manifest versions are the same" name="Module manifest.Validation.Changelog and manifest versions are the same" time="0" asserts="0" success="False" result="Failure" executed="True">
-                    <failure>
-                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                      <stack-trace />
-                    </failure>
-                  </test-case>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Format-FolderPermission.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1&quot;)" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Format-FolderPermission.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0076" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Format-FolderPermission.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1&quot;)" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="Git tagging" executed="True" result="Failure" success="False" time="0" asserts="0" description="Git tagging">
+          <test-suite type="TestFixture" name="function 'Format-SecurityPrincipal.ps1'" executed="True" result="Success" success="True" time="0.0414" asserts="0" description="function 'Format-SecurityPrincipal.ps1'">
             <results>
-              <test-case description="Is tagged with a valid version" name="Git tagging.Is tagged with a valid version" time="0" asserts="0" success="False" result="Failure" executed="True">
+              <test-suite type="ParameterizedTest" name="function 'Format-SecurityPrincipal.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0114" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Format-SecurityPrincipal.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1&quot;)" time="0.0114" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Format-SecurityPrincipal.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0074" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Format-SecurityPrincipal.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1&quot;)" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'Get-CustomFolderPermissions.ps1'" executed="True" result="Success" success="True" time="0.0599" asserts="0" description="function 'Get-CustomFolderPermissions.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'Get-CustomFolderPermissions.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0073" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Get-CustomFolderPermissions.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1&quot;)" time="0.0073" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Get-CustomFolderPermissions.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0076" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Get-CustomFolderPermissions.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1&quot;)" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'Get-FolderTarget.ps1'" executed="True" result="Success" success="True" time="0.1001" asserts="0" description="function 'Get-FolderTarget.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'Get-FolderTarget.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0108" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Get-FolderTarget.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1&quot;)" time="0.0108" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Get-FolderTarget.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0255" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Get-FolderTarget.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1&quot;)" time="0.0255" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'Get-Subfolder.ps1'" executed="True" result="Success" success="True" time="0.1338" asserts="0" description="function 'Get-Subfolder.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'Get-Subfolder.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0195" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Get-Subfolder.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1&quot;)" time="0.0195" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Get-Subfolder.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.008" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Get-Subfolder.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1&quot;)" time="0.008" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'New-NtfsAclIssueReport.ps1'" executed="True" result="Success" success="True" time="0.1554" asserts="0" description="function 'New-NtfsAclIssueReport.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'New-NtfsAclIssueReport.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0074" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'New-NtfsAclIssueReport.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1&quot;)" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'New-NtfsAclIssueReport.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.006" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'New-NtfsAclIssueReport.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1&quot;)" time="0.006" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'New-PermissionsReport.ps1'" executed="True" result="Success" success="True" time="0.1733" asserts="0" description="function 'New-PermissionsReport.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'New-PermissionsReport.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0097" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'New-PermissionsReport.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1&quot;)" time="0.0097" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'New-PermissionsReport.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0054" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'New-PermissionsReport.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1&quot;)" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'" executed="True" result="Success" success="True" time="0.1884" asserts="0" description="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'">
+            <results>
+              <test-suite type="ParameterizedTest" name="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'.can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0064" asserts="0" description="can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="can be tokenized by the PowerShell parser without any errors" name="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'.can be tokenized by the PowerShell parser without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1&quot;)" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'.runs without throwing errors" executed="True" result="Success" success="True" time="0.0056" asserts="0" description="runs without throwing errors">
+                <results>
+                  <test-case description="runs without throwing errors" name="function 'Remove-DuplicatesAcrossIgnoredDomains.ps1'.runs without throwing errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1&quot;)" time="0.0056" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1" executed="True" result="Failure" success="False" time="0.9425" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="help for Format-FolderPermission" executed="True" result="Failure" success="False" time="0.1042" asserts="0" description="help for Format-FolderPermission">
+            <results>
+              <test-suite type="TestFixture" name="help for Format-FolderPermission.- Help for parameter 'FileSystemRightsToIgnore'" executed="True" result="Failure" success="False" time="0.0627" asserts="0" description="help for Format-FolderPermission.- Help for parameter 'FileSystemRightsToIgnore'">
+                <results>
+                  <test-case description="has a description" name="help for Format-FolderPermission.- Help for parameter 'FileSystemRightsToIgnore'.has a description" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Format-FolderPermission.- Help for parameter 'FileSystemRightsToIgnore'.has the correct [mandatory] value" time="0.008" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Format-FolderPermission.- Help for parameter 'FileSystemRightsToIgnore'.has the correct parameter type" time="0.0135" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 8
+Actual length:   15
+Strings differ at index 1.
+Expected: 'String[]'
+But was:  'System.String[]'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for Format-FolderPermission.- Help for parameter 'UserPermission'" executed="True" result="Failure" success="False" time="0.09" asserts="0" description="help for Format-FolderPermission.- Help for parameter 'UserPermission'">
+                <results>
+                  <test-case description="has a description" name="help for Format-FolderPermission.- Help for parameter 'UserPermission'.has a description" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Format-FolderPermission.- Help for parameter 'UserPermission'.has the correct [mandatory] value" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Format-FolderPermission.- Help for parameter 'UserPermission'.has the correct parameter type" time="0.0138" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for Format-FolderPermission.is not auto-generated" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Format-FolderPermission.has a description" time="0.0054" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Format-FolderPermission.has example code" time="0.0056" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Format-FolderPermission.has example help" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for Format-SecurityPrincipal" executed="True" result="Failure" success="False" time="0.1688" asserts="0" description="help for Format-SecurityPrincipal">
+            <results>
+              <test-suite type="TestFixture" name="help for Format-SecurityPrincipal.- Help for parameter 'SecurityPrincipal'" executed="True" result="Failure" success="False" time="0.0536" asserts="0" description="help for Format-SecurityPrincipal.- Help for parameter 'SecurityPrincipal'">
+                <results>
+                  <test-case description="has a description" name="help for Format-SecurityPrincipal.- Help for parameter 'SecurityPrincipal'.has a description" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Format-SecurityPrincipal.- Help for parameter 'SecurityPrincipal'.has the correct [mandatory] value" time="0.0052" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Format-SecurityPrincipal.- Help for parameter 'SecurityPrincipal'.has the correct parameter type" time="0.0138" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for Format-SecurityPrincipal.is not auto-generated" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Format-SecurityPrincipal.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Format-SecurityPrincipal.has example code" time="0.01" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Format-SecurityPrincipal.has example help" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for Get-CustomFolderPermissions" executed="True" result="Failure" success="False" time="0.2691" asserts="0" description="help for Get-CustomFolderPermissions">
+            <results>
+              <test-suite type="TestFixture" name="help for Get-CustomFolderPermissions.- Help for parameter 'DirectoryPath'" executed="True" result="Success" success="True" time="0.066" asserts="0" description="help for Get-CustomFolderPermissions.- Help for parameter 'DirectoryPath'">
+                <results>
+                  <test-case description="has a description" name="help for Get-CustomFolderPermissions.- Help for parameter 'DirectoryPath'.has a description" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-CustomFolderPermissions.- Help for parameter 'DirectoryPath'.has the correct [mandatory] value" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-CustomFolderPermissions.- Help for parameter 'DirectoryPath'.has the correct parameter type" time="0.0112" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for Get-CustomFolderPermissions.- Help for parameter 'IncludeInherited'" executed="True" result="Success" success="True" time="0.0841" asserts="0" description="help for Get-CustomFolderPermissions.- Help for parameter 'IncludeInherited'">
+                <results>
+                  <test-case description="has a description" name="help for Get-CustomFolderPermissions.- Help for parameter 'IncludeInherited'.has a description" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-CustomFolderPermissions.- Help for parameter 'IncludeInherited'.has the correct [mandatory] value" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-CustomFolderPermissions.- Help for parameter 'IncludeInherited'.has the correct parameter type" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for Get-CustomFolderPermissions.is not auto-generated" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Get-CustomFolderPermissions.has a description" time="0.0098" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
-                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                  <stack-trace />
+                  <message>Expected a value, but got $null or empty.</message>
+                  <stack-trace>at $commandHelp.Description | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:75
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:75</stack-trace>
                 </failure>
               </test-case>
-              <test-case description="Matches manifest version" name="Git tagging.Matches manifest version" time="0" asserts="0" success="False" result="Failure" executed="True">
+              <test-case description="has example code" name="help for Get-CustomFolderPermissions.has example code" time="0.0122" asserts="0" success="False" result="Failure" executed="True">
                 <failure>
-                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
-                  <stack-trace />
+                  <message>Expected a value, but got $null or empty.</message>
+                  <stack-trace>at ($commandHelp.Examples.Example | Select-Object -First 1).Code | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:80
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:80</stack-trace>
+                </failure>
+              </test-case>
+              <test-case description="has example help" name="help for Get-CustomFolderPermissions.has example help" time="0.0102" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>Expected a value, but got $null or empty.</message>
+                  <stack-trace>at ($commandHelp.Examples.Example.Remarks | Select-Object -First 1).Text | Should -Not -BeNullOrEmpty, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:85
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:85</stack-trace>
                 </failure>
               </test-case>
             </results>
           </test-suite>
-        </results>
-      </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1" executed="True" result="Success" success="True" time="0.1337" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1">
-        <results>
-          <test-suite type="TestFixture" name="Text files formatting" executed="True" result="Success" success="True" time="0.0273" asserts="0" description="Text files formatting">
+          <test-suite type="TestFixture" name="help for Get-FolderTarget" executed="True" result="Failure" success="False" time="0.3191" asserts="0" description="help for Get-FolderTarget">
             <results>
-              <test-suite type="TestFixture" name="Text files formatting.File encoding" executed="True" result="Success" success="True" time="0.0113" asserts="0" description="Text files formatting.File encoding">
+              <test-suite type="TestFixture" name="help for Get-FolderTarget.- Help for parameter 'FolderPath'" executed="True" result="Failure" success="False" time="0.0366" asserts="0" description="help for Get-FolderTarget.- Help for parameter 'FolderPath'">
                 <results>
-                  <test-case description="No text file uses Unicode/UTF-16 encoding" name="Text files formatting.File encoding.No text file uses Unicode/UTF-16 encoding" time="0.0084" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Get-FolderTarget.- Help for parameter 'FolderPath'.has a description" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-FolderTarget.- Help for parameter 'FolderPath'.has the correct [mandatory] value" time="0.003" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-FolderTarget.- Help for parameter 'FolderPath'.has the correct parameter type" time="0.008" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 8
+Actual length:   15
+Strings differ at index 1.
+Expected: 'String[]'
+But was:  'System.String[]'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
                 </results>
               </test-suite>
-              <test-suite type="TestFixture" name="Text files formatting.Indentations" executed="True" result="Success" success="True" time="0.0237" asserts="0" description="Text files formatting.Indentations">
+              <test-case description="is not auto-generated" name="help for Get-FolderTarget.is not auto-generated" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Get-FolderTarget.has a description" time="0.003" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Get-FolderTarget.has example code" time="0.0044" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Get-FolderTarget.has example help" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for Get-Subfolder" executed="True" result="Failure" success="False" time="0.3893" asserts="0" description="help for Get-Subfolder">
+            <results>
+              <test-suite type="TestFixture" name="help for Get-Subfolder.- Help for parameter 'FolderRecursionDepth'" executed="True" result="Failure" success="False" time="0.0355" asserts="0" description="help for Get-Subfolder.- Help for parameter 'FolderRecursionDepth'">
                 <results>
-                  <test-case description="No text file use tabs for indentations" name="Text files formatting.Indentations.No text file use tabs for indentations" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a description" name="help for Get-Subfolder.- Help for parameter 'FolderRecursionDepth'.has a description" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-Subfolder.- Help for parameter 'FolderRecursionDepth'.has the correct [mandatory] value" time="0.0063" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-Subfolder.- Help for parameter 'FolderRecursionDepth'.has the correct parameter type" time="0.0083" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 5
+Actual length:   12
+Strings differ at index 0.
+Expected: 'Int32'
+But was:  'System.Int32'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
                 </results>
               </test-suite>
+              <test-suite type="TestFixture" name="help for Get-Subfolder.- Help for parameter 'TargetPath'" executed="True" result="Failure" success="False" time="0.058" asserts="0" description="help for Get-Subfolder.- Help for parameter 'TargetPath'">
+                <results>
+                  <test-case description="has a description" name="help for Get-Subfolder.- Help for parameter 'TargetPath'.has a description" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Get-Subfolder.- Help for parameter 'TargetPath'.has the correct [mandatory] value" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Get-Subfolder.- Help for parameter 'TargetPath'.has the correct parameter type" time="0.0117" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 1.
+Expected: 'String'
+But was:  'System.String'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for Get-Subfolder.is not auto-generated" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Get-Subfolder.has a description" time="0.0025" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Get-Subfolder.has example code" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Get-Subfolder.has example help" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport" executed="True" result="Failure" success="False" time="0.6155" asserts="0" description="help for New-NtfsAclIssueReport">
+            <results>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'FolderPermissions'" executed="True" result="Failure" success="False" time="0.0409" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'FolderPermissions'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'FolderPermissions'.has a description" time="0.0048" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'FolderPermissions'.has the correct [mandatory] value" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'FolderPermissions'.has the correct parameter type" time="0.0077" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'GroupNamingConvention'" executed="True" result="Failure" success="False" time="0.0619" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'GroupNamingConvention'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'GroupNamingConvention'.has a description" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'GroupNamingConvention'.has the correct [mandatory] value" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'GroupNamingConvention'.has the correct parameter type" time="0.0108" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 11
+Actual length:   40
+Strings differ at index 1.
+Expected: 'ScriptBlock'
+But was:  'System.Management.Automation.ScriptBlock'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgProbe'" executed="True" result="Failure" success="False" time="0.0822" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgProbe'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgProbe'.has a description" time="0.003" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgProbe'.has the correct [mandatory] value" time="0.0026" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgProbe'.has the correct parameter type" time="0.0114" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 1.
+Expected: 'String'
+But was:  'System.String'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorPort'" executed="True" result="Failure" success="False" time="0.1309" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorPort'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorPort'.has a description" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorPort'.has the correct [mandatory] value" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorPort'.has the correct parameter type" time="0.0073" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 5
+Actual length:   12
+Strings differ at index 0.
+Expected: 'Int32'
+But was:  'System.Int32'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorProtocol'" executed="True" result="Failure" success="False" time="0.1674" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorProtocol'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorProtocol'.has a description" time="0.0145" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorProtocol'.has the correct [mandatory] value" time="0.0031" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorProtocol'.has the correct parameter type" time="0.0136" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 1.
+Expected: 'String'
+But was:  'System.String'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorToken'" executed="True" result="Failure" success="False" time="0.1903" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorToken'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorToken'.has a description" time="0.009" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorToken'.has the correct [mandatory] value" time="0.0026" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'PrtgSensorToken'.has the correct parameter type" time="0.0065" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 1.
+Expected: 'String'
+But was:  'System.String'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-NtfsAclIssueReport.- Help for parameter 'UserPermissions'" executed="True" result="Failure" success="False" time="0.2131" asserts="0" description="help for New-NtfsAclIssueReport.- Help for parameter 'UserPermissions'">
+                <results>
+                  <test-case description="has a description" name="help for New-NtfsAclIssueReport.- Help for parameter 'UserPermissions'.has a description" time="0.0035" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-NtfsAclIssueReport.- Help for parameter 'UserPermissions'.has the correct [mandatory] value" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-NtfsAclIssueReport.- Help for parameter 'UserPermissions'.has the correct parameter type" time="0.0124" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for New-NtfsAclIssueReport.is not auto-generated" time="0.0051" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for New-NtfsAclIssueReport.has a description" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for New-NtfsAclIssueReport.has example code" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for New-NtfsAclIssueReport.has example help" time="0.0037" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for New-PermissionsReport" executed="True" result="Failure" success="False" time="0.6885" asserts="0" description="help for New-PermissionsReport">
+            <results>
+              <test-suite type="TestFixture" name="help for New-PermissionsReport.- Help for parameter 'LogDir'" executed="True" result="Failure" success="False" time="0.0411" asserts="0" description="help for New-PermissionsReport.- Help for parameter 'LogDir'">
+                <results>
+                  <test-case description="has a description" name="help for New-PermissionsReport.- Help for parameter 'LogDir'.has a description" time="0.0043" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-PermissionsReport.- Help for parameter 'LogDir'.has the correct [mandatory] value" time="0.0029" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-PermissionsReport.- Help for parameter 'LogDir'.has the correct parameter type" time="0.0109" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 1.
+Expected: 'String'
+But was:  'System.String'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for New-PermissionsReport.- Help for parameter 'Permissions'" executed="True" result="Failure" success="False" time="0.0632" asserts="0" description="help for New-PermissionsReport.- Help for parameter 'Permissions'">
+                <results>
+                  <test-case description="has a description" name="help for New-PermissionsReport.- Help for parameter 'Permissions'.has a description" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for New-PermissionsReport.- Help for parameter 'Permissions'.has the correct [mandatory] value" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for New-PermissionsReport.- Help for parameter 'Permissions'.has the correct parameter type" time="0.0072" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for New-PermissionsReport.is not auto-generated" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for New-PermissionsReport.has a description" time="0.0032" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for New-PermissionsReport.has example code" time="0.0028" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for New-PermissionsReport.has example help" time="0.0076" asserts="0" success="True" result="Success" executed="True" />
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="help for Remove-DuplicatesAcrossIgnoredDomains" executed="True" result="Failure" success="False" time="0.7621" asserts="0" description="help for Remove-DuplicatesAcrossIgnoredDomains">
+            <results>
+              <test-suite type="TestFixture" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'DomainToIgnore'" executed="True" result="Failure" success="False" time="0.0384" asserts="0" description="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'DomainToIgnore'">
+                <results>
+                  <test-case description="has a description" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'DomainToIgnore'.has a description" time="0.004" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'DomainToIgnore'.has the correct [mandatory] value" time="0.0036" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'DomainToIgnore'.has the correct parameter type" time="0.0113" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 8
+Actual length:   15
+Strings differ at index 1.
+Expected: 'String[]'
+But was:  'System.String[]'
+           -^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'UserPermission'" executed="True" result="Failure" success="False" time="0.0627" asserts="0" description="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'UserPermission'">
+                <results>
+                  <test-case description="has a description" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'UserPermission'.has a description" time="0.0049" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct [mandatory] value" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'UserPermission'.has the correct [mandatory] value" time="0.0034" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the correct parameter type" name="help for Remove-DuplicatesAcrossIgnoredDomains.- Help for parameter 'UserPermission'.has the correct parameter type" time="0.0119" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   13
+Strings differ at index 0.
+Expected: 'Object'
+But was:  'System.Object'
+           ^</message>
+                      <stack-trace>at $parameterHelpType | Should -Be $parameter.ParameterType.Name, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1:114</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-case description="is not auto-generated" name="help for Remove-DuplicatesAcrossIgnoredDomains.is not auto-generated" time="0.0045" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has a description" name="help for Remove-DuplicatesAcrossIgnoredDomains.has a description" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example code" name="help for Remove-DuplicatesAcrossIgnoredDomains.has example code" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
+              <test-case description="has example help" name="help for Remove-DuplicatesAcrossIgnoredDomains.has example help" time="0.0039" asserts="0" success="True" result="Success" executed="True" />
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1" executed="True" result="Success" success="True" time="0.4193" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1" executed="True" result="Failure" success="False" time="0.1963" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="'PsNtfs.psd1' Module Manifest Tests" executed="True" result="Success" success="True" time="0.1151" asserts="0" description="'PsNtfs.psd1' Module Manifest Tests">
+          <test-suite type="TestFixture" name="module manifest 'PsNtfs.psd1'" executed="True" result="Failure" success="False" time="0.0514" asserts="0" description="module manifest 'PsNtfs.psd1'">
             <results>
-              <test-suite type="ParameterizedTest" name="'PsNtfs.psd1' Module Manifest Tests.Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest" executed="True" result="Success" success="True" time="0.1063" asserts="0" description="Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest">
+              <test-suite type="TestFixture" name="module manifest 'PsNtfs.psd1'.- Validation" executed="True" result="Failure" success="False" time="0.0488" asserts="0" description="module manifest 'PsNtfs.psd1'.- Validation">
                 <results>
-                  <test-case description="Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest" name="'PsNtfs.psd1' Module Manifest Tests.Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest(E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1)" time="0.1063" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="is a valid manifest" name="module manifest 'PsNtfs.psd1'.- Validation.is a valid manifest" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid name in the manifest" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid name in the manifest" time="0.005" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid root module" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid root module" time="0.0113" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected strings to be the same, but they were different.
+Expected length: 6
+Actual length:   11
+Strings differ at index 6.
+Expected: 'PsNtfs'
+But was:  'PsNtfs.psm1'
+           ------^</message>
+                      <stack-trace>at $manifestData.RootModule | Should -Be $moduleName, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1:36
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1:36</stack-trace>
+                    </failure>
+                  </test-case>
+                  <test-case description="has a valid version" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid version" time="0.0047" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid description" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid description" time="0.0052" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid author" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid author" time="0.0033" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid guid" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid guid" time="0.0046" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has a valid copyright" name="module manifest 'PsNtfs.psd1'.- Validation.has a valid copyright" time="0.004" asserts="0" success="True" result="Success" executed="True" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
-          <test-suite type="TestFixture" name="'PsNtfs' Function Tests" executed="True" result="Success" success="True" time="0.3071" asserts="0" description="'PsNtfs' Function Tests">
+          <test-suite type="TestFixture" name="Git tagging" executed="True" result="Ignored" success="True" time="0.071" asserts="0" description="Git tagging">
             <results>
-              <test-suite type="ParameterizedTest" name="'PsNtfs' Function Tests.Script '&lt;Script&gt;' is valid PowerShell" executed="True" result="Success" success="True" time="0.1861" asserts="0" description="Script '&lt;Script&gt;' is valid PowerShell">
+              <test-suite type="TestFixture" name="Git tagging.- Git tag version ''" executed="True" result="Ignored" success="True" time="0.0169" asserts="0" description="Git tagging.- Git tag version ''">
                 <results>
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1' is valid PowerShell" time="0.0079" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' is valid PowerShell" time="0.0122" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1' is valid PowerShell" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1' is valid PowerShell" time="0.0109" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1' is valid PowerShell" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1' is valid PowerShell" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1' is valid PowerShell" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1' is valid PowerShell" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1' is valid PowerShell" time="0.01" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1' is valid PowerShell" time="0.0068" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psd1' is valid PowerShell" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psm1' is valid PowerShell" time="0.0068" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1' is valid PowerShell" time="0.0098" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1' is valid PowerShell" time="0.0089" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1' is valid PowerShell" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1' is valid PowerShell" time="0.0101" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\MetaFixers.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\MetaFixers.psm1' is valid PowerShell" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1' is valid PowerShell" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\ScriptAnalyzerSettings.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\ScriptAnalyzerSettings.psd1' is valid PowerShell" time="0.0097" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\build.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\build.ps1' is valid PowerShell" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psakeFile.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psakeFile.ps1' is valid PowerShell" time="0.016" asserts="0" success="True" result="Success" executed="True" />
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psdependRequirements.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psdependRequirements.psd1' is valid PowerShell" time="0.0058" asserts="0" success="True" result="Success" executed="True" />
-                </results>
-              </test-suite>
-            </results>
-          </test-suite>
-          <test-suite type="TestFixture" name="'PsNtfs.psm1' Module Tests" executed="True" result="Success" success="True" time="0.3353" asserts="0" description="'PsNtfs.psm1' Module Tests">
-            <results>
-              <test-suite type="ParameterizedTest" name="'PsNtfs.psm1' Module Tests.Module file '&lt;ThisModule&gt;' can be imported without any errors" executed="True" result="Success" success="True" time="0.0242" asserts="0" description="Module file '&lt;ThisModule&gt;' can be imported without any errors">
-                <results>
-                  <test-case description="Module file 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' can be imported without any errors" name="'PsNtfs.psm1' Module Tests.Module file 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' can be imported without any errors" time="0.0242" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="is a valid version" name="Git tagging.- Git tag version ''.is a valid version" time="0.0108" asserts="0" success="False" result="Ignored" executed="False" />
+                  <test-case description="matches the module manifest version" name="Git tagging.- Git tag version ''.matches the module manifest version" time="0.0034" asserts="0" success="False" result="Ignored" executed="False" />
                 </results>
               </test-suite>
             </results>
           </test-suite>
         </results>
       </test-suite>
-      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1" executed="True" result="Failure" success="False" time="0.0957" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1">
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Metadata.tests.ps1" executed="True" result="Success" success="True" time="0.1424" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Metadata.tests.ps1">
         <results>
-          <test-suite type="TestFixture" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests" executed="True" result="Failure" success="False" time="0.0529" asserts="0" description="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests">
+          <test-suite type="TestFixture" name="text files" executed="True" result="Success" success="True" time="0.0258" asserts="0" description="text files">
             <results>
-              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" executed="True" result="Failure" success="False" time="0.0325" asserts="0" description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors">
+              <test-suite type="TestFixture" name="text files.- File Encoding" executed="True" result="Success" success="True" time="0.0098" asserts="0" description="text files.- File Encoding">
                 <results>
-                  <test-case description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1&quot;)" time="0.0325" asserts="0" success="False" result="Failure" executed="True">
+                  <test-case description="do not use Unicode/UTF-16 encoding" name="text files.- File Encoding.do not use Unicode/UTF-16 encoding" time="0.0059" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="text files.- Indentations" executed="True" result="Success" success="True" time="0.0232" asserts="0" description="text files.- Indentations">
+                <results>
+                  <test-case description="do not use tabs for indentations" name="text files.- Indentations.do not use tabs for indentations" time="0.0099" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Module.tests.ps1" executed="True" result="Success" success="True" time="0.0941" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Module.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="PowerShell files in module 'PsNtfs'" executed="True" result="Success" success="True" time="0.0239" asserts="0" description="PowerShell files in module 'PsNtfs'">
+            <results>
+              <test-suite type="ParameterizedTest" name="PowerShell files in module 'PsNtfs'.'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors" executed="True" result="Success" success="True" time="0.0207" asserts="0" description="'&lt;Script&gt;' can be tokenized by the PowerShell parser without any errors">
+                <results>
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.5\PsNtfs\PsNtfs.psd1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsNtfs'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.5\PsNtfs\PsNtfs.psd1' can be tokenized by the PowerShell parser without any errors" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.5\PsNtfs\PsNtfs.psm1' can be tokenized by the PowerShell parser without any errors" name="PowerShell files in module 'PsNtfs'.'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.5\PsNtfs\PsNtfs.psm1' can be tokenized by the PowerShell parser without any errors" time="0.013" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="module 'PsNtfs'" executed="True" result="Success" success="True" time="0.0485" asserts="0" description="module 'PsNtfs'">
+            <results>
+              <test-suite type="ParameterizedTest" name="module 'PsNtfs'.can be imported without any errors" executed="True" result="Success" success="True" time="0.022" asserts="0" description="can be imported without any errors">
+                <results>
+                  <test-case description="can be imported without any errors" name="module 'PsNtfs'.can be imported without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.5\PsNtfs\PsNtfs.psm1&quot;)" time="0.022" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Project.tests.ps1" executed="True" result="Success" success="True" time="0.1488" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Project.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="change log" executed="True" result="Success" success="True" time="0.0187" asserts="0" description="change log">
+            <results>
+              <test-suite type="TestFixture" name="change log.- Version" executed="True" result="Success" success="True" time="0.0159" asserts="0" description="change log.- Version">
+                <results>
+                  <test-case description="has a valid version" name="change log.- Version.has a valid version" time="0.0078" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="has the same version as the manifest" name="change log.- Version.has the same version as the manifest" time="0.0052" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1" executed="True" result="Failure" success="False" time="0.0741" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests" executed="True" result="Failure" success="False" time="0.0304" asserts="0" description="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests">
+            <results>
+              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" executed="True" result="Failure" success="False" time="0.013" asserts="0" description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors">
+                <results>
+                  <test-case description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1&quot;)" time="0.013" asserts="0" success="False" result="Failure" executed="True">
                     <failure>
                       <message>Expected no exception to be thrown, but an exception "The term 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is not recognized as a name of a cmdlet, function, script file, or executable program.
 Check the spelling of the name, or if a path was included, verify that the path is correct and try again." was thrown from E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:18 char:13
@@ -180,9 +658,9 @@ at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerSh
                   </test-case>
                 </results>
               </test-suite>
-              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script '&lt;Script&gt;' is valid PowerShell" executed="True" result="Failure" success="False" time="0.0167" asserts="0" description="Script '&lt;Script&gt;' is valid PowerShell">
+              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script '&lt;Script&gt;' is valid PowerShell" executed="True" result="Failure" success="False" time="0.0128" asserts="0" description="Script '&lt;Script&gt;' is valid PowerShell">
                 <results>
-                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" time="0.0167" asserts="0" success="False" result="Failure" executed="True">
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" time="0.0128" asserts="0" success="False" result="Failure" executed="True">
                     <failure>
                       <message>ItemNotFoundException: Cannot find path 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' because it does not exist.</message>
                       <stack-trace>at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:9</stack-trace>
