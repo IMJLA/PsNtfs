@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.12] - 2022-06-19 - Fixed bug with incorrect property name in Format-FolderPermission
+
 ## [1.0.11] - 2022-06-19 - Removed custom classes
 
 ## [1.0.10] - 2022-06-19 - Fixed file name Get-NtfsAccessRule.ps1

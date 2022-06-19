@@ -49,7 +49,7 @@ function Format-FolderPermission {
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
-                    $IdentityReference = $ThisACE.ResolvedIdentityReference
+                    $IdentityReference = $ThisACE.IdentityReferenceResolved
                 }
 
                 $FileSystemRights = $ThisACE.FileSystemRights

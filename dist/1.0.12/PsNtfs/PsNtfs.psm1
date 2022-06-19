@@ -50,7 +50,7 @@ function Format-FolderPermission {
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
-                    $IdentityReference = $ThisACE.ResolvedIdentityReference
+                    $IdentityReference = $ThisACE.IdentityReferenceResolved
                 }
 
                 $FileSystemRights = $ThisACE.FileSystemRights
@@ -517,6 +517,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 
