@@ -232,10 +232,11 @@ function Get-NtfsAccessRule {
             if ($DirectoryInfo) {
 
                 # New method for modern versions of PowerShell
-                $FileSecurity = [System.Security.AccessControl.FileSecurity]::new(
+                $FileSecurity = [System.Security.AccessControl.DirectorySecurity]::new(
                     $DirectoryInfo,
                     $Sections
                 )
+
                 $FileSecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
                 ForEach-Object {
                     [pscustomobject]@{
@@ -517,6 +518,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

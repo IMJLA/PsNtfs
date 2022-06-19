@@ -36,10 +36,11 @@ function Get-NtfsAccessRule {
             if ($DirectoryInfo) {
 
                 # New method for modern versions of PowerShell
-                $FileSecurity = [System.Security.AccessControl.FileSecurity]::new(
+                $FileSecurity = [System.Security.AccessControl.DirectorySecurity]::new(
                     $DirectoryInfo,
                     $Sections
                 )
+
                 $FileSecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
                 ForEach-Object {
                     [pscustomobject]@{
