@@ -3,7 +3,7 @@ function Get-NtfsAccessRule {
     .INPUTS
     [System.String]$DirectoryPath
     .OUTPUTS
-    [PsNtfs.PsNtfsAccessRule]
+    [PSCustomObject]
     #>
 
     [CmdletBinding(
@@ -42,17 +42,6 @@ function Get-NtfsAccessRule {
                 )
                 $FileSecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
                 ForEach-Object {
-                    [PsNtfs.PsNtfsAccessRule]::new(
-                        $CurrentPath,
-                        $FileSecurity.AreAccessRulesProtected,
-                        $_.FileSystemRights,
-                        $_.AccessControlType,
-                        $_.IdentityReference,
-                        $_.IsInherited,
-                        $_.InheritanceFlags,
-                        $_.PropagationFlags
-                    )
-                    <#
                     [pscustomobject]@{
                         Path                        = $CurrentPath
                         PathAreAccessRulesProtected = $FileSecurity.AreAccessRulesProtected
@@ -63,7 +52,6 @@ function Get-NtfsAccessRule {
                         InheritanceFlags            = $_.InheritanceFlags
                         PropagationFlags            = $_.PropagationFlags
                     }
-                    #>
                 }
 
             }

@@ -340,7 +340,7 @@
     <command:returnValues>
       <command:returnValue>
         <dev:type>
-          <maml:name>[PsNtfs.PsNtfsAccessRule]</maml:name>
+          <maml:name>[PSCustomObject]</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>

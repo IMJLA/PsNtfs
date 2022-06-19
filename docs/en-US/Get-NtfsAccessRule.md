@@ -67,7 +67,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### [System.String]$DirectoryPath
 ## OUTPUTS
 
-### [PsNtfs.PsNtfsAccessRule]
+### [PSCustomObject]
 ## NOTES
 
 ## RELATED LINKS
