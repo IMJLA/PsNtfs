@@ -1,0 +1,199 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-results xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="nunit_schema_2.5.xsd" name="Pester" total="40" errors="0" failures="14" not-run="0" inconclusive="0" ignored="0" skipped="0" invalid="0" date="2022-06-19" time="05:25:45">
+  <environment platform="Microsoft Windows 10 Pro|C:\WINDOWS|\Device\Harddisk0\Partition2" user-domain="JLA-LoftHTPC" clr-version="Unknown" cwd="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests" os-version="10.0.19044" user="Owner" nunit-version="2.5.8.0" machine-name="JLA-LOFTHTPC" />
+  <culture-info current-culture="en-US" current-uiculture="en-US" />
+  <test-suite type="TestFixture" name="Pester" executed="True" result="Failure" success="False" time="0.8048" asserts="0" description="Pester">
+    <results>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1" executed="True" result="Failure" success="False" time="0.1195" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Module manifest" executed="True" result="Failure" success="False" time="0" asserts="0" description="Module manifest">
+            <results>
+              <test-suite type="TestFixture" name="Module manifest.Validation" executed="True" result="Failure" success="False" time="0" asserts="0" description="Module manifest.Validation">
+                <results>
+                  <test-case description="Has a valid manifest" name="Module manifest.Validation.Has a valid manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid name in the manifest" name="Module manifest.Validation.Has a valid name in the manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid root module" name="Module manifest.Validation.Has a valid root module" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid version in the manifest" name="Module manifest.Validation.Has a valid version in the manifest" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid description" name="Module manifest.Validation.Has a valid description" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid author" name="Module manifest.Validation.Has a valid author" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid guid" name="Module manifest.Validation.Has a valid guid" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid copyright" name="Module manifest.Validation.Has a valid copyright" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Has a valid version in the changelog" name="Module manifest.Validation.Has a valid version in the changelog" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                  <test-case description="Changelog and manifest versions are the same" name="Module manifest.Validation.Changelog and manifest versions are the same" time="0" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                      <stack-trace />
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="Git tagging" executed="True" result="Failure" success="False" time="0" asserts="0" description="Git tagging">
+            <results>
+              <test-case description="Is tagged with a valid version" name="Git tagging.Is tagged with a valid version" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+              <test-case description="Matches manifest version" name="Git tagging.Matches manifest version" time="0" asserts="0" success="False" result="Failure" executed="True">
+                <failure>
+                  <message>This test should run but it did not. Most likely a setup in some parent block failed.</message>
+                  <stack-trace />
+                </failure>
+              </test-case>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1" executed="True" result="Success" success="True" time="0.1337" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="Text files formatting" executed="True" result="Success" success="True" time="0.0273" asserts="0" description="Text files formatting">
+            <results>
+              <test-suite type="TestFixture" name="Text files formatting.File encoding" executed="True" result="Success" success="True" time="0.0113" asserts="0" description="Text files formatting.File encoding">
+                <results>
+                  <test-case description="No text file uses Unicode/UTF-16 encoding" name="Text files formatting.File encoding.No text file uses Unicode/UTF-16 encoding" time="0.0084" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+              <test-suite type="TestFixture" name="Text files formatting.Indentations" executed="True" result="Success" success="True" time="0.0237" asserts="0" description="Text files formatting.Indentations">
+                <results>
+                  <test-case description="No text file use tabs for indentations" name="Text files formatting.Indentations.No text file use tabs for indentations" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1" executed="True" result="Success" success="True" time="0.4193" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="'PsNtfs.psd1' Module Manifest Tests" executed="True" result="Success" success="True" time="0.1151" asserts="0" description="'PsNtfs.psd1' Module Manifest Tests">
+            <results>
+              <test-suite type="ParameterizedTest" name="'PsNtfs.psd1' Module Manifest Tests.Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest" executed="True" result="Success" success="True" time="0.1063" asserts="0" description="Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest">
+                <results>
+                  <test-case description="Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest" name="'PsNtfs.psd1' Module Manifest Tests.Module manifest 'PsNtfs.psd1' passes Test-ModuleManifest(E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1)" time="0.1063" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="'PsNtfs' Function Tests" executed="True" result="Success" success="True" time="0.3071" asserts="0" description="'PsNtfs' Function Tests">
+            <results>
+              <test-suite type="ParameterizedTest" name="'PsNtfs' Function Tests.Script '&lt;Script&gt;' is valid PowerShell" executed="True" result="Success" success="True" time="0.1861" asserts="0" description="Script '&lt;Script&gt;' is valid PowerShell">
+                <results>
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psd1' is valid PowerShell" time="0.0079" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' is valid PowerShell" time="0.0122" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-FolderPermission.ps1' is valid PowerShell" time="0.0074" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Format-SecurityPrincipal.ps1' is valid PowerShell" time="0.0109" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-CustomFolderPermissions.ps1' is valid PowerShell" time="0.0072" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-FolderTarget.ps1' is valid PowerShell" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Get-Subfolder.ps1' is valid PowerShell" time="0.0075" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-NtfsAclIssueReport.ps1' is valid PowerShell" time="0.0082" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\New-PermissionsReport.ps1' is valid PowerShell" time="0.01" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Remove-DuplicatesAcrossIgnoredDomains.ps1' is valid PowerShell" time="0.0068" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psd1' is valid PowerShell" time="0.0077" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\PsNtfs.psm1' is valid PowerShell" time="0.0068" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1' is valid PowerShell" time="0.0098" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Help.tests.ps1' is valid PowerShell" time="0.0089" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Manifest.tests.ps1' is valid PowerShell" time="0.0061" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\Meta.tests.ps1' is valid PowerShell" time="0.0101" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\MetaFixers.psm1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\MetaFixers.psm1' is valid PowerShell" time="0.0071" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\PsNtfs.tests.ps1' is valid PowerShell" time="0.0062" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\ScriptAnalyzerSettings.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\ScriptAnalyzerSettings.psd1' is valid PowerShell" time="0.0097" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\build.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\build.ps1' is valid PowerShell" time="0.0064" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psakeFile.ps1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psakeFile.ps1' is valid PowerShell" time="0.016" asserts="0" success="True" result="Success" executed="True" />
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psdependRequirements.psd1' is valid PowerShell" name="'PsNtfs' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\psdependRequirements.psd1' is valid PowerShell" time="0.0058" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+          <test-suite type="TestFixture" name="'PsNtfs.psm1' Module Tests" executed="True" result="Success" success="True" time="0.3353" asserts="0" description="'PsNtfs.psm1' Module Tests">
+            <results>
+              <test-suite type="ParameterizedTest" name="'PsNtfs.psm1' Module Tests.Module file '&lt;ThisModule&gt;' can be imported without any errors" executed="True" result="Success" success="True" time="0.0242" asserts="0" description="Module file '&lt;ThisModule&gt;' can be imported without any errors">
+                <results>
+                  <test-case description="Module file 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' can be imported without any errors" name="'PsNtfs.psm1' Module Tests.Module file 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\dist\1.0.2\PsNtfs\PsNtfs.psm1' can be imported without any errors" time="0.0242" asserts="0" success="True" result="Success" executed="True" />
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+      <test-suite type="TestFixture" name="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1" executed="True" result="Failure" success="False" time="0.0957" asserts="0" description="E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1">
+        <results>
+          <test-suite type="TestFixture" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests" executed="True" result="Failure" success="False" time="0.0529" asserts="0" description="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests">
+            <results>
+              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" executed="True" result="Failure" success="False" time="0.0325" asserts="0" description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors">
+                <results>
+                  <test-case description="Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script file 'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' can be run without any errors(&quot;E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1&quot;)" time="0.0325" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>Expected no exception to be thrown, but an exception "The term 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is not recognized as a name of a cmdlet, function, script file, or executable program.
+Check the spelling of the name, or if a path was included, verify that the path is correct and try again." was thrown from E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:18 char:13
+    +         { . $ThisScriptPath } | Should -Not -Throw
+    +             ~~~~~~~~~~~~~~~.</message>
+                      <stack-trace>at { . $ThisScriptPath } | Should -Not -Throw, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:18
+at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:18</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+              <test-suite type="ParameterizedTest" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script '&lt;Script&gt;' is valid PowerShell" executed="True" result="Failure" success="False" time="0.0167" asserts="0" description="Script '&lt;Script&gt;' is valid PowerShell">
+                <results>
+                  <test-case description="Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" name="'Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' Function Tests.Script 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' is valid PowerShell" time="0.0167" asserts="0" success="False" result="Failure" executed="True">
+                    <failure>
+                      <message>ItemNotFoundException: Cannot find path 'E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\src\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.ps1' because it does not exist.</message>
+                      <stack-trace>at &lt;ScriptBlock&gt;, E:\Owner\Documents\Google Drive\Programs\Scripts\PowerShell\PsNtfs\tests\functions\public\Test-PublicFunction_52c41a71-2458-4da5-a961-5114ef8cbd33.tests.ps1:9</stack-trace>
+                    </failure>
+                  </test-case>
+                </results>
+              </test-suite>
+            </results>
+          </test-suite>
+        </results>
+      </test-suite>
+    </results>
+  </test-suite>
+</test-results>
