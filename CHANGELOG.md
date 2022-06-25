@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.16] - 2022-06-24 - Changed Write-Host to Write-Verbose in Format-FolderPermission
+
 ## [1.0.15] - 2022-06-24 - Suspect intermittent bug in PSScriptAnalyzer, trying again
 
 ## [1.0.14] - 2022-06-24 - Updated New-NtfsAclIssueReport to output pscustom object and move PRTG functionality to PsPrtg module
