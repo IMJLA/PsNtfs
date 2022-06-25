@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.15] - 2022-06-24 - Suspect intermittent bug in PSScriptAnalyzer, trying again
+
+## [1.0.14] - 2022-06-24 - Updated New-NtfsAclIssueReport to output pscustom object and move PRTG functionality to PsPrtg module
+
 ## [1.0.13] - 2022-06-19 - Bug fix in Get-NtfsAccessRule (now using DirectorySecurity instead of FileSecurity)
 
 ## [1.0.12] - 2022-06-19 - Fixed bug with incorrect property name in Format-FolderPermission

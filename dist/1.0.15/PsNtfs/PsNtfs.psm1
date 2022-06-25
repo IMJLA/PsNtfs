@@ -1,8 +1,6 @@
 
 function Format-FolderPermission {
 
-
-
     Param (
 
         # Expects ACEs grouped using Group-Object
@@ -321,37 +319,23 @@ function New-NtfsAclIssueReport {
         The naming format that will be used for the users is CONTOSO\User1 where CONTOSO is the NetBIOS name of the domain, and User1 is the samAccountName of the user
         By default, this is a scriptblock that always evaluates to $true so it doesn't evaluate any naming convention compliance
         #>
-        [scriptblock]$GroupNamingConvention = {$true},
-
-        # If all four of the PRTG parameters are specified, then the results will be XML-formatted and pushed to the specified PRTG probe for a push sensor
-        [string]$PrtgProbe,
-
-        # If all four of the PRTG parameters are specified, then the results will be XML-formatted and pushed to the specified PRTG probe for a push sensor
-        [string]$PrtgSensorProtocol,
-
-        # If all four of the PRTG parameters are specified, then the results will be XML-formatted and pushed to the specified PRTG probe for a push sensor
-        [int]$PrtgSensorPort,
-
-        # If all four of the PRTG parameters are specified, then the results will be XML-formatted and pushed to the specified PRTG probe for a push sensor
-        [string]$PrtgSensorToken
+        [scriptblock]$GroupNamingConvention = { $true }
     )
 
     $IssuesDetected = $false
 
-
     # List of folders with broken inheritance (recommend moving to higher level to avoid breaking inheritance.  Deny entries are a less desirable alternative)
     $FoldersWithBrokenInheritance = $FolderPermissions |
-        Select-Object -Skip 1 |
-            Where-Object -FilterScript {
+    Select-Object -Skip 1 |
+    Where-Object -FilterScript {
                 ($_.Group.FolderInheritanceEnabled | Select-Object -First 1) -eq $false -and
-                (($_.Name -replace ([regex]::Escape($TargetPath)),'' -split '\\') | Measure-Object).Count -ne 2
-            }
+                (($_.Name -replace ([regex]::Escape($TargetPath)), '' -split '\\') | Measure-Object).Count -ne 2
+    }
     $Count = ($FoldersWithBrokenInheritance | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "folders with broken inheritance: $($FoldersWithBrokenInheritance.Name -join "`r`n")"
-    }
-    else {
+    } else {
         $Txt = 'OK'
     }
     Write-Verbose "$Count`:$Txt"
@@ -360,81 +344,67 @@ function New-NtfsAclIssueReport {
     # Invert the naming convention scriptblock (because we actually want to identify groups that do NOT follow the convention)
     $ViolatesNamingConvention = [scriptblock]::Create("!($GroupNamingConvention)")
     $NonCompliantGroups = $SecurityPrincipals |
-        Where-Object -FilterScript {$_.ObjectType -contains 'Group'} |
-            Where-Object -FilterScript $ViolatesNamingConvention |
-                Select-Object -ExpandProperty Group |
-                    ForEach-Object {"$($_.IdentityReference) on '$($_.Path)'"}
+    Where-Object -FilterScript { $_.ObjectType -contains 'Group' } |
+    Where-Object -FilterScript $ViolatesNamingConvention |
+    Select-Object -ExpandProperty Group |
+    ForEach-Object { "$($_.IdentityReference) on '$($_.Path)'" }
 
     $Count = ($NonCompliantGroups | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "groups that don't match naming convention: $($NonCompliantGroups -join "`r`n")"
-    }
-    else {
+    } else {
         $Txt = 'OK'
     }
     Write-Verbose "$Count`:$Txt"
 
     # ACEs for users (recommend replacing with group-based access on any folder that is not a home folder)
     $UserACEs = $UserPermissions.Group |
-        Where-Object {$_.ObjectType -contains 'User'} |
-            ForEach-Object {$_.NtfsAccessControlEntries} |
-                ForEach-Object {"$($_.IdentityReference) on '$($_.Path)'"} |
-                    Sort-Object -Unique
+    Where-Object { $_.ObjectType -contains 'User' } |
+    ForEach-Object { $_.NtfsAccessControlEntries } |
+    ForEach-Object { "$($_.IdentityReference) on '$($_.Path)'" } |
+    Sort-Object -Unique
     $Count = ($UserACEs | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "users with ACEs: $($UserACEs -join "`r`n")"
-    }
-    else {
+    } else {
         $Txt = 'OK'
     }
     Write-Verbose "$Count`:$Txt"
 
     # ACEs for unresolvable SIDs (recommend removing these ACEs)
     $SIDsToCleanup = $UserPermissions.Group.NtfsAccessControlEntries |
-        Where-Object -FilterScript {$_.IdentityReference -match 'S-\d+-\d+-\d+-\d+-\d+\-\d+\-\d+'} |
-                ForEach-Object {"$($_.IdentityReference) on '$($_.Path)'"} |
-                    Sort-Object -Unique
+    Where-Object -FilterScript { $_.IdentityReference -match 'S-\d+-\d+-\d+-\d+-\d+\-\d+\-\d+' } |
+    ForEach-Object { "$($_.IdentityReference) on '$($_.Path)'" } |
+    Sort-Object -Unique
     $Count = ($SIDsToCleanup | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "ACEs for unresolvable SIDs: $($SIDsToCleanup -join "`r`n")"
-    }
-    else {
+    } else {
         $Txt = 'OK'
     }
     Write-Verbose "$Count`:$Txt"
 
     # CREATOR OWNER access (recommend replacing with group-based access, or with explicit user access for a home folder.)
-    $FoldersWithCreatorOwner = ($UserPermissions | ?{$_.Name -match 'CREATOR OWNER'}).Group.NtfsAccessControlEntries.Path | Sort -Unique
+    $FoldersWithCreatorOwner = ($UserPermissions | ? { $_.Name -match 'CREATOR OWNER' }).Group.NtfsAccessControlEntries.Path | Sort -Unique
     $Count = ($FoldersWithCreatorOwner | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "folders with 'CREATOR OWNER' ACEs: $($FoldersWithCreatorOwner -join "`r`n")"
-    }
-    else {
+    } else {
         $Txt = 'OK'
     }
     Write-Verbose "$Count`:$Txt"
 
-    # TODO: Users with ownership (recommend replacing with Administrators and ensuring the user will retain Modify access to the file/folder in question)
-
-    $XMLOutput = Add-PrtgChannels
-    Write-Output $XMLOutput
-
-    $ResultToPost = @{
-        Body = $XMLOutput
-        ContentType = 'application/xml'
-        Method = 'Post'
-        Uri = "$PrtgSensorProtocol`://$PrtgProbe`:$PrtgSensorPort/$PrtgSensorToken"
-        UseBasicParsing = $true
-    }
-
-    if ($PrtgSensorToken) {
-        Write-Verbose "URI: $PrtgSensorProtocol`://$PrtgProbe`:$PrtgSensorPort/$PrtgSensorToken"
-
-        Invoke-WebRequest @ResultToPost
+    [PSCustomObject]@{
+        IssueDetected                = $IssuesDetected
+        FoldersWithBrokenInheritance = $FoldersWithBrokenInheritance
+        NonCompliantGroups           = $NonCompliantGroups
+        UserACEs                     = $UserACEs
+        SIDsToCleanup                = $SIDsToCleanup
+        FoldersWithCreatorOwner      = $FoldersWithCreatorOwner
     }
 }
 function New-PermissionsReport {
@@ -518,6 +488,8 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+
+
 
 
 

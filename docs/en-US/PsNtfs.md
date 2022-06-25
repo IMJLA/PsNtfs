@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.13
+Help Version: 1.0.15
 Locale: en-US
 ---
 
@@ -36,7 +36,7 @@ Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [<CommonP
 
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
 
-New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>] [[-PrtgProbe] <string>] [[-PrtgSensorProtocol] <string>] [[-PrtgSensorPort] <int>] [[-PrtgSensorToken] <string>]
+New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>]
 
 
 ### [New-PermissionsReport](New-PermissionsReport.md)

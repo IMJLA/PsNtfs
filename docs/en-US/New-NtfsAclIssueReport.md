@@ -14,8 +14,7 @@ schema: 2.0.0
 
 ```
 New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>]
- [[-GroupNamingConvention] <ScriptBlock>] [[-PrtgProbe] <String>] [[-PrtgSensorProtocol] <String>]
- [[-PrtgSensorPort] <Int32>] [[-PrtgSensorToken] <String>]
+ [[-GroupNamingConvention] <ScriptBlock>]
 ```
 
 ## DESCRIPTION
@@ -57,66 +56,6 @@ Aliases:
 
 Required: False
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PrtgProbe
-{{ Fill PrtgProbe Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PrtgSensorPort
-{{ Fill PrtgSensorPort Description }}
-
-```yaml
-Type: System.Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PrtgSensorProtocol
-{{ Fill PrtgSensorProtocol Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PrtgSensorToken
-{{ Fill PrtgSensorToken Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -1,7 +1,5 @@
 function Format-FolderPermission {
 
-
-
     Param (
 
         # Expects ACEs grouped using Group-Object
