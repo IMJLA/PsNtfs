@@ -300,10 +300,10 @@ function Get-Subfolder {
     if ($Host.Version.Major -gt 2) {
         switch ($FolderRecursionDepth) {
             -1 {
-                GetDirectories -TargetPath $TargetPath -SearchOption [System.IO.SearchOption]::AllDirectories
+                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories)
             }
             1 {
-                GetDirectories -TargetPath $TargetPath -SearchOption [System.IO.SearchOption]::TopDirectoryOnly
+                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly)
             }
             Default {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-Subfolder`tGet-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $FolderRecursionDepth"
@@ -498,6 +498,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

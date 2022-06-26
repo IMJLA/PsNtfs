@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.18] - 2022-06-25 - bug fix in Get-Subfolder
+
 ## [1.0.17] - 2022-06-25 - Implemented GetDirectories private function
 
 ## [1.0.16] - 2022-06-24 - Changed Write-Host to Write-Verbose in Format-FolderPermission
