@@ -18,7 +18,8 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 }
 $publicFunctions = $PublicScriptFiles.BaseName
 
-Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

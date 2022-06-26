@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.22] - 2022-06-26 - Deleted New-PermissionsReport because it was unnecessary
+
 ## [1.0.21] - 2022-06-25 - Silent handling of 0 for FolderRecursionDepth parameter value
 
 ## [1.0.20] - 2022-06-25 - bug fix in GetDirectories debug output

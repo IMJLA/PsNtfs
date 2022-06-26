@@ -419,23 +419,6 @@ function New-NtfsAclIssueReport {
         FoldersWithCreatorOwner      = $FoldersWithCreatorOwner
     }
 }
-function New-PermissionsReport {
-    param (
-        $Permissions,
-        [string]$LogDir
-    )
-
-    $Permissions |
-        Select Path,
-            IdentityReference,
-            AccessControlType,
-            FileSystemRights,
-            IsInherited,
-            InheritanceFlags,
-            PropagationFlags |
-                Export-Csv -Path "$LogDir\RawPermissionsReport.csv" -NoTypeInformation -Force
-    "$LogDir\RawPermissionsReport.csv"
-}
 function Remove-DuplicatesAcrossIgnoredDomains {
 
     param (
@@ -499,7 +482,8 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 }
 $publicFunctions = $PublicScriptFiles.BaseName
 
-Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 
