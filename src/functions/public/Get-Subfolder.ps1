@@ -33,7 +33,7 @@ function Get-Subfolder {
             }
             Default {
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-Subfolder`tGet-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $FolderRecursionDepth"
-                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $FolderRecursionDepth).FullName
+                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth ($FolderRecursionDepth - 1)).FullName
             }
         }
     } else {
