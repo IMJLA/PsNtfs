@@ -283,10 +283,10 @@ function Get-Subfolder {
         [string]$TargetPath,
 
         <#
-            How many levels of recursive subfolder enumeration to perform
-            Equivalent to the Depth parameter of Get-ChildItem
-            Set to 0 to disable recursion
+        How many levels of subfolder to enumerate
+            Set to 0 to ignore all subfolders
             Set to -1 (default) to recurse infinitely
+            Set to any whole number to enumerate that many levels
         #>
         [int]$FolderRecursionDepth = -1
     )
@@ -302,12 +302,14 @@ function Get-Subfolder {
             -1 {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories)
             }
+            0 {}
             1 {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly)
             }
             Default {
+                $FolderRecursionDepth = $FolderRecursionDepth - 1
                 Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGet-Subfolder`tGet-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $FolderRecursionDepth"
-                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth ($FolderRecursionDepth - 1)).FullName
+                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $FolderRecursionDepth).FullName
             }
         }
     } else {
@@ -498,6 +500,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','New-PermissionsReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.0.21] - 2022-06-25 - Silent handling of 0 for FolderRecursionDepth parameter value
+
 ## [1.0.20] - 2022-06-25 - bug fix in GetDirectories debug output
 
 ## [1.0.19] - 2022-06-25 - Bug fix for get-childitem usage in get-subfolder
