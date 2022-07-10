@@ -12,7 +12,7 @@
     RootModule        = 'PsNtfs.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.0.23'
+    ModuleVersion     = '1.0.25'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -24,10 +24,10 @@
     Author            = 'Jeremy La Camera'
 
     # Company or vendor of this module
-    CompanyName       = 'Unknown'
+    CompanyName       = 'Jeremy La Camera'
 
     # Copyright statement for this module
-    Copyright         = '(c) Jeremy La Camera. All rights reserved.'
+    Copyright         = '2022 Jeremy La Camera. All rights reserved.'
 
     # Description of the functionality provided by this module
     Description       = 'Work with the contents of NTFS volumes'
