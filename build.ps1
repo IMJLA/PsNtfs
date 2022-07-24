@@ -4,6 +4,8 @@ param(
     [parameter(ParameterSetName = 'task', position = 0)]
     [string[]]$Task = 'default',
 
+    [switch]$IncrementMajorVersion,
+
     # Bootstrap dependencies
     [switch]$Bootstrap,
 
@@ -12,7 +14,9 @@ param(
     [switch]$Help,
 
     # Optional properties to pass to psake
-    [hashtable]$Properties,
+    [hashtable]$Properties = @{
+        IncrementMajorVersion = $IncrementMajorVersion
+    },
 
     # Optional parameters to pass to psake
     [hashtable]$Parameters,

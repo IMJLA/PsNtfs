@@ -6,6 +6,8 @@ properties {
     # Version of the module manifest in the src directory before the build is run and the version is updated
     $SourceModuleVersion = (Import-PowerShellDataFile -Path $env:BHPSModuleManifest).ModuleVersion
 
+    $IncrementMajorVersion = $false
+
     # Controls whether to "compile" module into single PSM1 or not
     $BuildCompileModule = $true
 

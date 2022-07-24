@@ -15,6 +15,151 @@ function GetDirectories {
         Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
     }
 }
+function Expand-AccountPermission {
+    <#
+        .SYNOPSIS
+        Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+        .DESCRIPTION
+        Convert an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
+        .INPUTS
+        [pscustomobject]$AccountPermission
+        .OUTPUTS
+        [pscustomobject] One object per access control entry per account
+        .EXAMPLE
+        (Get-Acl).Access |
+        Group-Object -Property IdentityReference |
+        Expand-IdentityReference |
+        Format-SecurityPrincipal |
+        Expand-AccountPermission
+
+        Incomplete example but it shows the chain of functions to generate the expected input for this
+    #>
+    param (
+        # Object that was output from Format-SecurityPrincipal
+        $AccountPermission
+    )
+    ForEach ($Account in $AccountPermission) {
+
+        $PropertiesToExclude = @(
+            'NativeObject',
+            'NtfsAccessControlEntries',
+            'Group'
+        )
+        $Props = @{}
+
+        $AccountNoteProperties = $Account |
+        Get-Member -MemberType NoteProperty |
+        Where-Object -Property Name -NotIn $PropertiesToExclude
+
+        ForEach ($ThisProperty in $AccountNoteProperties) {
+            if ($null -eq $Props[$ThisProperty.Name]) {
+                $Value = $Account.$($ThisProperty.Name)
+
+                if ($null -ne $Value) {
+                    # We wrap this in an expression and use output redirection to supress this error:
+                    # The following exception occurred while retrieving member "GetType": "Not implemented"
+                    [string]$Type = & { $Value.GetType().FullName } 2>$null
+                } else {
+                    [string]$Type = $null
+                }
+
+                switch ($Type) {
+                    'System.DirectoryServices.PropertyCollection' {
+                        ForEach ($ThisAccountProperty in $Account.Properties.Keys) {
+                            $Props[$ThisAccountProperty] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Account.Properties[$ThisAccountProperty]
+                        }
+                        $Props[$ThisProperty.Name] = "Converted to properties prefixed with AccountProperty"
+                    }
+                    'System.DirectoryServices.PropertyValueCollection' {
+                        $Props[$ThisProperty.Name] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value
+                    }
+                    default {
+                        <#
+                            By default we will just let most types get cast as a string
+                            Includes but not limited to:
+                                $null (because GetType is not implemented)
+                                System.String
+                                System.Boolean
+                                System.Byte[]
+                        #>
+                        $Props[$ThisProperty.Name] = "$Value"
+                    }
+                }
+            }
+        }
+
+        ForEach ($ACE in $Account.NtfsAccessControlEntries) {
+
+            $ACENoteProperties = $ACE |
+            Get-Member -MemberType NoteProperty
+
+            ForEach ($ThisProperty in $ACENoteProperties) {
+                $Props["ACE$($ThisProperty.Name)"] = [string]$ACE.$($ThisProperty.Name)
+            }
+
+            [pscustomobject]$Props
+        }
+    }
+}
+function Expand-Acl {
+    <#
+        .SYNOPSIS
+        Expand an Access Control List into its constituent Access Control Entries
+        .DESCRIPTION
+        Enumerate the members of the Access property of the $InputObject parameter (which is an AuthorizationRuleCollection or similar)
+        Append the original ACL to each member as a SourceAccessList property
+        Then return each member
+        .INPUTS
+        [PSObject]$InputObject
+        Expected:
+        [System.Security.AccessControl.DirectorySecurity]$InputObject from Get-Acl
+        or
+        [System.Security.AccessControl.FileSecurity]$InputObject from Get-Acl
+        .OUTPUTS
+        [PSCustomObject]
+        .EXAMPLE
+        Get-Acl |
+        Expand-Acl
+
+        Use Get-Acl from the Microsoft.PowerShell.Security module as the source of the access list
+        This works in either Windows Powershell or in Powershell
+        Get-Acl does not support long paths (>256 characters)
+        That was why I originally used the .Net Framework method
+    #>
+    param (
+
+        # Access Control List whose Access Control Entries to return
+        # Expects [System.Security.AccessControl.FileSecurity] objects from Get-Acl or otherwise
+        # Expects [System.Security.AccessControl.DirectorySecurity] objects from Get-Acl or otherwise
+        # Accepts any [PSObject] as long as it has an 'Access' property that contains a collection
+        [Parameter(
+            ValueFromPipeline
+        )]
+        [PSObject]$InputObject
+
+    )
+
+    process {
+
+        ForEach ($ThisInputObject in $InputObject) {
+
+            $ObjectProperties = @{
+                SourceAccessList = $ThisInputObject
+            }
+            $AllACEs = $ThisInputObject.Access
+            $AceProperties = (Get-Member -InputObject $AllACEs[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+            ForEach ($ThisACE in $AllACEs) {
+                ForEach ($ThisProperty in $AceProperties) {
+                    $ObjectProperties["$Prefix$ThisProperty"] = $ThisACE.$ThisProperty
+                }
+                [PSCustomObject]$ObjectProperties
+            }
+
+        }
+
+    }
+
+}
 function Format-FolderPermission {
 
     Param (
@@ -158,6 +303,85 @@ function Format-SecurityPrincipal {
     }
 
 }
+function Get-FolderAce {
+    <#
+    .SYNOPSIS
+    Alternative to Get-Acl designed to be as lightweight as possible
+    .DESCRIPTION
+    Returns an object for each access control entry instead of a single object for the ACL
+    Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
+    .INPUTS
+    [System.String]$LiteralPath
+    .OUTPUTS
+    [PSCustomObject]
+    .NOTES
+    Currently only supports Directories but could easily be copied to support files, or Registry or AD providers
+    #>
+
+    [CmdletBinding(
+        SupportsShouldProcess = $false,
+        ConfirmImpact = "Low"
+    )]
+
+    param(
+
+        # Path to the directory whose permissions to get
+        [string]$LiteralPath,
+
+        # Include inherited Access Control Entries in the results
+        [Switch]$IncludeInherited,
+
+        # Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement
+        [System.Security.AccessControl.AccessControlSections]$Sections = ([System.Security.AccessControl.AccessControlSections]::Access -bor
+            [System.Security.AccessControl.AccessControlSections]::Owner -bor
+            [System.Security.AccessControl.AccessControlSections]::Group),
+
+        # Include non-inherited Access Control Entries in the results
+        [bool]$IncludeExplicitRules = $true,
+
+        # Type of IdentityReference to return in each ACE
+        [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier]
+
+    )
+
+    $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
+            $LiteralPath,
+            $Sections
+        ) } 2>$null
+
+    if (-not $DirectorySecurity) {
+        continue
+    }
+
+    $AclProperties = @{}
+    $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    ForEach ($ThisProperty in $AclPropertyNames) {
+        $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
+    }
+    $AclProperties['Path'] = $LiteralPath
+    $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
+    $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    ForEach ($ThisAccessRule in $AccessRules) {
+        $ACEProperties = @{
+            SourceAccessList = [PSCustomObject]$AclProperties
+        }
+        ForEach ($ThisProperty in $ACEPropertyNames) {
+            $ACEProperties[$ThisProperty] = $ThisAccessRule.$ThisProperty
+        }
+        [pscustomobject]$ACEProperties
+    }
+
+    $ACEProperties['IsInherited'] = $false
+    $ACEProperties['IdentityReference'] = $DirectorySecurity.Owner
+    $ACEProperties['FileSystemRights'] = [System.Security.AccessControl.FileSystemRights]::FullControl
+    $ACEProperties['InheritanceFlags'] = [System.Security.AccessControl.InheritanceFlags]::None
+    $ACEProperties['PropagationFlags'] = [System.Security.AccessControl.PropagationFlags]::None
+    $ACEProperties['AccessControlType'] = [System.Security.AccessControl.AccessControlType]::Allow
+
+    #TODO: Output an object for the owner as well to represent that they have Full Control
+    [PSCustomObject]$ACEProperties
+
+}
 function Get-FolderTarget {
 
     param (
@@ -186,70 +410,6 @@ function Get-FolderTarget {
                 }
             }
         }
-    }
-
-}
-function Get-NtfsAccessRule {
-    <#
-    .INPUTS
-    [System.String]$DirectoryPath
-    .OUTPUTS
-    [PSCustomObject]
-    #>
-
-    [CmdletBinding(
-        SupportsShouldProcess = $false,
-        ConfirmImpact = "Low"
-    )]
-
-    param(
-
-        # Path to the directory whose permissions to get
-        [Parameter(ValueFromPipeline)]
-        [string[]]$DirectoryPath,
-
-        # Include inherited Access Control Entries in the results
-        [Switch]$IncludeInherited
-    )
-
-    begin {
-        $Sections = [System.Security.AccessControl.AccessControlSections]::Access
-        $IncludeExplicitRules = $true
-        $AccountType = [System.Security.Principal.SecurityIdentifier]
-    }
-
-    process {
-
-        ForEach ($CurrentPath in $DirectoryPath) {
-
-            $DirectoryInfo = Get-Item -LiteralPath $CurrentPath -ErrorAction SilentlyContinue
-
-            if ($DirectoryInfo) {
-
-                # New method for modern versions of PowerShell
-                $FileSecurity = [System.Security.AccessControl.DirectorySecurity]::new(
-                    $DirectoryInfo,
-                    $Sections
-                )
-
-                $FileSecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType) |
-                ForEach-Object {
-                    [pscustomobject]@{
-                        Path                        = $CurrentPath
-                        PathAreAccessRulesProtected = $FileSecurity.AreAccessRulesProtected
-                        FileSystemRights            = $_.FileSystemRights
-                        AccessControlType           = $_.AccessControlType
-                        IdentityReference           = $_.IdentityReference
-                        IsInherited                 = $_.IsInherited
-                        InheritanceFlags            = $_.InheritanceFlags
-                        PropagationFlags            = $_.PropagationFlags
-                    }
-                }
-
-            }
-
-        }
-
     }
 
 }
@@ -463,7 +623,8 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 }
 $publicFunctions = $PublicScriptFiles.BaseName
 
-Export-ModuleMember -Function @('Format-FolderPermission','Format-SecurityPrincipal','Get-FolderTarget','Get-NtfsAccessRule','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+Export-ModuleMember -Function @('Expand-AccountPermission','Expand-Acl','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

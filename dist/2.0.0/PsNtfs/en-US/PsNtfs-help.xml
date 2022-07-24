@@ -2,6 +2,201 @@
 <helpItems schema="maml" xmlns="http://msh">
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Expand-AccountPermission</command:name>
+      <command:verb>Expand</command:verb>
+      <command:noun>AccountPermission</command:noun>
+      <maml:description>
+        <maml:para>Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Convert an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Expand-AccountPermission</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>AccountPermission</maml:name>
+          <maml:description>
+            <maml:para>Object that was output from Format-SecurityPrincipal</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Object</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Object</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>AccountPermission</maml:name>
+        <maml:description>
+          <maml:para>Object that was output from Format-SecurityPrincipal</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Object</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[pscustomobject]$AccountPermission</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>[pscustomobject] One object per access control entry per account</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>(Get-Acl).Access |
+Group-Object -Property IdentityReference |
+Expand-IdentityReference |
+Format-SecurityPrincipal |
+Expand-AccountPermission</dev:code>
+        <dev:remarks>
+          <maml:para>Incomplete example but it shows the chain of functions to generate the expected input for this</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Expand-Acl</command:name>
+      <command:verb>Expand</command:verb>
+      <command:noun>Acl</command:noun>
+      <maml:description>
+        <maml:para>Expand an Access Control List into its constituent Access Control Entries</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Enumerate the members of the Access property of the $InputObject parameter (which is an AuthorizationRuleCollection or similar) Append the original ACL to each member as a SourceAccessList property Then return each member</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Expand-Acl</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+          <maml:name>InputObject</maml:name>
+          <maml:description>
+            <maml:para>Access Control List whose Access Control Entries to return Expects [System.Security.AccessControl.FileSecurity] objects from Get-Acl or otherwise Expects [System.Security.AccessControl.DirectorySecurity] objects from Get-Acl or otherwise Accepts any [PSObject] as long as it has an 'Access' property that contains a collection</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSObject</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Management.Automation.PSObject</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
+        <maml:name>InputObject</maml:name>
+        <maml:description>
+          <maml:para>Access Control List whose Access Control Entries to return Expects [System.Security.AccessControl.FileSecurity] objects from Get-Acl or otherwise Expects [System.Security.AccessControl.DirectorySecurity] objects from Get-Acl or otherwise Accepts any [PSObject] as long as it has an 'Access' property that contains a collection</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSObject</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.PSObject</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[PSObject]$InputObject</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>Expected:</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[System.Security.AccessControl.DirectorySecurity]$InputObject from Get-Acl</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>or</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[System.Security.AccessControl.FileSecurity]$InputObject from Get-Acl</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>[PSCustomObject]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para></maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+        <dev:code>Get-Acl |
+Expand-Acl</dev:code>
+        <dev:remarks>
+          <maml:para>Use Get-Acl from the Microsoft.PowerShell.Security module as the source of the access list This works in either Windows Powershell or in Powershell Get-Acl does not support long paths (&gt;256 characters) That was why I originally used the .Net Framework method</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Format-FolderPermission</command:name>
       <command:verb>Format</command:verb>
       <command:noun>FolderPermission</command:noun>
@@ -184,6 +379,188 @@
   </command:command>
   <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
     <command:details>
+      <command:name>Get-FolderAce</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>FolderAce</command:noun>
+      <maml:description>
+        <maml:para>Alternative to Get-Acl designed to be as lightweight as possible</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns an object for each access control entry instead of a single object for the ACL Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-FolderAce</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>LiteralPath</maml:name>
+          <maml:description>
+            <maml:para>Path to the directory whose permissions to get</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+          <dev:type>
+            <maml:name>System.String</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+          <maml:name>Sections</maml:name>
+          <maml:description>
+            <maml:para>Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement</maml:para>
+          </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">None</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Audit</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Access</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Owner</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Group</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">All</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">System.Security.AccessControl.AccessControlSections</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Security.AccessControl.AccessControlSections</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>Access, Owner, Group</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>IncludeExplicitRules</maml:name>
+          <maml:description>
+            <maml:para>Include non-inherited Access Control Entries in the results</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>True</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+          <maml:name>AccountType</maml:name>
+          <maml:description>
+            <maml:para>Type of IdentityReference to return in each ACE</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Type</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Type</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>System.Security.Principal.SecurityIdentifier</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>IncludeInherited</maml:name>
+          <maml:description>
+            <maml:para>Include inherited Access Control Entries in the results</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none">
+        <maml:name>AccountType</maml:name>
+        <maml:description>
+          <maml:para>Type of IdentityReference to return in each ACE</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Type</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Type</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>System.Security.Principal.SecurityIdentifier</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>IncludeExplicitRules</maml:name>
+        <maml:description>
+          <maml:para>Include non-inherited Access Control Entries in the results</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>True</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>IncludeInherited</maml:name>
+        <maml:description>
+          <maml:para>Include inherited Access Control Entries in the results</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>LiteralPath</maml:name>
+        <maml:description>
+          <maml:para>Path to the directory whose permissions to get</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+        <maml:name>Sections</maml:name>
+        <maml:description>
+          <maml:para>Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Security.AccessControl.AccessControlSections</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Security.AccessControl.AccessControlSections</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>Access, Owner, Group</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>[System.String]$LiteralPath</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>[PSCustomObject]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para></maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>Currently only supports Directories but could easily be copied to support files, or Registry or AD providers</maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
+        <dev:remarks>
+          <maml:para>{{ Add example description here }}</maml:para>
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
       <command:name>Get-FolderTarget</command:name>
       <command:verb>Get</command:verb>
       <command:noun>FolderTarget</command:noun>
@@ -239,108 +616,6 @@
       <command:returnValue>
         <dev:type>
           <maml:name>System.Object</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:returnValue>
-    </command:returnValues>
-    <maml:alertSet>
-      <maml:alert>
-        <maml:para></maml:para>
-      </maml:alert>
-    </maml:alertSet>
-    <command:examples>
-      <command:example>
-        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
-        <dev:code>PS C:\&gt; {{ Add example code here }}</dev:code>
-        <dev:remarks>
-          <maml:para>{{ Add example description here }}</maml:para>
-        </dev:remarks>
-      </command:example>
-    </command:examples>
-    <command:relatedLinks />
-  </command:command>
-  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
-    <command:details>
-      <command:name>Get-NtfsAccessRule</command:name>
-      <command:verb>Get</command:verb>
-      <command:noun>NtfsAccessRule</command:noun>
-      <maml:description>
-        <maml:para></maml:para>
-      </maml:description>
-    </command:details>
-    <maml:description>
-      <maml:para>{{ Fill in the Description }}</maml:para>
-    </maml:description>
-    <command:syntax>
-      <command:syntaxItem>
-        <maml:name>Get-NtfsAccessRule</maml:name>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
-          <maml:name>DirectoryPath</maml:name>
-          <maml:description>
-            <maml:para>Path to the directory whose permissions to get</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String[]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-          <maml:name>IncludeInherited</maml:name>
-          <maml:description>
-            <maml:para>Include inherited Access Control Entries in the results</maml:para>
-          </maml:description>
-          <dev:type>
-            <maml:name>System.Management.Automation.SwitchParameter</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>False</dev:defaultValue>
-        </command:parameter>
-      </command:syntaxItem>
-    </command:syntax>
-    <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="1" aliases="none">
-        <maml:name>DirectoryPath</maml:name>
-        <maml:description>
-          <maml:para>Path to the directory whose permissions to get</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
-        <dev:type>
-          <maml:name>System.String[]</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
-        <maml:name>IncludeInherited</maml:name>
-        <maml:description>
-          <maml:para>Include inherited Access Control Entries in the results</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Management.Automation.SwitchParameter</command:parameterValue>
-        <dev:type>
-          <maml:name>System.Management.Automation.SwitchParameter</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>False</dev:defaultValue>
-      </command:parameter>
-    </command:parameters>
-    <command:inputTypes>
-      <command:inputType>
-        <dev:type>
-          <maml:name>[System.String]$DirectoryPath</maml:name>
-        </dev:type>
-        <maml:description>
-          <maml:para></maml:para>
-        </maml:description>
-      </command:inputType>
-    </command:inputTypes>
-    <command:returnValues>
-      <command:returnValue>
-        <dev:type>
-          <maml:name>[PSCustomObject]</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>

@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 1.0.25
+Help Version: 2.0.0
 Locale: en-US
 ---
 
@@ -11,6 +11,12 @@ Locale: en-US
 Work with the contents of NTFS volumes
 
 ## PsNtfs Cmdlets
+### [Expand-AccountPermission](Expand-AccountPermission.md)
+Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+
+### [Expand-Acl](Expand-Acl.md)
+Expand an Access Control List into its constituent Access Control Entries
+
 ### [Format-FolderPermission](Format-FolderPermission.md)
 
 Format-FolderPermission [[-UserPermission] <Object>] [[-FileSystemRightsToIgnore] <string[]>]
@@ -21,12 +27,12 @@ Format-FolderPermission [[-UserPermission] <Object>] [[-FileSystemRightsToIgnore
 Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
 
 
+### [Get-FolderAce](Get-FolderAce.md)
+Alternative to Get-Acl designed to be as lightweight as possible
+
 ### [Get-FolderTarget](Get-FolderTarget.md)
 
 Get-FolderTarget [[-FolderPath] <string[]>]
-
-
-### [Get-NtfsAccessRule](Get-NtfsAccessRule.md)
 
 
 ### [Get-Subfolder](Get-Subfolder.md)
