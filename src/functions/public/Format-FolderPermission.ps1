@@ -56,8 +56,8 @@ function Format-FolderPermission {
                 }
 
                 [pscustomobject]@{
-                    Folder                   = $ThisACE.Path
-                    FolderInheritanceEnabled = !($ThisACE.AreAccessRulesProtected)
+                    Folder                   = $ThisACE.SourceAccessList.Path
+                    FolderInheritanceEnabled = !($ThisACE.SourceAccessList.AreAccessRulesProtected)
                     Access                   = "$($ThisACE.AccessControlType) $FileSystemRights $Scope"
                     Account                  = $ThisUser.Name
                     Name                     = $Name
@@ -65,7 +65,7 @@ function Format-FolderPermission {
                     Title                    = $Title
                     IdentityReference        = $IdentityReference
                     AccessControlEntry       = $ThisACE
-                    SchemaClassName          = $ThisUser.Group.SchemaClassName | Select -First 1
+                    SchemaClassName          = $ThisUser.Group.SchemaClassName | Select-Object -First 1
                 }
 
             }

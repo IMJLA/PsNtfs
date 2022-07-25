@@ -31,7 +31,7 @@ function Expand-AccountPermission {
         $Props = @{}
 
         $AccountNoteProperties = $Account |
-        Get-Member -MemberType NoteProperty |
+        Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty |
         Where-Object -Property Name -NotIn $PropertiesToExclude
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
@@ -74,7 +74,7 @@ function Expand-AccountPermission {
         ForEach ($ACE in $Account.NtfsAccessControlEntries) {
 
             $ACENoteProperties = $ACE |
-            Get-Member -MemberType NoteProperty
+            Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty
 
             ForEach ($ThisProperty in $ACENoteProperties) {
                 $Props["ACE$($ThisProperty.Name)"] = [string]$ACE.$($ThisProperty.Name)

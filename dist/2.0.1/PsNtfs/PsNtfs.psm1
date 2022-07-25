@@ -48,7 +48,7 @@ function Expand-AccountPermission {
         $Props = @{}
 
         $AccountNoteProperties = $Account |
-        Get-Member -MemberType NoteProperty |
+        Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty |
         Where-Object -Property Name -NotIn $PropertiesToExclude
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
@@ -91,7 +91,7 @@ function Expand-AccountPermission {
         ForEach ($ACE in $Account.NtfsAccessControlEntries) {
 
             $ACENoteProperties = $ACE |
-            Get-Member -MemberType NoteProperty
+            Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty
 
             ForEach ($ThisProperty in $ACENoteProperties) {
                 $Props["ACE$($ThisProperty.Name)"] = [string]$ACE.$($ThisProperty.Name)
@@ -218,8 +218,8 @@ function Format-FolderPermission {
                 }
 
                 [pscustomobject]@{
-                    Folder                   = $ThisACE.Path
-                    FolderInheritanceEnabled = !($ThisACE.AreAccessRulesProtected)
+                    Folder                   = $ThisACE.SourceAccessList.Path
+                    FolderInheritanceEnabled = !($ThisACE.SourceAccessList.AreAccessRulesProtected)
                     Access                   = "$($ThisACE.AccessControlType) $FileSystemRights $Scope"
                     Account                  = $ThisUser.Name
                     Name                     = $Name
@@ -227,7 +227,7 @@ function Format-FolderPermission {
                     Title                    = $Title
                     IdentityReference        = $IdentityReference
                     AccessControlEntry       = $ThisACE
-                    SchemaClassName          = $ThisUser.Group.SchemaClassName | Select -First 1
+                    SchemaClassName          = $ThisUser.Group.SchemaClassName | Select-Object -First 1
                 }
 
             }
@@ -624,6 +624,7 @@ $PublicScriptFiles = $ScriptFiles | Where-Object -FilterScript {
 $publicFunctions = $PublicScriptFiles.BaseName
 
 Export-ModuleMember -Function @('Expand-AccountPermission','Expand-Acl','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 
