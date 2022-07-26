@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.2] - 2022-07-25 - Cleaned up source .psm1 file
+
 ## [2.0.1] - 2022-07-25 - Bug fix in Format-FolderPermission
 
 ## [2.0.0] - 2022-07-24 - Major breaking changes, replaced Get-NtfsAccessRule with Get-FolderAce, added Expand-Acl and Expand-AccountPermission
