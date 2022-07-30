@@ -383,7 +383,7 @@ Expand-Acl</dev:code>
       <command:verb>Get</command:verb>
       <command:noun>FolderAce</command:noun>
       <maml:description>
-        <maml:para>Alternative to Get-Acl designed to be as lightweight as possible</maml:para>
+        <maml:para>Alternative to Get-Acl designed to be as lightweight and flexible as possible</maml:para>
       </maml:description>
     </command:details>
     <maml:description>
@@ -526,7 +526,7 @@ Expand-Acl</dev:code>
     <command:inputTypes>
       <command:inputType>
         <dev:type>
-          <maml:name>[System.String]$LiteralPath</maml:name>
+          <maml:name>None. Pipeline input is not accepted.</maml:name>
         </dev:type>
         <maml:description>
           <maml:para></maml:para>

@@ -8,7 +8,7 @@ schema: 2.0.0
 # Get-FolderAce
 
 ## SYNOPSIS
-Alternative to Get-Acl designed to be as lightweight as possible
+Alternative to Get-Acl designed to be as lightweight and flexible as possible
 
 ## SYNTAX
 
@@ -113,7 +113,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## INPUTS
 
-### [System.String]$LiteralPath
+### None. Pipeline input is not accepted.
 ## OUTPUTS
 
 ### [PSCustomObject]

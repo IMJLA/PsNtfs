@@ -306,12 +306,12 @@ function Format-SecurityPrincipal {
 function Get-FolderAce {
     <#
     .SYNOPSIS
-    Alternative to Get-Acl designed to be as lightweight as possible
+    Alternative to Get-Acl designed to be as lightweight and flexible as possible
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
     .INPUTS
-    [System.String]$LiteralPath
+    None. Pipeline input is not accepted.
     .OUTPUTS
     [PSCustomObject]
     .NOTES
@@ -332,7 +332,8 @@ function Get-FolderAce {
         [Switch]$IncludeInherited,
 
         # Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement
-        [System.Security.AccessControl.AccessControlSections]$Sections = ([System.Security.AccessControl.AccessControlSections]::Access -bor
+        [System.Security.AccessControl.AccessControlSections]$Sections = (
+            [System.Security.AccessControl.AccessControlSections]::Access -bor
             [System.Security.AccessControl.AccessControlSections]::Owner -bor
             [System.Security.AccessControl.AccessControlSections]::Group),
 
@@ -350,7 +351,7 @@ function Get-FolderAce {
         ) } 2>$null
 
     if (-not $DirectorySecurity) {
-        continue
+        return
     }
 
     $AclProperties = @{}
@@ -360,6 +361,9 @@ function Get-FolderAce {
     }
     $AclProperties['Path'] = $LiteralPath
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
+    if (-not $AccessRules) {
+        return
+    }
     $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
@@ -368,17 +372,16 @@ function Get-FolderAce {
         ForEach ($ThisProperty in $ACEPropertyNames) {
             $ACEProperties[$ThisProperty] = $ThisAccessRule.$ThisProperty
         }
-        [pscustomobject]$ACEProperties
+        [PSCustomObject]$ACEProperties
     }
 
+    #TODO: Output an object for the owner as well to represent that they have Full Control
     $ACEProperties['IsInherited'] = $false
     $ACEProperties['IdentityReference'] = $DirectorySecurity.Owner
     $ACEProperties['FileSystemRights'] = [System.Security.AccessControl.FileSystemRights]::FullControl
     $ACEProperties['InheritanceFlags'] = [System.Security.AccessControl.InheritanceFlags]::None
     $ACEProperties['PropagationFlags'] = [System.Security.AccessControl.PropagationFlags]::None
     $ACEProperties['AccessControlType'] = [System.Security.AccessControl.AccessControlType]::Allow
-
-    #TODO: Output an object for the owner as well to represent that they have Full Control
     [PSCustomObject]$ACEProperties
 
 }
@@ -611,6 +614,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('Expand-AccountPermission','Expand-Acl','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

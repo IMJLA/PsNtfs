@@ -11,6 +11,8 @@ properties {
     # Controls whether to "compile" module into single PSM1 or not
     $BuildCompileModule = $true
 
+    $NoPublish = $false
+
     # List of directories that if BuildCompileModule is $true, will be concatenated into the PSM1
     $BuildCompileDirectories = @('classes', 'enums', 'filters', 'functions/private', 'functions/public')
 
@@ -483,8 +485,10 @@ task Publish -depends SourceControl {
         $publishParams.Credential = $PublishPSRepositoryCredential
     }
 
-    # Publish to PSGallery
-    Publish-Module @publishParams
+    if ($NoPublish -eq $false) {
+        # Publish to PSGallery
+        Publish-Module @publishParams
+    }
 } -description 'Publish module to the defined PowerShell repository'
 
 task FinalTasks -depends Publish {

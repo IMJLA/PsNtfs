@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.5] - 2022-07-29 - Troubleshooting 5.1 compatibility
+
 ## [2.0.4] - 2022-07-27 - Revert last change, did not work
 
 ## [2.0.3] - 2022-07-27 - Workaround for PS 5.1 in GetDirectories

@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.4
+Help Version: 2.0.5
 Locale: en-US
 ---
 
@@ -28,7 +28,7 @@ Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
 
 
 ### [Get-FolderAce](Get-FolderAce.md)
-Alternative to Get-Acl designed to be as lightweight as possible
+Alternative to Get-Acl designed to be as lightweight and flexible as possible
 
 ### [Get-FolderTarget](Get-FolderTarget.md)
 
