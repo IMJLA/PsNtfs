@@ -40,12 +40,16 @@ function Get-FolderAce {
 
     )
 
+    $TodaysHostname = HOSTNAME.exe
+
+    Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
             $Sections
         ) } 2>$null
 
     if (-not $DirectorySecurity) {
+        Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no ACL for '$LiteralPath'"
         return
     }
 
@@ -55,8 +59,11 @@ function Get-FolderAce {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
     $AclProperties['Path'] = $LiteralPath
+
+    Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     if (-not $AccessRules) {
+        Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no matching access rules"
         return
     }
     $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name

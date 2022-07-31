@@ -52,7 +52,7 @@ function New-NtfsAclIssueReport {
 
     # ACEs for users (recommend replacing with group-based access on any folder that is not a home folder)
     $UserACEs = $UserPermissions.Group |
-    Where-Object { $_.ObjectType -contains 'User' } |
+    Where-Object -FilterScript { $_.ObjectType -contains 'User' } |
     ForEach-Object { $_.NtfsAccessControlEntries } |
     ForEach-Object { "$($_.IdentityReference) on '$($_.Path)'" } |
     Sort-Object -Unique
