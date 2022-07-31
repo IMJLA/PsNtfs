@@ -466,7 +466,8 @@ task SourceControl -depends UnitTests {
     # Commit to Git
     git add .
     git commit -m $CommitMessage
-    git push origin main
+    $CurrentBranch = git symbolic-ref --short HEAD
+    git push -f origin "$CurrentBranch"
 } -description 'git add, commit, and push'
 
 task Publish -depends SourceControl {
