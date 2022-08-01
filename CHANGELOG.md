@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.19] - 2022-08-01 - Bug fix in DFS target filtering logic in Get-FolderTarget
+
 ## [2.0.18] - 2022-07-31 - Bug fix in ConvertTo-SimpleProperty
 
 ## [2.0.17] - 2022-07-31 - Bug fix in ConvertTo-SimpleProperty
