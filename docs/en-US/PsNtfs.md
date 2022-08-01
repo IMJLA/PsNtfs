@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.10
+Help Version: 2.0.15
 Locale: en-US
 ---
 
@@ -11,8 +11,13 @@ Locale: en-US
 Work with the contents of NTFS volumes
 
 ## PsNtfs Cmdlets
+### [ConvertTo-SimpleProperty](ConvertTo-SimpleProperty.md)
+
+ConvertTo-SimpleProperty [[-InputObject] <Object>] [[-Property] <string>] [[-PropertyDictionary] <hashtable>] [[-Prefix] <string>]
+
+
 ### [Expand-AccountPermission](Expand-AccountPermission.md)
-Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
 
 ### [Expand-Acl](Expand-Acl.md)
 Expand an Access Control List into its constituent Access Control Entries

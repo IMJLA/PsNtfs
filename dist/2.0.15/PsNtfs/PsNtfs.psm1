@@ -15,12 +15,94 @@ function GetDirectories {
         Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
     }
 }
+function ConvertTo-SimpleProperty {
+    #TODO: Only need to input $Value and output the PSCustomObject, drop the other params
+    param (
+        $InputObject,
+
+        [string]$Property,
+
+        [hashtable]$PropertyDictionary = @{},
+
+        [string]$Prefix
+    )
+
+    $Value = $InputObject.$Property
+
+    if ($null -ne $Value) {
+        # We wrap this in an expression and use output redirection to supress this error:
+        # The following exception occurred while retrieving member "GetType": "Not implemented"
+        [string]$Type = & { $Value.GetType().FullName } 2>$null
+    } else {
+        [string]$Type = $null
+    }
+
+    switch ($Type) {
+        'System.DirectoryServices.DirectoryEntry' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-DirectoryEntry -DirectoryEntry $Value
+        }
+        'System.DirectoryServices.PropertyCollection' {
+            $ThisObject = @{}
+
+            ForEach ($ThisProperty in $Value.Keys) {
+                $ThisPropertyString = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value[$ThisProperty]
+                $ThisObject[$ThisProperty] = $ThisPropertyString
+
+                # This copies the properties up to the top level.
+                # Want to remove this later
+                # The nested pscustomobject accomplishes the goal of removing hashtables and PropertyValueCollections and PropertyCollections
+                # But I may have existing functionality expecting these properties so I am not yet ready to remove this
+                # When I am, I should move this code into a ConvertFrom-PropertyCollection function in the Adsi module
+                $PropertyDictionary["$Prefix$ThisProperty"] = $ThisPropertyString
+
+            }
+            $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
+            continue
+        }
+        'System.DirectoryServices.PropertyValueCollection' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value
+            continue
+        }
+        'System.Object[]' {
+            $PropertyDictionary["$Prefix$Property"] = $Value
+            continue
+        }
+        'System.Object' {
+            $PropertyDictionary["$Prefix$Property"] = $Value
+            continue
+        }
+        'System.Management.Automation.PSCustomObject' {
+            $PropertyDictionary["$Prefix$Property"] = $Value
+            continue
+        }
+        'System.Collections.Hashtable' {
+            $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$Value
+            continue
+        }
+        'System.Byte[]' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertTo-DecStringRepresentation -ByteArray $Value
+        }
+        default {
+            <#
+                By default we will just let most types get cast as a string
+                Includes but not limited to:
+                    $null (because GetType is not implemented)
+                    System.String
+                    System.Boolean
+            #>
+            $PropertyDictionary["$Prefix$Property"] = "$Value"
+            continue
+        }
+    }
+
+    return $PropertyDictionary
+}
 function Expand-AccountPermission {
     <#
         .SYNOPSIS
-        Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+        Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
         .DESCRIPTION
-        Convert an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
+        Expand an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
         .INPUTS
         [pscustomobject]$AccountPermission
         .OUTPUTS
@@ -36,15 +118,17 @@ function Expand-AccountPermission {
     #>
     param (
         # Object that was output from Format-SecurityPrincipal
-        $AccountPermission
+        $AccountPermission,
+
+        # Properties to exclude from the output
+        # All properties listed on a single line to workaround a bug in PlatyPS when building MAML help
+        # (error is 'Invalid yaml: expected simple key-value pairs')
+        # Caused by multi-line default parameter values in the markdown
+        [string[]]$PropertiesToExclude = @('NativeObject', 'NtfsAccessControlEntries', 'Group')
     )
     ForEach ($Account in $AccountPermission) {
 
-        $PropertiesToExclude = @(
-            'NativeObject',
-            'NtfsAccessControlEntries',
-            'Group'
-        )
+
         $Props = @{}
 
         $AccountNoteProperties = $Account |
@@ -53,38 +137,7 @@ function Expand-AccountPermission {
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
             if ($null -eq $Props[$ThisProperty.Name]) {
-                $Value = $Account.$($ThisProperty.Name)
-
-                if ($null -ne $Value) {
-                    # We wrap this in an expression and use output redirection to supress this error:
-                    # The following exception occurred while retrieving member "GetType": "Not implemented"
-                    [string]$Type = & { $Value.GetType().FullName } 2>$null
-                } else {
-                    [string]$Type = $null
-                }
-
-                switch ($Type) {
-                    'System.DirectoryServices.PropertyCollection' {
-                        ForEach ($ThisAccountProperty in $Account.Properties.Keys) {
-                            $Props[$ThisAccountProperty] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Account.Properties[$ThisAccountProperty]
-                        }
-                        $Props[$ThisProperty.Name] = "Converted to properties prefixed with AccountProperty"
-                    }
-                    'System.DirectoryServices.PropertyValueCollection' {
-                        $Props[$ThisProperty.Name] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value
-                    }
-                    default {
-                        <#
-                            By default we will just let most types get cast as a string
-                            Includes but not limited to:
-                                $null (because GetType is not implemented)
-                                System.String
-                                System.Boolean
-                                System.Byte[]
-                        #>
-                        $Props[$ThisProperty.Name] = "$Value"
-                    }
-                }
+                $Props = ConvertTo-SimpleProperty -InputObject $Account -Property $ThisProperty.Name -PropertyDictionary $Props
             }
         }
 
@@ -94,10 +147,11 @@ function Expand-AccountPermission {
             Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty
 
             ForEach ($ThisProperty in $ACENoteProperties) {
-                $Props["ACE$($ThisProperty.Name)"] = [string]$ACE.$($ThisProperty.Name)
+                $Props = ConvertTo-SimpleProperty -InputObject $ACE -Property $ThisProperty.Name -PropertyDictionary $Props -Prefix "ACE"
             }
 
             [pscustomobject]$Props
+
         }
     }
 }
@@ -655,7 +709,12 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
+
+
+
+
 
 
 

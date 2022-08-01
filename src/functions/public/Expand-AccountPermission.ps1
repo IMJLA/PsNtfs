@@ -1,9 +1,9 @@
 function Expand-AccountPermission {
     <#
         .SYNOPSIS
-        Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+        Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
         .DESCRIPTION
-        Convert an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
+        Expand an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
         .INPUTS
         [pscustomobject]$AccountPermission
         .OUTPUTS
@@ -19,15 +19,17 @@ function Expand-AccountPermission {
     #>
     param (
         # Object that was output from Format-SecurityPrincipal
-        $AccountPermission
+        $AccountPermission,
+
+        # Properties to exclude from the output
+        # All properties listed on a single line to workaround a bug in PlatyPS when building MAML help
+        # (error is 'Invalid yaml: expected simple key-value pairs')
+        # Caused by multi-line default parameter values in the markdown
+        [string[]]$PropertiesToExclude = @('NativeObject', 'NtfsAccessControlEntries', 'Group')
     )
     ForEach ($Account in $AccountPermission) {
 
-        $PropertiesToExclude = @(
-            'NativeObject',
-            'NtfsAccessControlEntries',
-            'Group'
-        )
+
         $Props = @{}
 
         $AccountNoteProperties = $Account |
@@ -36,38 +38,7 @@ function Expand-AccountPermission {
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
             if ($null -eq $Props[$ThisProperty.Name]) {
-                $Value = $Account.$($ThisProperty.Name)
-
-                if ($null -ne $Value) {
-                    # We wrap this in an expression and use output redirection to supress this error:
-                    # The following exception occurred while retrieving member "GetType": "Not implemented"
-                    [string]$Type = & { $Value.GetType().FullName } 2>$null
-                } else {
-                    [string]$Type = $null
-                }
-
-                switch ($Type) {
-                    'System.DirectoryServices.PropertyCollection' {
-                        ForEach ($ThisAccountProperty in $Account.Properties.Keys) {
-                            $Props[$ThisAccountProperty] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Account.Properties[$ThisAccountProperty]
-                        }
-                        $Props[$ThisProperty.Name] = "Converted to properties prefixed with AccountProperty"
-                    }
-                    'System.DirectoryServices.PropertyValueCollection' {
-                        $Props[$ThisProperty.Name] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value
-                    }
-                    default {
-                        <#
-                            By default we will just let most types get cast as a string
-                            Includes but not limited to:
-                                $null (because GetType is not implemented)
-                                System.String
-                                System.Boolean
-                                System.Byte[]
-                        #>
-                        $Props[$ThisProperty.Name] = "$Value"
-                    }
-                }
+                $Props = ConvertTo-SimpleProperty -InputObject $Account -Property $ThisProperty.Name -PropertyDictionary $Props
             }
         }
 
@@ -77,10 +48,11 @@ function Expand-AccountPermission {
             Get-Member -MemberType Property, CodeProperty, ScriptProperty, NoteProperty
 
             ForEach ($ThisProperty in $ACENoteProperties) {
-                $Props["ACE$($ThisProperty.Name)"] = [string]$ACE.$($ThisProperty.Name)
+                $Props = ConvertTo-SimpleProperty -InputObject $ACE -Property $ThisProperty.Name -PropertyDictionary $Props -Prefix "ACE"
             }
 
             [pscustomobject]$Props
+
         }
     }
 }

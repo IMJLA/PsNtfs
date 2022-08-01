@@ -8,16 +8,16 @@ schema: 2.0.0
 # Expand-AccountPermission
 
 ## SYNOPSIS
-Convert an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
 
 ## SYNTAX
 
 ```
-Expand-AccountPermission [[-AccountPermission] <Object>]
+Expand-AccountPermission [[-AccountPermission] <Object>] [[-PropertiesToExclude] <String[]>]
 ```
 
 ## DESCRIPTION
-Convert an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
+Expand an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
 
 ## EXAMPLES
 
@@ -45,6 +45,24 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PropertiesToExclude
+Properties to exclude from the output
+All properties listed on a single line to workaround a bug in PlatyPS when building MAML help
+(error is 'Invalid yaml: expected simple key-value pairs')
+Caused by multi-line default parameter values in the markdown
+
+```yaml
+Type: System.String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: @('NativeObject', 'NtfsAccessControlEntries', 'Group')
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
