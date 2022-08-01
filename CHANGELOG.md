@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.18] - 2022-07-31 - Bug fix in ConvertTo-SimpleProperty
+
+## [2.0.17] - 2022-07-31 - Bug fix in ConvertTo-SimpleProperty
+
+## [2.0.16] - 2022-07-31 - Bug fix in ComvertTo-SimpleProperty
+
 ## [2.0.15] - 2022-07-31 - Bug fixes for Expand-AccountPermission which involved creating ConvertTo-SimpleProperty
 
 ## [2.0.14] - 2022-07-31 - Bug fixes for Expand-AccountPermission which involved creating ConvertTo-SimpleProperty

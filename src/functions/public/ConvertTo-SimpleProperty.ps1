@@ -12,12 +12,13 @@ function ConvertTo-SimpleProperty {
 
     $Value = $InputObject.$Property
 
-    if ($null -ne $Value) {
-        # We wrap this in an expression and use output redirection to supress this error:
+    [string]$Type = $null
+    if ($Value) {
+        # Ensure the GetType method exists to avoid this error:
         # The following exception occurred while retrieving member "GetType": "Not implemented"
-        [string]$Type = & { $Value.GetType().FullName } 2>$null
-    } else {
-        [string]$Type = $null
+        if (Get-Member -InputObject $Value -Name GetType) {
+            [string]$Type = $Value.GetType().FullName
+        }
     }
 
     switch ($Type) {
