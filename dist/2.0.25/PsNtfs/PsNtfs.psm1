@@ -154,7 +154,6 @@ function Expand-AccountPermission {
 
         }
     }
-    Write-Progress -Activity 'Completed' -Completed
 }
 function Expand-Acl {
     <#
@@ -761,6 +760,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

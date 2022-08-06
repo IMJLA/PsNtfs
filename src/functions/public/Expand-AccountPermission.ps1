@@ -54,5 +54,4 @@ function Expand-AccountPermission {
 
         }
     }
-    Write-Progress -Activity 'Completed' -Completed
 }
