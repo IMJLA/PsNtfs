@@ -26,6 +26,47 @@ function Format-FolderPermission {
             Write-Verbose $status
             Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
 
+            if ($ThisUser.Group.DirectoryEntry.Properties) {
+                $Name = $ThisUser.Group.DirectoryEntry.Properties['name'] | Sort-Object -Unique
+                $Dept = $ThisUser.Group.DirectoryEntry.Properties['department'] | Sort-Object -Unique
+                $Title = $ThisUser.Group.DirectoryEntry.Properties['title'] | Sort-Object -Unique
+            } else {
+                $Name = $ThisUser.Group.name | Sort-Object -Unique
+                $Dept = $ThisUser.Group.department | Sort-Object -Unique
+                $Title = $ThisUser.Group.title | Sort-Object -Unique
+            }
+            if ("$Name" -eq '') {
+                $Name = $ThisUser.Name
+            }
+            if ($ThisUser.Group.DirectoryEntry.Properties) {
+                if ($ThisUser.Group.DirectoryEntry.Properties['objectclass'] -contains 'group' -or
+                    "$($ThisUser.Group.DirectoryEntry.Properties['groupType'])" -ne ''
+                ) {
+                    $SchemaClassName = 'group'
+                } else {
+                    $SchemaClassName = 'user'
+                }
+            } else {
+                if ($ThisUser.Group.Properties) {
+                    if (
+                        $ThisUser.Group.Properties['objectclass'] -contains 'group' -or
+                        "$($ThisUser.Group.Properties['groupType'])" -ne ''
+                    ) {
+                        $SchemaClassName = 'group'
+                    } else {
+                        $SchemaClassName = 'user'
+                    }
+                } else {
+                    if ($ThisUser.Group.DirectoryEntry.SchemaClassName) {
+                        $SchemaClassName = $ThisUser.Group.DirectoryEntry.SchemaClassName |
+                        Select-Object -First 1
+                    } else {
+                        $SchemaClassName = $ThisUser.Group.SchemaClassName |
+                        Select-Object -First 1
+                    }
+                }
+            }
+
             ForEach ($ThisACE in $ThisUser.Group.NtfsAccessControlEntries) {
 
                 switch ($ThisACE.InheritanceFlags) {
@@ -35,18 +76,6 @@ function Format-FolderPermission {
                     default { $Scope = 'this folder but not subfolders' }
                 }
 
-                if ($ThisUser.Group.DirectoryEntry.Properties) {
-                    $Name = $ThisUser.Group.DirectoryEntry.Properties['name'] | Sort-Object -Unique
-                    $Dept = $ThisUser.Group.DirectoryEntry.Properties['department'] | Sort-Object -Unique
-                    $Title = $ThisUser.Group.DirectoryEntry.Properties['title'] | Sort-Object -Unique
-                } else {
-                    $Name = $ThisUser.Group.name | Sort-Object -Unique
-                    $Dept = $ThisUser.Group.department | Sort-Object -Unique
-                    $Title = $ThisUser.Group.title | Sort-Object -Unique
-                }
-                if ("$Name" -eq '') {
-                    $Name = $ThisUser.Name
-                }
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
@@ -68,7 +97,7 @@ function Format-FolderPermission {
                     Title                    = $Title
                     IdentityReference        = $IdentityReference
                     AccessControlEntry       = $ThisACE
-                    SchemaClassName          = $ThisUser.Group.SchemaClassName | Select-Object -First 1
+                    SchemaClassName          = $SchemaClassName
                 }
 
             }

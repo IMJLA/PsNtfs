@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.22] - 2022-08-05 - bugfix in format-folderpermission with schemaclassname
+
 ## [2.0.21] - 2022-08-05 - Bugfixes
 
 ## [2.0.20] - 2022-08-05 - Bugfix in format-securityprincipal when retrieving samaccountname
