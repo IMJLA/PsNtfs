@@ -296,6 +296,9 @@ function Format-FolderPermission {
                     $Dept = $ThisUser.Group.department | Sort-Object -Unique
                     $Title = $ThisUser.Group.title | Sort-Object -Unique
                 }
+                if ("$Name" -eq '') {
+                    $Name = $ThisUser.Name
+                }
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
@@ -378,18 +381,7 @@ function Format-SecurityPrincipal {
         Select-Object -Property @{
             Label      = 'User'
             Expression = {
-                if ($_.SamAccountName) {
-                    $AccountName = $_.SamAccountName
-                } else {
-                    if ($_.Properties) {
-                        if ($_.Properties['SamAccountName'].Value) {
-                            $AccountName = $_.Properties['SamAccountName'].Value
-                        } else {
-                            $AccountName = $_.Properties['SamAccountName']
-                        }
-                    }
-                }
-                "$($_.Domain.Netbios)\$AccountName"
+                "$($_.Domain.Netbios)\$($_.Properties['Name'])"
             }
         },
         @{
@@ -740,6 +732,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 

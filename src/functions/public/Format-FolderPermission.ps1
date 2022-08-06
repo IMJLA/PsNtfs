@@ -44,6 +44,9 @@ function Format-FolderPermission {
                     $Dept = $ThisUser.Group.department | Sort-Object -Unique
                     $Title = $ThisUser.Group.title | Sort-Object -Unique
                 }
+                if ("$Name" -eq '') {
+                    $Name = $ThisUser.Name
+                }
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
