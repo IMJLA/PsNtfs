@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.23] - 2022-08-05 - added progress bar to format-folderpermission
+
 ## [2.0.22] - 2022-08-05 - bugfix in format-folderpermission with schemaclassname
 
 ## [2.0.21] - 2022-08-05 - Bugfixes
