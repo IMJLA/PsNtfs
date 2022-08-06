@@ -44,7 +44,20 @@ function Format-SecurityPrincipal {
         #>
         Select-Object -Property @{
             Label      = 'User'
-            Expression = { "$($_.Domain.Netbios)\$($_.SamAccountName)" }
+            Expression = {
+                if ($_.SamAccountName) {
+                    $AccountName = $_.SamAccountName
+                } else {
+                    if ($_.Properties) {
+                        if ($_.Properties['SamAccountName'].Value) {
+                            $AccountName = $_.Properties['SamAccountName'].Value
+                        } else {
+                            $AccountName = $_.Properties['SamAccountName']
+                        }
+                    }
+                }
+                "$($_.Domain.Netbios)\$AccountName"
+            }
         },
         @{
             Label      = 'IdentityReference'
