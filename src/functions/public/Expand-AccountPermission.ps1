@@ -29,15 +29,6 @@ function Expand-AccountPermission {
     )
     ForEach ($Account in $AccountPermission) {
 
-        $i++
-        #Calculate the completion percentage, and format it to show 0 decimal places
-        $percentage = "{0:N0}" -f (($i / ($AccountPermission.Count)) * 100)
-
-        #Display the progress bar
-        $status = ("$(Get-Date -Format s)`t$(hostname)`tExpand-AccountPermission`tStatus: " + $percentage + "% - Processing account permission $i of " + $AccountPermission.Count + ": " + $Account.User)
-        Write-Verbose $status
-        Write-Progress -Activity ("Total Users: " + $AccountPermission.Count) -Status $status -PercentComplete $percentage
-
         $Props = @{}
 
         $AccountNoteProperties = $Account |
