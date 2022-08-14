@@ -157,7 +157,7 @@
       <command:verb>Expand</command:verb>
       <command:noun>AccountPermission</command:noun>
       <maml:description>
-        <maml:para>Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal</maml:para>
+        <maml:para>Expand an object representing a security principal and into a collection of objects respresenting the access control entries for that principal</maml:para>
       </maml:description>
     </command:details>
     <maml:description>

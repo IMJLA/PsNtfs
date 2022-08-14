@@ -84,7 +84,6 @@ function Format-SecurityPrincipal {
         },
         *
 
-
     }
 
 }

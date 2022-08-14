@@ -8,7 +8,7 @@ schema: 2.0.0
 # Expand-AccountPermission
 
 ## SYNOPSIS
-Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+Expand an object representing a security principal and into a collection of objects respresenting the access control entries for that principal
 
 ## SYNTAX
 

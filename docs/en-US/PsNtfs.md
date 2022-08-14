@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.26
+Help Version: 2.0.27
 Locale: en-US
 ---
 
@@ -17,7 +17,7 @@ ConvertTo-SimpleProperty [[-InputObject] <Object>] [[-Property] <string>] [[-Pro
 
 
 ### [Expand-AccountPermission](Expand-AccountPermission.md)
-Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+Expand an object representing a security principal and into a collection of objects respresenting the access control entries for that principal
 
 ### [Expand-Acl](Expand-Acl.md)
 Expand an Access Control List into its constituent Access Control Entries

@@ -101,7 +101,7 @@ function ConvertTo-SimpleProperty {
 function Expand-AccountPermission {
     <#
         .SYNOPSIS
-        Expand an object representing a security principal into a collection of objects respresenting the access control entries for that principal
+        Expand an object representing a security principal and into a collection of objects respresenting the access control entries for that principal
         .DESCRIPTION
         Expand an object from Format-SecurityPrincipal (one object per principal, containing nested access entries) into flat objects (one per access entry per account)
         .INPUTS
@@ -448,7 +448,6 @@ function Format-SecurityPrincipal {
         },
         *
 
-
     }
 
 }
@@ -786,6 +785,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 
