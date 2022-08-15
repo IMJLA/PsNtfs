@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.28] - 2022-08-14 - Bug fix in Get-FolderAce that was causing null items to be returned
+
 ## [2.0.27] - 2022-08-14 - Minor changes
 
 ## [2.0.26] - 2022-08-14 - More advanced generation of 'User' property in Format-SecurityPrincipal

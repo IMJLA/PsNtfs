@@ -501,7 +501,7 @@ function Get-FolderAce {
             $Sections
         ) } 2>$null
 
-    if (-not $DirectorySecurity) {
+    if (-not $DirectorySecurity.Access) {
         Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no ACL for '$LiteralPath'"
         return
     }
@@ -515,7 +515,7 @@ function Get-FolderAce {
 
     Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
-    if (-not $AccessRules) {
+    if ($AccessRules.Count -lt 1) {
         Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no matching access rules"
         return
     }
@@ -785,6 +785,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+
 
 
 
