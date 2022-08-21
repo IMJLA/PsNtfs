@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.28
+Help Version: 2.0.30
 Locale: en-US
 ---
 
@@ -51,11 +51,6 @@ Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [<CommonP
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
 
 New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>]
-
-
-### [Remove-DuplicatesAcrossIgnoredDomains](Remove-DuplicatesAcrossIgnoredDomains.md)
-
-Remove-DuplicatesAcrossIgnoredDomains [[-UserPermission] <Object>] [[-DomainToIgnore] <string[]>] [<CommonParameters>]
 
 
 

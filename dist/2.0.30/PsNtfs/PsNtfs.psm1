@@ -734,49 +734,6 @@ function New-NtfsAclIssueReport {
         FoldersWithCreatorOwner      = $FoldersWithCreatorOwner
     }
 }
-function Remove-DuplicatesAcrossIgnoredDomains {
-
-    param (
-
-        [Parameter(ValueFromPipeline)]
-        $UserPermission,
-
-        [string[]]$DomainToIgnore
-
-    )
-
-    begin {
-        $KnownUsers = [hashtable]::Synchronized(@{})
-    }
-    process {
-        
-        ForEach ($ThisUser in $UserPermission) {
-            
-            $ShortName = $ThisUser.Name
-            ForEach ($IgnoreThisDomain in $DomainToIgnore) {
-                $ShortName = $ShortName -replace $IgnoreThisDomain,''
-            }
-
-            if ($null -eq $KnownUsers[$ShortName]) {
-                $KnownUsers[$ShortName] = [pscustomobject]@{
-                    'Name' = $ShortName
-                    'Group' = $ThisUser.Group
-                }
-            }
-            else {
-                $KnownUsers[$ShortName] = [pscustomobject]@{
-                    'Name' = $ShortName
-                    'Group' = $KnownUsers[$ShortName].Group + $ThisUser.Group
-                }
-            }
-        }
-
-    }
-    end {
-        $KnownUsers.Values | Sort-Object -Property Name
-    }
-
-}
 <#
 # Dot source any functions
 ForEach ($ThisScript in $ScriptFiles) {
@@ -784,7 +741,9 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport','Remove-DuplicatesAcrossIgnoredDomains')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport')
+
+
 
 
 
