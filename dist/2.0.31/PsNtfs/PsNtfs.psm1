@@ -516,7 +516,7 @@ function Get-FolderAce {
     Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     if ($AccessRules.Count -lt 1) {
-        Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no matching access rules"
+        Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no matching access rules for '$LiteralPath'"
         return
     }
     $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
@@ -532,7 +532,7 @@ function Get-FolderAce {
 
     #TODO: Output an object for the owner as well to represent that they have Full Control
     $ACEProperties['IsInherited'] = $false
-    $ACEProperties['IdentityReference'] = $DirectorySecurity.Owner
+    $ACEProperties['IdentityReference'] = $DirectorySecurity.Owner -replace '^O:', ''
     $ACEProperties['FileSystemRights'] = [System.Security.AccessControl.FileSystemRights]::FullControl
     $ACEProperties['InheritanceFlags'] = [System.Security.AccessControl.InheritanceFlags]::None
     $ACEProperties['PropagationFlags'] = [System.Security.AccessControl.PropagationFlags]::None
@@ -742,6 +742,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

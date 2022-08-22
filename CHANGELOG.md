@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.31] - 2022-08-21 - bugfix (remove O: prefix from Owner identityreference)
+
 ## [2.0.30] - 2022-08-20 - removed function
 
 ## [2.0.29] - 2022-08-20 - Removed function
