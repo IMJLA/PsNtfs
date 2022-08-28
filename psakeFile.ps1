@@ -464,9 +464,13 @@ task UnitTests -depends Lint -precondition $pesterPreReqs {
 
 task SourceControl -depends UnitTests {
     # Commit to Git
+    Write-Host "git add ."
     git add .
+    Write-Host "git commit -m `"$CommitMessage`""
     git commit -m $CommitMessage
-    $CurrentBranch = git symbolic-ref --short HEAD
+    Write-Host "git branch --show-current"
+    $CurrentBranch = git branch --show-current
+    Write-Host "git push -f origin `"$CurrentBranch`""
     git push -f origin "$CurrentBranch"
 } -description 'git add, commit, and push'
 

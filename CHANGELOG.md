@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.43] - 2022-08-28 - fixed export-permission bug 7 in format-folderpermission
+
+## [2.0.42] - 2022-08-28 - fixed export-permission bug 7 in format-folderpermission
+
 ## [2.0.41] - 2022-08-28 - fixed export-permission bug 7 in format-folderpermission
 
 ## [2.0.40] - 2022-08-28 - fixed export-permission bug #7 in format-folderpermission
