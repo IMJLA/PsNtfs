@@ -50,6 +50,8 @@ function Expand-AccountPermission {
                 $Props = ConvertTo-SimpleProperty -InputObject $ACE -Property $ThisProperty.Name -PropertyDictionary $Props -Prefix "ACE"
             }
 
+            $Props['SourceAclPath'] = $ACE.SourceAccessList.Path
+
             [pscustomobject]$Props
 
         }
