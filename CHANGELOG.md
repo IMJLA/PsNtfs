@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.38] - 2022-08-28 - Bugfix for WinNT DirectoryEntry objects in ConvertTo-SimpleProperty
+
 ## [2.0.37] - 2022-08-27 - Updated Get-FolderTarget
 
 ## [2.0.36] - 2022-08-27 - Updated Format-FolderPermission to work with the output from Select-UniqueAccountPermission instead of Format-SecurityPrincipal

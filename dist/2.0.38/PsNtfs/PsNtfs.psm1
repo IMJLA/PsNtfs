@@ -35,6 +35,10 @@ function ConvertTo-SimpleProperty {
         # The following exception occurred while retrieving member "GetType": "Not implemented"
         if (Get-Member -InputObject $Value -Name GetType) {
             [string]$Type = $Value.GetType().FullName
+        } else {
+            # The only scenario we've encountered where the GetType() method does not exist is DirectoryEntry objects from the WinNT provider
+            # Force the type to 'System.DirectoryServices.DirectoryEntry'
+            [string]$Type = 'System.DirectoryServices.DirectoryEntry'
         }
     }
 
@@ -830,6 +834,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 
