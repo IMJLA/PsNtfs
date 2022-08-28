@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.34] - 2022-08-27 - Added mapped drive, UNC features and FQDN resolution to get-foldertarget
+
 ## [2.0.33] - 2022-08-27 - bug fix for unc folder targets in get-foldertarget
 
 ## [2.0.32] - 2022-08-27 - Bug fix in Get-FolderTarget for non-DFS UNC paths

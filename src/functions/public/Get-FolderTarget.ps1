@@ -16,9 +16,14 @@ function Get-FolderTarget {
                 Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
 
                 if ($MatchingNetworkDrive) {
-                    $MatchingNetworkDrive.ProviderName
+                    $UNC = $MatchingNetworkDrive.ProviderName
                 } else {
-                    $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                    $UNC = $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                }
+                if ($UNC) {
+                    $Server = $UNC.split('\')[2]
+                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
+                    $UNC -replace "^\\\\$Server\\", "\\$FQDN\"
                 }
             } else {
                 # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
