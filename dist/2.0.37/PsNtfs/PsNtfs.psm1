@@ -619,7 +619,9 @@ function Get-FolderTarget {
                         $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
                     }
                 } else {
-                    $TargetPath
+                    $Server = $TargetPath.split('\')[2]
+                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
+                    $TargetPath -replace "^\\\\$Server\\", "\\$FQDN\"
                 }
 
             }
@@ -828,6 +830,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 

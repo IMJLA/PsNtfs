@@ -56,7 +56,9 @@ function Get-FolderTarget {
                         $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
                     }
                 } else {
-                    $TargetPath
+                    $Server = $TargetPath.split('\')[2]
+                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
+                    $TargetPath -replace "^\\\\$Server\\", "\\$FQDN\"
                 }
 
             }
