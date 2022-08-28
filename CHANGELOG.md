@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.39] - 2022-08-28 - fixed export-permission bug #7 in format-folderpermission
+
 ## [2.0.38] - 2022-08-28 - Bugfix for WinNT DirectoryEntry objects in ConvertTo-SimpleProperty
 
 ## [2.0.37] - 2022-08-27 - Updated Get-FolderTarget

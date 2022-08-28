@@ -27,37 +27,52 @@ function Format-FolderPermission {
             Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
 
             if ($ThisUser.Group.DirectoryEntry.Properties) {
-                $Name = $ThisUser.Group.DirectoryEntry |
-                ForEach-Object {
-                    if ($_.Properties) {
-                        $_.Properties['name']
-                    }
-                } |
-                Sort-Object -Unique
-
-                $Dept = $ThisUser.Group.DirectoryEntry |
-                ForEach-Object {
-                    if ($_.Properties) {
-                        $_.Properties['department']
-                    }
-                } |
-                Sort-Object -Unique
-
-                $Title = $ThisUser.Group.DirectoryEntry |
-                ForEach-Object {
-                    if ($_.Properties) {
-                        $_.Properties['title']
-                    }
-                } |
-                Sort-Object -Unique
-
-                if ($ThisUser.Group.DirectoryEntry.Properties['objectclass'] -contains 'group' -or
-                    "$($ThisUser.Group.DirectoryEntry.Properties['groupType'])" -ne ''
+                if (
+                    (
+                        $ThisUser.Group.DirectoryEntry |
+                        ForEach-Object {
+                            if ($null -ne $_) {
+                                $_.GetType().FullName 2>$null
+                            }
+                        }
+                    ) -contains 'System.Management.Automation.PSCustomObject'
                 ) {
-                    $SchemaClassName = 'group'
+                    $Names = $ThisUser.Group.DirectoryEntry.Properties.Name
+                    $Depts = $ThisUser.Group.DirectoryEntry.Properties.Department
+                    $Titles = $ThisUser.Group.DirectoryEntry.Properties.Title
                 } else {
-                    $SchemaClassName = 'user'
+                    $Names = $ThisUser.Group.DirectoryEntry |
+                    ForEach-Object {
+                        if ($_.Properties) {
+                            $_.Properties['name']
+                        }
+                    }
+
+                    $Depts = $ThisUser.Group.DirectoryEntry |
+                    ForEach-Object {
+                        if ($_.Properties) {
+                            $_.Properties['department']
+                        }
+                    }
+
+                    $Titles = $ThisUser.Group.DirectoryEntry |
+                    ForEach-Object {
+                        if ($_.Properties) {
+                            $_.Properties['title']
+                        }
+                    }
+
+                    if ($ThisUser.Group.DirectoryEntry.Properties['objectclass'] -contains 'group' -or
+                        "$($ThisUser.Group.DirectoryEntry.Properties['groupType'])" -ne ''
+                    ) {
+                        $SchemaClassName = 'group'
+                    } else {
+                        $SchemaClassName = 'user'
+                    }
                 }
+                $Name = $Names | Sort-Object -Unique
+                $Dept = $Depts | Sort-Object -Unique
+                $Title = $Titles | Sort-Object -Unique
             } else {
                 $Name = $ThisUser.Group.name | Sort-Object -Unique
                 $Dept = $ThisUser.Group.department | Sort-Object -Unique
