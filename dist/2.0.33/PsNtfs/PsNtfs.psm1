@@ -551,8 +551,17 @@ function Get-FolderTarget {
 
             $RegEx = '^(?<DriveLetter>\w):'
             if ($TargetPath -match $RegEx) {
-                # TODO: Resolve mapped network drives to their UNC path, currently this will incorrectly treat them as local paths
-                $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                # Resolve mapped network drives to their UNC path
+                $MappedNetworkDrives = Get-Win32MappedLogicalDisk
+
+                $MatchingNetworkDrive = $MappedNetworkDrives |
+                Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
+
+                if ($MatchingNetworkDrive) {
+                    $MatchingNetworkDrive.ProviderName
+                } else {
+                    $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                }
             } else {
                 # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
                 # Can't use [NetApi32Dll]::NetDfsGetClientInfo($TargetPath) because it does not return disabled folder targets
@@ -637,6 +646,52 @@ function Get-Subfolder {
         Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
     }
     Write-Progress -Activity ("Retrieving subfolders...") -Completed
+}
+function Get-Win32MappedLogicalDisk {
+    param (
+        [string]$ComputerName,
+
+        <#
+        Hostname of the computer running this function.
+
+        Can be provided as a string to avoid calls to HOSTNAME.EXE
+        #>
+        [string]$ThisHostName = (HOSTNAME.EXE),
+
+        <#
+        FQDN of the computer running this function.
+
+        Can be provided as a string to avoid calls to HOSTNAME.EXE and [System.Net.Dns]::GetHostByName()
+        #>
+        [string]$ThisFqdn = ([System.Net.Dns]::GetHostByName((HOSTNAME.EXE)).HostName),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Dictionary of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
+    )
+
+    $LogParams = @{
+        ThisHostname = $ThisHostname
+        Type         = 'Debug'
+        LogMsgCache  = $LogMsgCache
+        WhoAmI       = $WhoAmI
+    }
+
+    if (
+        $ComputerName -eq $ThisHostname -or
+        $ComputerName -eq "$ThisHostname." -or
+        $ComputerName -eq $ThisFqdn
+    ) {
+        #Write-LogMsg @LogParams -Text "Get-CimInstance -ClassName Win32_MappedLogicalDisk"
+        Get-CimInstance -ClassName Win32_MappedLogicalDisk
+    } else {
+        #Write-LogMsg @LogParams -Text "Get-CimInstance -ComputerName $ComputerName -ClassName Win32_MappedLogicalDisk"
+        # If an Active Directory domain is targeted there are no local accounts and CIM connectivity is not expected
+        # Suppress errors and return nothing in that case
+        Get-CimInstance -ComputerName $ComputerName -ClassName Win32_MappedLogicalDisk -ErrorAction SilentlyContinue
+    }
 }
 function New-NtfsAclIssueReport {
 
@@ -746,7 +801,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','New-NtfsAclIssueReport')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 

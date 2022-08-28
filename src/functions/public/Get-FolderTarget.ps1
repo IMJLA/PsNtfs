@@ -9,8 +9,17 @@ function Get-FolderTarget {
 
             $RegEx = '^(?<DriveLetter>\w):'
             if ($TargetPath -match $RegEx) {
-                # TODO: Resolve mapped network drives to their UNC path, currently this will incorrectly treat them as local paths
-                $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                # Resolve mapped network drives to their UNC path
+                $MappedNetworkDrives = Get-Win32MappedLogicalDisk
+
+                $MatchingNetworkDrive = $MappedNetworkDrives |
+                Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
+
+                if ($MatchingNetworkDrive) {
+                    $MatchingNetworkDrive.ProviderName
+                } else {
+                    $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                }
             } else {
                 # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
                 # Can't use [NetApi32Dll]::NetDfsGetClientInfo($TargetPath) because it does not return disabled folder targets
