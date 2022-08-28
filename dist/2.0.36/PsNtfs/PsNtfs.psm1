@@ -280,18 +280,30 @@ function Format-FolderPermission {
             Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
 
             if ($ThisUser.Group.DirectoryEntry.Properties) {
-                $Name = $ThisUser.Group.DirectoryEntry.Properties['name'] | Sort-Object -Unique
-                $Dept = $ThisUser.Group.DirectoryEntry.Properties['department'] | Sort-Object -Unique
-                $Title = $ThisUser.Group.DirectoryEntry.Properties['title'] | Sort-Object -Unique
-            } else {
-                $Name = $ThisUser.Group.name | Sort-Object -Unique
-                $Dept = $ThisUser.Group.department | Sort-Object -Unique
-                $Title = $ThisUser.Group.title | Sort-Object -Unique
-            }
-            if ("$Name" -eq '') {
-                $Name = $ThisUser.Name
-            }
-            if ($ThisUser.Group.DirectoryEntry.Properties) {
+                $Name = $ThisUser.Group.DirectoryEntry |
+                ForEach-Object {
+                    if ($_.Properties) {
+                        $_.Properties['name']
+                    }
+                } |
+                Sort-Object -Unique
+
+                $Dept = $ThisUser.Group.DirectoryEntry |
+                ForEach-Object {
+                    if ($_.Properties) {
+                        $_.Properties['department']
+                    }
+                } |
+                Sort-Object -Unique
+
+                $Title = $ThisUser.Group.DirectoryEntry |
+                ForEach-Object {
+                    if ($_.Properties) {
+                        $_.Properties['title']
+                    }
+                } |
+                Sort-Object -Unique
+
                 if ($ThisUser.Group.DirectoryEntry.Properties['objectclass'] -contains 'group' -or
                     "$($ThisUser.Group.DirectoryEntry.Properties['groupType'])" -ne ''
                 ) {
@@ -300,6 +312,10 @@ function Format-FolderPermission {
                     $SchemaClassName = 'user'
                 }
             } else {
+                $Name = $ThisUser.Group.name | Sort-Object -Unique
+                $Dept = $ThisUser.Group.department | Sort-Object -Unique
+                $Title = $ThisUser.Group.title | Sort-Object -Unique
+
                 if ($ThisUser.Group.Properties) {
                     if (
                         $ThisUser.Group.Properties['objectclass'] -contains 'group' -or
@@ -319,10 +335,13 @@ function Format-FolderPermission {
                     }
                 }
             }
+            if ("$Name" -eq '') {
+                $Name = $ThisUser.Name
+            }
 
-            ForEach ($ThisACE in $ThisUser.Group.NtfsAccessControlEntries) {
+            ForEach ($ThisACE in $ThisUser.Group) {
 
-                switch ($ThisACE.InheritanceFlags) {
+                switch ($ThisACE.ACEInheritanceFlags) {
                     'ContainerInherit, ObjectInherit' { $Scope = 'this folder, subfolders, and files' }
                     'ContainerInherit' { $Scope = 'this folder and subfolders' }
                     'ObjectInherit' { $Scope = 'this folder and files, but not subfolders' }
@@ -332,18 +351,18 @@ function Format-FolderPermission {
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
                 } else {
-                    $IdentityReference = $ThisACE.IdentityReferenceResolved
+                    $IdentityReference = $ThisACE.ACEIdentityReferenceResolved
                 }
 
-                $FileSystemRights = $ThisACE.FileSystemRights
+                $FileSystemRights = $ThisACE.ACEFileSystemRights
                 ForEach ($Ignore in $FileSystemRightsToIgnore) {
                     $FileSystemRights = $FileSystemRights -replace ", $Ignore\Z", '' -replace "$Ignore,", ''
                 }
 
                 [pscustomobject]@{
-                    Folder                   = $ThisACE.SourceAccessList.Path
-                    FolderInheritanceEnabled = !($ThisACE.SourceAccessList.AreAccessRulesProtected)
-                    Access                   = "$($ThisACE.AccessControlType) $FileSystemRights $Scope"
+                    Folder                   = $ThisACE.ACESourceAccessList.Path
+                    FolderInheritanceEnabled = !($ThisACE.ACESourceAccessList.AreAccessRulesProtected)
+                    Access                   = "$($ThisACE.ACEAccessControlType) $FileSystemRights $Scope"
                     Account                  = $ThisUser.Name
                     Name                     = $Name
                     Department               = $Dept
@@ -809,6 +828,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.36] - 2022-08-27 - Updated Format-FolderPermission to work with the output from Select-UniqueAccountPermission instead of Format-SecurityPrincipal
+
 ## [2.0.35] - 2022-08-27 - Added SourceAclPath property to output of Expand-AccountPermission
 
 ## [2.0.34] - 2022-08-27 - Added mapped drive, UNC features and FQDN resolution to get-foldertarget
