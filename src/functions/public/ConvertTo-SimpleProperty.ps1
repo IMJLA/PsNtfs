@@ -1,5 +1,4 @@
 function ConvertTo-SimpleProperty {
-    #TODO: Only need to input $Value and output the PSCustomObject, drop the other params
     param (
         $InputObject,
 
@@ -57,6 +56,32 @@ function ConvertTo-SimpleProperty {
         }
         'System.Object' {
             $PropertyDictionary["$Prefix$Property"] = $Value
+            continue
+        }
+        'System.DirectoryServices.SearchResult' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-SearchResult -SearchResult $Value
+            continue
+        }
+        'System.DirectoryServices.ResultPropertyCollection' {
+            $ThisObject = @{}
+
+            ForEach ($ThisProperty in $Value.Keys) {
+                $ThisPropertyString = ConvertFrom-ResultPropertyValueCollectionToString -ResultPropertyValueCollection $Value[$ThisProperty]
+                $ThisObject[$ThisProperty] = $ThisPropertyString
+
+                # This copies the properties up to the top level.
+                # Want to remove this later
+                # The nested pscustomobject accomplishes the goal of removing hashtables and PropertyValueCollections and PropertyCollections
+                # But I may have existing functionality expecting these properties so I am not yet ready to remove this
+                # When I am, I should move this code into a ConvertFrom-PropertyCollection function in the Adsi module
+                $PropertyDictionary["$Prefix$ThisProperty"] = $ThisPropertyString
+
+            }
+            $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
+            continue
+        }
+        'System.DirectoryServices.ResultPropertyValueCollection' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-ResultPropertyValueCollectionToString -ResultPropertyValueCollection $Value
             continue
         }
         'System.Management.Automation.PSCustomObject' {

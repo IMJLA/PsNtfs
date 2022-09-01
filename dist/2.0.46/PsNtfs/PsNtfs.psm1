@@ -16,7 +16,6 @@ function GetDirectories {
     }
 }
 function ConvertTo-SimpleProperty {
-    #TODO: Only need to input $Value and output the PSCustomObject, drop the other params
     param (
         $InputObject,
 
@@ -74,6 +73,32 @@ function ConvertTo-SimpleProperty {
         }
         'System.Object' {
             $PropertyDictionary["$Prefix$Property"] = $Value
+            continue
+        }
+        'System.DirectoryServices.SearchResult' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-SearchResult -SearchResult $Value
+            continue
+        }
+        'System.DirectoryServices.ResultPropertyCollection' {
+            $ThisObject = @{}
+
+            ForEach ($ThisProperty in $Value.Keys) {
+                $ThisPropertyString = ConvertFrom-ResultPropertyValueCollectionToString -ResultPropertyValueCollection $Value[$ThisProperty]
+                $ThisObject[$ThisProperty] = $ThisPropertyString
+
+                # This copies the properties up to the top level.
+                # Want to remove this later
+                # The nested pscustomobject accomplishes the goal of removing hashtables and PropertyValueCollections and PropertyCollections
+                # But I may have existing functionality expecting these properties so I am not yet ready to remove this
+                # When I am, I should move this code into a ConvertFrom-PropertyCollection function in the Adsi module
+                $PropertyDictionary["$Prefix$ThisProperty"] = $ThisPropertyString
+
+            }
+            $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
+            continue
+        }
+        'System.DirectoryServices.ResultPropertyValueCollection' {
+            $PropertyDictionary["$Prefix$Property"] = ConvertFrom-ResultPropertyValueCollectionToString -ResultPropertyValueCollection $Value
             continue
         }
         'System.Management.Automation.PSCustomObject' {
@@ -418,7 +443,7 @@ function Format-SecurityPrincipal {
 
         # Format and output the security principal
         $ThisPrincipal |
-        Select-Object -Property @{
+        Select-Object -ExcludeProperty Name -Property @{
             Label      = 'User'
             Expression = {
                 $ThisPrincipalAccount = $null
@@ -439,6 +464,20 @@ function Format-SecurityPrincipal {
         @{
             Label      = 'NtfsAccessControlEntries'
             Expression = { $_.Group }
+        },
+        @{
+            Label      = 'Name'
+            Expression = {
+                $ThisName = $null
+                if ($_.DirectoryEntry.Properties) {
+                    $ThisName = $_.DirectoryEntry.Properties['name']
+                }
+                if ("$ThisName" -eq '') {
+                    $_.Name -replace [regex]::Escape("$($_.DomainNetBios)\"), ''
+                } else {
+                    $ThisName
+                }
+            }
         },
         *
 
@@ -480,7 +519,10 @@ function Format-SecurityPrincipal {
         },
         @{
             Label      = 'IdentityReference'
-            Expression = { $ThisPrincipal.Group.IdentityReferenceResolved | Sort-Object -Unique }
+            Expression = {
+                $ThisPrincipal.Group.IdentityReferenceResolved |
+                Sort-Object -Unique
+            }
         },
         @{
             Label      = 'NtfsAccessControlEntries'
@@ -849,6 +891,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 

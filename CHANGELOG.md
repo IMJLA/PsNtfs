@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.46] - 2022-08-31 - bugfix Format-SecurityPrincipal including domainnetbios in Name property, and bugfix ConvertTo-SimpleProperty with a few additional types and functions to convert them
+
 ## [2.0.45] - 2022-08-28 - fixed export-permission bug 7 in format-folderpermission
 
 ## [2.0.44] - 2022-08-28 - fixed export-permission bug 7 in format-folderpermission

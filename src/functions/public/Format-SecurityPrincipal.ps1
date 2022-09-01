@@ -14,7 +14,7 @@ function Format-SecurityPrincipal {
 
         # Format and output the security principal
         $ThisPrincipal |
-        Select-Object -Property @{
+        Select-Object -ExcludeProperty Name -Property @{
             Label      = 'User'
             Expression = {
                 $ThisPrincipalAccount = $null
@@ -35,6 +35,20 @@ function Format-SecurityPrincipal {
         @{
             Label      = 'NtfsAccessControlEntries'
             Expression = { $_.Group }
+        },
+        @{
+            Label      = 'Name'
+            Expression = {
+                $ThisName = $null
+                if ($_.DirectoryEntry.Properties) {
+                    $ThisName = $_.DirectoryEntry.Properties['name']
+                }
+                if ("$ThisName" -eq '') {
+                    $_.Name -replace [regex]::Escape("$($_.DomainNetBios)\"), ''
+                } else {
+                    $ThisName
+                }
+            }
         },
         *
 
@@ -76,7 +90,10 @@ function Format-SecurityPrincipal {
         },
         @{
             Label      = 'IdentityReference'
-            Expression = { $ThisPrincipal.Group.IdentityReferenceResolved | Sort-Object -Unique }
+            Expression = {
+                $ThisPrincipal.Group.IdentityReferenceResolved |
+                Sort-Object -Unique
+            }
         },
         @{
             Label      = 'NtfsAccessControlEntries'
