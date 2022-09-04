@@ -632,13 +632,13 @@ function Get-FolderAce {
     }
 
     #TODO: Output an object for the owner as well to represent that they have Full Control
-    $ACEProperties['IsInherited'] = $false
-    $ACEProperties['IdentityReference'] = $DirectorySecurity.Owner -replace '^O:', ''
-    $ACEProperties['FileSystemRights'] = [System.Security.AccessControl.FileSystemRights]::FullControl
-    $ACEProperties['InheritanceFlags'] = [System.Security.AccessControl.InheritanceFlags]::None
-    $ACEProperties['PropagationFlags'] = [System.Security.AccessControl.PropagationFlags]::None
-    $ACEProperties['AccessControlType'] = [System.Security.AccessControl.AccessControlType]::Allow
-    [PSCustomObject]$ACEProperties
+    ##$ACEProperties['IsInherited'] = $false
+    ##$ACEProperties['IdentityReference'] = $DirectorySecurity.Owner -replace '^O:', ''
+    ##$ACEProperties['FileSystemRights'] = [System.Security.AccessControl.FileSystemRights]::FullControl
+    ##$ACEProperties['InheritanceFlags'] = [System.Security.AccessControl.InheritanceFlags]::None
+    ##$ACEProperties['PropagationFlags'] = [System.Security.AccessControl.PropagationFlags]::None
+    ##$ACEProperties['AccessControlType'] = [System.Security.AccessControl.AccessControlType]::Allow
+    ##[PSCustomObject]$ACEProperties
 
 }
 function Get-FolderTarget {
@@ -910,6 +910,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+
 
 
 

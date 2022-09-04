@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.48] - 2022-09-04 - Removed ACE object for ACL Owner until -IncludeOwner param is implemented
+
 ## [2.0.47] - 2022-09-03 - Bug fix to handle edge case with System.DirectoryServices.PropertyCollection in ConvertTo-SimpleProperty (which really feels unrelated to NTFS by the way)
 
 ## [2.0.46] - 2022-08-31 - bugfix Format-SecurityPrincipal including domainnetbios in Name property, and bugfix ConvertTo-SimpleProperty with a few additional types and functions to convert them
