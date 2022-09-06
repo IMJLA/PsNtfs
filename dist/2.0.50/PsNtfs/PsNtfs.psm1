@@ -264,57 +264,6 @@ function Expand-Acl {
     }
 
 }
-function Expand-Folder {
-
-    # Expand a folder path into its own path plus the paths of its subfolders
-
-    param (
-
-        # Path to return along, with the paths to its subfolders
-        $FolderTargets,
-
-        <#
-        How many levels of subfolder to enumerate
-
-            Set to 0 to ignore all subfolders
-
-            Set to -1 (default) to recurse infinitely
-
-            Set to any whole number to enumerate that many levels
-        #>
-        $LevelsOfSubfolders,
-
-        # Number of asynchronous threads to use
-        [uint16]$ThreadCount = ((Get-CimInstance -ClassName CIM_Processor | Measure-Object -Sum -Property NumberOfLogicalProcessors).Sum),
-
-        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
-        [string]$DebugOutputStream = 'Silent',
-
-        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$TodaysHostname = (HOSTNAME.EXE),
-
-        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$WhoAmI = (whoami.EXE),
-
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
-
-    )
-
-    $LogParams = @{
-        LogMsgCache  = $LogMsgCache
-        ThisHostname = $TodaysHostname
-        Type         = $DebugOutputStream
-        WhoAmI       = $WhoAmI
-    }
-
-    ForEach ($ThisFolder in $FolderTargets) {
-        $Subfolders = $null
-        $Subfolders = Get-Subfolder -TargetPath $ThisFolder -FolderRecursionDepth $LevelsOfSubfolders -ErrorAction Continue
-        Write-LogMsg @LogParams -Text "# Folders (including parent): $($Subfolders.Count + 1) for '$ThisFolder'"
-        $Subfolders
-    }
-}
 function Find-ServerNameInPath {
     <#
         .SYNOPSIS
@@ -692,74 +641,6 @@ function Get-FolderAce {
     ##[PSCustomObject]$ACEProperties
 
 }
-function Get-FolderTarget {
-
-    param (
-        [string[]]$FolderPath
-    )
-
-    process {
-        foreach ($TargetPath in $FolderPath) {
-
-            $RegEx = '^(?<DriveLetter>\w):'
-            if ($TargetPath -match $RegEx) {
-                # Resolve mapped network drives to their UNC path
-                $MappedNetworkDrives = Get-Win32MappedLogicalDisk
-
-                $MatchingNetworkDrive = $MappedNetworkDrives |
-                Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
-
-                if ($MatchingNetworkDrive) {
-                    $UNC = $MatchingNetworkDrive.ProviderName
-                } else {
-                    $UNC = $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
-                }
-                if ($UNC) {
-                    $Server = $UNC.split('\')[2]
-                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
-                    $UNC -replace "^\\\\$Server\\", "\\$FQDN\"
-                }
-            } else {
-                # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
-                # Can't use [NetApi32Dll]::NetDfsGetClientInfo($TargetPath) because it does not return disabled folder targets
-                # Instead need to use [NetApi32Dll]::NetDfsEnum($TargetPath) then Where-Object to filter results
-                $AllDfs = Get-NetDfsEnum -Verbose -FolderPath $TargetPath -ErrorAction SilentlyContinue
-
-                if ($AllDfs) {
-                    $MatchingDfsEntryPaths = $AllDfs |
-                    Group-Object -Property DfsEntryPath |
-                    Where-Object -FilterScript {
-                        $TargetPath -match [regex]::Escape($_.Name)
-                    }
-
-                    # Filter out the DFS Namespace
-                    # TODO: I know this is an inefficient n2 algorithm, but my brain is fried...plez...halp...leeloo dallas multipass
-                    $RemainingDfsEntryPaths = $MatchingDfsEntryPaths |
-                    Where-Object -FilterScript {
-                        -not [bool]$(
-                            ForEach ($ThisEntryPath in $MatchingDfsEntryPaths) {
-                                if ($ThisEntryPath.Name -match "$([regex]::Escape("$($_.Name)")).+") { $true }
-                            }
-                        )
-                    } |
-                    Sort-Object -Property Name
-
-                    $RemainingDfsEntryPaths |
-                    Select-Object -Last 1 -ExpandProperty Group |
-                    ForEach-Object {
-                        $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
-                    }
-                } else {
-                    $Server = $TargetPath.split('\')[2]
-                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
-                    $TargetPath -replace "^\\\\$Server\\", "\\$FQDN\"
-                }
-
-            }
-        }
-    }
-
-}
 function Get-Subfolder {
 
     # Use the fastest available method to enumerate subfolders
@@ -953,6 +834,78 @@ function New-NtfsAclIssueReport {
         FoldersWithCreatorOwner      = $FoldersWithCreatorOwner
     }
 }
+function Resolve-Folder {
+
+    # Resolve the provided FolderPath to all of its associated UNC paths
+
+    param (
+        [string[]]$FolderPath
+    )
+
+    process {
+        foreach ($TargetPath in $FolderPath) {
+
+            $RegEx = '^(?<DriveLetter>\w):'
+            if ($TargetPath -match $RegEx) {
+                $MappedNetworkDrives = Get-Win32MappedLogicalDisk
+
+                $MatchingNetworkDrive = $MappedNetworkDrives |
+                Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
+
+                if ($MatchingNetworkDrive) {
+                    # Resolve mapped network drives to their UNC path
+                    $UNC = $MatchingNetworkDrive.ProviderName
+                } else {
+                    # Resolve local drive letters to their UNC paths using administrative shares
+                    $UNC = $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
+                }
+                if ($UNC) {
+                    # Replace hostname with FQDN in the path
+                    $Server = $UNC.split('\')[2]
+                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
+                    $UNC -replace "^\\\\$Server\\", "\\$FQDN\"
+                }
+            } else {
+                # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
+                # Can't use [NetApi32Dll]::NetDfsGetClientInfo($TargetPath) because it does not return disabled folder targets
+                # Instead need to use [NetApi32Dll]::NetDfsEnum($TargetPath) then Where-Object to filter results
+                $AllDfs = Get-NetDfsEnum -Verbose -FolderPath $TargetPath -ErrorAction SilentlyContinue
+
+                if ($AllDfs) {
+                    $MatchingDfsEntryPaths = $AllDfs |
+                    Group-Object -Property DfsEntryPath |
+                    Where-Object -FilterScript {
+                        $TargetPath -match [regex]::Escape($_.Name)
+                    }
+
+                    # Filter out the DFS Namespace
+                    # TODO: I know this is an inefficient n2 algorithm, but my brain is fried...plez...halp...leeloo dallas multipass
+                    $RemainingDfsEntryPaths = $MatchingDfsEntryPaths |
+                    Where-Object -FilterScript {
+                        -not [bool]$(
+                            ForEach ($ThisEntryPath in $MatchingDfsEntryPaths) {
+                                if ($ThisEntryPath.Name -match "$([regex]::Escape("$($_.Name)")).+") { $true }
+                            }
+                        )
+                    } |
+                    Sort-Object -Property Name
+
+                    $RemainingDfsEntryPaths |
+                    Select-Object -Last 1 -ExpandProperty Group |
+                    ForEach-Object {
+                        $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
+                    }
+                } else {
+                    $Server = $TargetPath.split('\')[2]
+                    $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
+                    $TargetPath -replace "^\\\\$Server\\", "\\$FQDN\"
+                }
+
+            }
+        }
+    }
+
+}
 <#
 # Dot source any functions
 ForEach ($ThisScript in $ScriptFiles) {
@@ -960,7 +913,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Expand-Folder','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-FolderTarget','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

@@ -1,4 +1,6 @@
-function Get-FolderTarget {
+function Resolve-Folder {
+
+    # Resolve the provided FolderPath to all of its associated UNC paths
 
     param (
         [string[]]$FolderPath
@@ -9,18 +11,20 @@ function Get-FolderTarget {
 
             $RegEx = '^(?<DriveLetter>\w):'
             if ($TargetPath -match $RegEx) {
-                # Resolve mapped network drives to their UNC path
                 $MappedNetworkDrives = Get-Win32MappedLogicalDisk
 
                 $MatchingNetworkDrive = $MappedNetworkDrives |
                 Where-Object -FilterScript { $_.DeviceID -eq "$($Matches.DriveLetter):" }
 
                 if ($MatchingNetworkDrive) {
+                    # Resolve mapped network drives to their UNC path
                     $UNC = $MatchingNetworkDrive.ProviderName
                 } else {
+                    # Resolve local drive letters to their UNC paths using administrative shares
                     $UNC = $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
                 }
                 if ($UNC) {
+                    # Replace hostname with FQDN in the path
                     $Server = $UNC.split('\')[2]
                     $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
                     $UNC -replace "^\\\\$Server\\", "\\$FQDN\"

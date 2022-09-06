@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-FolderTarget
+# Resolve-Folder
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-FolderTarget [[-FolderPath] <String[]>]
+Resolve-Folder [[-FolderPath] <String[]>]
 ```
 
 ## DESCRIPTION
@@ -22,7 +22,7 @@ Get-FolderTarget [[-FolderPath] <String[]>]
 ## EXAMPLES
 
 ### Example 1
-```
+```powershell
 PS C:\> {{ Add example code here }}
 ```
 
@@ -48,6 +48,7 @@ Accept wildcard characters: False
 ## INPUTS
 
 ### None
+
 ## OUTPUTS
 
 ### System.Object
