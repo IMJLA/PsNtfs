@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.48
+Help Version: 2.0.49
 Locale: en-US
 ---
 
@@ -21,6 +21,11 @@ Expand an object representing a security principal and into a collection of obje
 
 ### [Expand-Acl](Expand-Acl.md)
 Expand an Access Control List into its constituent Access Control Entries
+
+### [Expand-Folder](Expand-Folder.md)
+
+Expand-Folder [[-FolderTargets] <Object>] [[-LevelsOfSubfolders] <Object>] [[-ThreadCount] <ushort>] [[-DebugOutputStream] <string>] [[-TodaysHostname] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
+
 
 ### [Find-ServerNameInPath](Find-ServerNameInPath.md)
 Parse a literal path to find its server
