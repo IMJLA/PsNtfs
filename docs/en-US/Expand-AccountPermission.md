@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -PropertiesToExclude
-Properties to exclude from the output
+Properties to exclude from the output because they cause problems or are unnecessary/redundant/undesirable
 All properties listed on a single line to workaround a bug in PlatyPS when building MAML help
 (error is 'Invalid yaml: expected simple key-value pairs')
 Caused by multi-line default parameter values in the markdown

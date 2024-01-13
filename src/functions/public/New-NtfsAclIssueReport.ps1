@@ -47,7 +47,8 @@ function New-NtfsAclIssueReport {
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "folders with broken inheritance: $($FoldersWithBrokenInheritance.Name -join "`r`n")"
-    } else {
+    }
+    else {
         $Txt = 'OK'
     }
     Write-LogMsg @LogParams -Text "$Count $Txt"
@@ -65,22 +66,26 @@ function New-NtfsAclIssueReport {
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "groups that don't match naming convention: $($NonCompliantGroups -join "`r`n")"
-    } else {
+    }
+    else {
         $Txt = 'OK'
     }
     Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # ACEs for users (recommend replacing with group-based access on any folder that is not a home folder)
     $UserACEs = $UserPermissions.Group |
-    Where-Object -FilterScript { $_.ObjectType -contains 'User' } |
-    ForEach-Object { $_.NtfsAccessControlEntries } |
-    ForEach-Object { "$($_.IdentityReference) on '$($_.Path)'" } |
+    Where-Object -FilterScript {
+        $_.ObjectType -contains 'User' -and
+        $_.ACEIdentityReference -ne 'S-1-5-18' # The 'NT AUTHORITY\SYSTEM' account is part of default Windows file permissions and is out of scope
+    } |
+    ForEach-Object { "$($_.User) on '$($_.SourceAclPath)'" } |
     Sort-Object -Unique
     $Count = ($UserACEs | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "users with ACEs: $($UserACEs -join "`r`n")"
-    } else {
+    }
+    else {
         $Txt = 'OK'
     }
     Write-LogMsg @LogParams -Text "$Count $Txt"
@@ -94,7 +99,8 @@ function New-NtfsAclIssueReport {
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "ACEs for unresolvable SIDs: $($SIDsToCleanup -join "`r`n")"
-    } else {
+    }
+    else {
         $Txt = 'OK'
     }
     Write-LogMsg @LogParams -Text "$Count $Txt"
@@ -105,7 +111,8 @@ function New-NtfsAclIssueReport {
     if ($Count -gt 0) {
         $IssuesDetected = $true
         $Txt = "folders with 'CREATOR OWNER' ACEs: $($FoldersWithCreatorOwner -join "`r`n")"
-    } else {
+    }
+    else {
         $Txt = 'OK'
     }
     Write-LogMsg @LogParams -Text "$Count $Txt"

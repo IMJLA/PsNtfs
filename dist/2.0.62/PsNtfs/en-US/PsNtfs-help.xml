@@ -181,7 +181,7 @@
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>PropertiesToExclude</maml:name>
           <maml:description>
-            <maml:para>Properties to exclude from the output All properties listed on a single line to workaround a bug in PlatyPS when building MAML help (error is 'Invalid yaml: expected simple key-value pairs') Caused by multi-line default parameter values in the markdown</maml:para>
+            <maml:para>Properties to exclude from the output because they cause problems or are unnecessary/redundant/undesirable All properties listed on a single line to workaround a bug in PlatyPS when building MAML help (error is 'Invalid yaml: expected simple key-value pairs') Caused by multi-line default parameter values in the markdown</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
@@ -208,7 +208,7 @@
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>PropertiesToExclude</maml:name>
         <maml:description>
-          <maml:para>Properties to exclude from the output All properties listed on a single line to workaround a bug in PlatyPS when building MAML help (error is 'Invalid yaml: expected simple key-value pairs') Caused by multi-line default parameter values in the markdown</maml:para>
+          <maml:para>Properties to exclude from the output because they cause problems or are unnecessary/redundant/undesirable All properties listed on a single line to workaround a bug in PlatyPS when building MAML help (error is 'Invalid yaml: expected simple key-value pairs') Caused by multi-line default parameter values in the markdown</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
         <dev:type>
