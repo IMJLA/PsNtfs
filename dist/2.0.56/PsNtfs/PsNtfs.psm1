@@ -307,12 +307,32 @@ function Format-FolderPermission {
         $UserPermission,
 
         # Ignore these FileSystemRights
-        [string[]]$FileSystemRightsToIgnore = @('Synchronize')
+        [string[]]$FileSystemRightsToIgnore = @('Synchronize'),
+
+        <#
+        Hostname of the computer running this function.
+
+        Can be provided as a string to avoid calls to HOSTNAME.EXE
+        #>
+        [string]$ThisHostName = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Dictionary of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
     begin {
         $i = 0
+
+        $LogParams = @{
+            ThisHostname = $ThisHostname
+            Type         = 'Verbose'
+            LogMsgCache  = $LogMsgCache
+            WhoAmI       = $WhoAmI
+        }
     }
     process {
 
@@ -324,7 +344,7 @@ function Format-FolderPermission {
 
             #Display the progress bar
             $status = ("$(Get-Date -Format s)`t$(hostname)`tFormat-FolderPermission`tStatus: " + $percentage + "% - Processing user permission $i of " + $UserPermission.Count + ": " + $ThisUser.Name)
-            Write-Verbose $status
+            Write-LogMsg @LogParams -Text $status
             Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
 
             if ($ThisUser.Group.DirectoryEntry.Properties) {
@@ -341,7 +361,8 @@ function Format-FolderPermission {
                     $Names = $ThisUser.Group.DirectoryEntry.Properties.Name
                     $Depts = $ThisUser.Group.DirectoryEntry.Properties.Department
                     $Titles = $ThisUser.Group.DirectoryEntry.Properties.Title
-                } else {
+                }
+                else {
                     $Names = $ThisUser.Group.DirectoryEntry |
                     ForEach-Object {
                         if ($_.Properties) {
@@ -367,14 +388,16 @@ function Format-FolderPermission {
                         "$($ThisUser.Group.DirectoryEntry.Properties['groupType'])" -ne ''
                     ) {
                         $SchemaClassName = 'group'
-                    } else {
+                    }
+                    else {
                         $SchemaClassName = 'user'
                     }
                 }
                 $Name = $Names | Sort-Object -Unique
                 $Dept = $Depts | Sort-Object -Unique
                 $Title = $Titles | Sort-Object -Unique
-            } else {
+            }
+            else {
                 $Name = $ThisUser.Group.name | Sort-Object -Unique
                 $Dept = $ThisUser.Group.department | Sort-Object -Unique
                 $Title = $ThisUser.Group.title | Sort-Object -Unique
@@ -385,14 +408,17 @@ function Format-FolderPermission {
                         "$($ThisUser.Group.Properties['groupType'])" -ne ''
                     ) {
                         $SchemaClassName = 'group'
-                    } else {
+                    }
+                    else {
                         $SchemaClassName = 'user'
                     }
-                } else {
+                }
+                else {
                     if ($ThisUser.Group.DirectoryEntry.SchemaClassName) {
                         $SchemaClassName = $ThisUser.Group.DirectoryEntry.SchemaClassName |
                         Select-Object -First 1
-                    } else {
+                    }
+                    else {
                         $SchemaClassName = $ThisUser.Group.SchemaClassName |
                         Select-Object -First 1
                     }
@@ -413,7 +439,8 @@ function Format-FolderPermission {
 
                 if ($null -eq $ThisUser.Group.IdentityReference) {
                     $IdentityReference = $null
-                } else {
+                }
+                else {
                     $IdentityReference = $ThisACE.ACEIdentityReferenceResolved
                 }
 
@@ -936,6 +963,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
