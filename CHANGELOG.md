@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.59] - 2024-01-13 - bug fix in expand-accountpermission
+
 ## [2.0.58] - 2024-01-12 - bugfix in convertto-simpleproperty on lines 48-51
 
 ## [2.0.57] - 2024-01-12 - corrected redundant metadata in log file code, lines 44-50 of format-folderpermission.ps1

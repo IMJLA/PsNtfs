@@ -185,10 +185,7 @@ function Expand-AccountPermission {
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
             if ($null -eq $Props[$ThisProperty.Name]) {
-                Write-Host "$($ThisProperty.Name)" -ForegroundColor Red
                 $Props = ConvertTo-SimpleProperty -InputObject $Account -Property $ThisProperty.Name -PropertyDictionary $Props
-                start-sleep -seconds 3
-                pause
             }
         }
 
@@ -969,6 +966,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
