@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.55] - 2024-01-12 - reloaded env vars for updated psgallery api key for publishing
+
 ## [2.0.54] - 2024-01-12 - testing updated psgallery api key for publishing
 
 ## [2.0.53] - 2024-01-12 - removed .vscode folder due to inability to open folder
