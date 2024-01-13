@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.53] - 2024-01-12 - removed .vscode folder due to inability to open folder
+
+## [2.0.52] - 2024-01-12 - implemented write-logmsg
+
+## [2.0.51] - 2024-01-12 - implemented write-logmsg in new-ntfsaclissuereport
+
 ## [2.0.50] - 2022-09-05 - renamed get-foldertarget to resolve-folder
 
 ## [2.0.49] - 2022-09-05 - Added Expand-Folder, in future can implement multithreading for Get-Subfolder via this function

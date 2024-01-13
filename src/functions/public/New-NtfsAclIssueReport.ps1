@@ -11,8 +11,28 @@ function New-NtfsAclIssueReport {
         The naming format that will be used for the users is CONTOSO\User1 where CONTOSO is the NetBIOS name of the domain, and User1 is the samAccountName of the user
         By default, this is a scriptblock that always evaluates to $true so it doesn't evaluate any naming convention compliance
         #>
-        [scriptblock]$GroupNamingConvention = { $true }
+        [scriptblock]$GroupNamingConvention = { $true },
+
+        <#
+        Hostname of the computer running this function.
+
+        Can be provided as a string to avoid calls to HOSTNAME.EXE
+        #>
+        [string]$ThisHostName = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Dictionary of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
     )
+
+    $LogParams = @{
+        ThisHostname = $ThisHostname
+        Type         = 'Verbose'
+        LogMsgCache  = $LogMsgCache
+        WhoAmI       = $WhoAmI
+    }
 
     $IssuesDetected = $false
 
@@ -30,7 +50,7 @@ function New-NtfsAclIssueReport {
     } else {
         $Txt = 'OK'
     }
-    Write-Verbose "$Count`:$Txt"
+    Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # List of ACEs for groups that do not match the specified naming convention
     # Invert the naming convention scriptblock (because we actually want to identify groups that do NOT follow the convention)
@@ -48,7 +68,7 @@ function New-NtfsAclIssueReport {
     } else {
         $Txt = 'OK'
     }
-    Write-Verbose "$Count`:$Txt"
+    Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # ACEs for users (recommend replacing with group-based access on any folder that is not a home folder)
     $UserACEs = $UserPermissions.Group |
@@ -63,7 +83,7 @@ function New-NtfsAclIssueReport {
     } else {
         $Txt = 'OK'
     }
-    Write-Verbose "$Count`:$Txt"
+    Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # ACEs for unresolvable SIDs (recommend removing these ACEs)
     $SIDsToCleanup = $UserPermissions.Group.NtfsAccessControlEntries |
@@ -77,7 +97,7 @@ function New-NtfsAclIssueReport {
     } else {
         $Txt = 'OK'
     }
-    Write-Verbose "$Count`:$Txt"
+    Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # CREATOR OWNER access (recommend replacing with group-based access, or with explicit user access for a home folder.)
     $FoldersWithCreatorOwner = ($UserPermissions | ? { $_.Name -match 'CREATOR OWNER' }).Group.NtfsAccessControlEntries.Path | Sort -Unique
@@ -88,7 +108,7 @@ function New-NtfsAclIssueReport {
     } else {
         $Txt = 'OK'
     }
-    Write-Verbose "$Count`:$Txt"
+    Write-LogMsg @LogParams -Text "$Count $Txt"
 
     [PSCustomObject]@{
         IssueDetected                = $IssuesDetected
@@ -98,4 +118,5 @@ function New-NtfsAclIssueReport {
         SIDsToCleanup                = $SIDsToCleanup
         FoldersWithCreatorOwner      = $FoldersWithCreatorOwner
     }
+
 }

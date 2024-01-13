@@ -14,7 +14,8 @@ Alternative to Get-Acl designed to be as lightweight and flexible as possible
 
 ```
 Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
- [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [<CommonParameters>]
+ [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -87,6 +88,21 @@ Aliases:
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

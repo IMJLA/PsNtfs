@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.50
+Help Version: 2.0.53
 Locale: en-US
 ---
 
@@ -22,9 +22,6 @@ Expand an object representing a security principal and into a collection of obje
 ### [Expand-Acl](Expand-Acl.md)
 Expand an Access Control List into its constituent Access Control Entries
 
-### [Expand-Folder](Expand-Folder.md)
-{{ Fill in the Description }}
-
 ### [Find-ServerNameInPath](Find-ServerNameInPath.md)
 Parse a literal path to find its server
 
@@ -41,9 +38,6 @@ Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
 ### [Get-FolderAce](Get-FolderAce.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
 
-### [Get-FolderTarget](Get-FolderTarget.md)
-{{ Fill in the Description }}
-
 ### [Get-Subfolder](Get-Subfolder.md)
 
 Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [<CommonParameters>]
@@ -56,7 +50,7 @@ Get-Win32MappedLogicalDisk [[-ComputerName] <string>] [[-ThisHostName] <string>]
 
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
 
-New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>]
+New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
 
 
 ### [Resolve-Folder](Resolve-Folder.md)
