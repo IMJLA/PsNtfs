@@ -41,9 +41,12 @@ function Format-FolderPermission {
             #Calculate the completion percentage, and format it to show 0 decimal places
             $percentage = "{0:N0}" -f (($i / ($UserPermission.Count)) * 100)
 
+            #Update the log with the current status
+            [string]$statusMsg = "Status: $percentage% - Processing user permission $i of " + $UserPermission.Count + ": " + $ThisUser.Name
+            Write-LogMsg @LogParams -Text $statusMsg
+
             #Display the progress bar
-            $status = ("$(Get-Date -Format s)`t$(hostname)`tFormat-FolderPermission`tStatus: " + $percentage + "% - Processing user permission $i of " + $UserPermission.Count + ": " + $ThisUser.Name)
-            Write-LogMsg @LogParams -Text $status
+            $status = "$(Get-Date -Format s)`t$ThisHostName`tFormat-FolderPermission`t$statusMsg"
             Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
 
             if ($ThisUser.Group.DirectoryEntry.Properties) {
