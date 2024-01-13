@@ -724,10 +724,11 @@ function Get-Win32MappedLogicalDisk {
         $ComputerName -eq "$ThisHostname." -or
         $ComputerName -eq $ThisFqdn
     ) {
-        #Write-LogMsg @LogParams -Text "Get-CimInstance -ClassName Win32_MappedLogicalDisk"
+        Write-LogMsg @LogParams -Text "Get-CimInstance -ClassName Win32_MappedLogicalDisk"
         Get-CimInstance -ClassName Win32_MappedLogicalDisk
-    } else {
-        #Write-LogMsg @LogParams -Text "Get-CimInstance -ComputerName $ComputerName -ClassName Win32_MappedLogicalDisk"
+    }
+    else {
+        Write-LogMsg @LogParams -Text "Get-CimInstance -ComputerName $ComputerName -ClassName Win32_MappedLogicalDisk"
         # If an Active Directory domain is targeted there are no local accounts and CIM connectivity is not expected
         # Suppress errors and return nothing in that case
         Get-CimInstance -ComputerName $ComputerName -ClassName Win32_MappedLogicalDisk -ErrorAction SilentlyContinue
@@ -935,6 +936,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
