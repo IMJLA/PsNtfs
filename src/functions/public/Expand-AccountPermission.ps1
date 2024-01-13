@@ -37,7 +37,10 @@ function Expand-AccountPermission {
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
             if ($null -eq $Props[$ThisProperty.Name]) {
+                Write-Host "$($ThisProperty.Name)" -ForegroundColor Red
                 $Props = ConvertTo-SimpleProperty -InputObject $Account -Property $ThisProperty.Name -PropertyDictionary $Props
+                start-sleep -seconds 3
+                pause
             }
         }
 

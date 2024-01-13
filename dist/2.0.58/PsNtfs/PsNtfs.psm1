@@ -34,7 +34,8 @@ function ConvertTo-SimpleProperty {
         # The following exception occurred while retrieving member "GetType": "Not implemented"
         if (Get-Member -InputObject $Value -Name GetType) {
             [string]$Type = $Value.GetType().FullName
-        } else {
+        }
+        else {
             # The only scenario we've encountered where the GetType() method does not exist is DirectoryEntry objects from the WinNT provider
             # Force the type to 'System.DirectoryServices.DirectoryEntry'
             [string]$Type = 'System.DirectoryServices.DirectoryEntry'
@@ -61,9 +62,8 @@ function ConvertTo-SimpleProperty {
             To catch the error we will redirect the Success Stream to the Error Stream
             Then if the Exception type matches, we will use the continue keyword to break out of the current switch statement
             #>
-            try {
-                $Value 1>2
-            } catch [System.NotSupportedException] {
+            $KeyCount = $Value.Keys.$KeyCount
+            if (-not $KeyCount -gt 0) {
                 continue
             }
 
@@ -185,7 +185,10 @@ function Expand-AccountPermission {
 
         ForEach ($ThisProperty in $AccountNoteProperties) {
             if ($null -eq $Props[$ThisProperty.Name]) {
+                Write-Host "$($ThisProperty.Name)" -ForegroundColor Red
                 $Props = ConvertTo-SimpleProperty -InputObject $Account -Property $ThisProperty.Name -PropertyDictionary $Props
+                start-sleep -seconds 3
+                pause
             }
         }
 
@@ -966,6 +969,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
