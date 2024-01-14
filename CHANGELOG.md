@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.64] - 2024-01-13 - troubleshooting bug in get-folderace ln 51-55
+
 ## [2.0.63] - 2024-01-13 - think I am reintroducing a bug by not suppressing output in get-folderace lines 46-50 but testing anyway
 
 ## [2.0.62] - 2024-01-13 - bug fix in New-NtfsAclIssueReport

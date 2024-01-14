@@ -43,13 +43,13 @@ function Get-FolderAce {
     $TodaysHostname = HOSTNAME.exe
 
     Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
-    #$DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
-    #        $LiteralPath,
-    #        $Sections
-    #    ) } 2>$null
-    $DirectorySecurity = [System.Security.AccessControl.DirectorySecurity]::new($LiteralPath, $Sections)
+    $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
+            $LiteralPath,
+            $Sections
+        ) } 2>$null
 
-    if (-not $DirectorySecurity.Access) {
+    #if (-not $DirectorySecurity.Access) {
+    if ($null -eq $DirectorySecurity) {
         Write-Debug "  $(Get-Date -Format s)`t$TodaysHostname`tGet-FolderAce`t# Found no ACL for '$LiteralPath'"
         return
     }
