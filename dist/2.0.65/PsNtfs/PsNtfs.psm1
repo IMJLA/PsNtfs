@@ -915,7 +915,8 @@ function Resolve-Folder {
                 if ($MatchingNetworkDrive) {
                     # Resolve mapped network drives to their UNC path
                     $UNC = $MatchingNetworkDrive.ProviderName
-                } else {
+                }
+                else {
                     # Resolve local drive letters to their UNC paths using administrative shares
                     $UNC = $TargetPath -replace $RegEx, "\\$(hostname)\$($Matches.DriveLetter)$"
                 }
@@ -925,11 +926,12 @@ function Resolve-Folder {
                     $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
                     $UNC -replace "^\\\\$Server\\", "\\$FQDN\"
                 }
-            } else {
-                # Can't use [NetApi32Dll]::NetDfsGetInfo($TargetPath) because it doesn't work if the provided path is a subfolder of a DFS folder
-                # Can't use [NetApi32Dll]::NetDfsGetClientInfo($TargetPath) because it does not return disabled folder targets
-                # Instead need to use [NetApi32Dll]::NetDfsEnum($TargetPath) then Where-Object to filter results
-                $AllDfs = Get-NetDfsEnum -Verbose -FolderPath $TargetPath -ErrorAction SilentlyContinue
+            }
+            else {
+                ## Workaround in place: Get-NetDfsEnum -Verbose parameter is not used due to errors when it is used with the PsRunspace module for multithreading
+                ## https://github.com/IMJLA/Export-Permission/issues/46
+                ## https://github.com/IMJLA/PsNtfs/issues/1
+                $AllDfs = Get-NetDfsEnum -FolderPath $TargetPath -ErrorAction SilentlyContinue
 
                 if ($AllDfs) {
                     $MatchingDfsEntryPaths = $AllDfs |
@@ -955,7 +957,8 @@ function Resolve-Folder {
                     ForEach-Object {
                         $_.FullOriginalQueryPath -replace [regex]::Escape($_.DfsEntryPath), $_.DfsTarget
                     }
-                } else {
+                }
+                else {
                     $Server = $TargetPath.split('\')[2]
                     $FQDN = ConvertTo-DnsFqdn -ComputerName $Server
                     $TargetPath -replace "^\\\\$Server\\", "\\$FQDN\"
@@ -974,6 +977,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
