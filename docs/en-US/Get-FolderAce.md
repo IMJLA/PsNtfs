@@ -9,6 +9,11 @@ schema: 2.0.0
 
 ## SYNOPSIS
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
+    Lightweight: Does not return the Path property like Get-Acl does
+    Flexible how? 
+Was it long paths? 
+DFS? 
+Can't remember what didn't work with Get-Acl
 
 ## SYNTAX
 

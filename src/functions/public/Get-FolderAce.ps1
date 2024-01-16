@@ -2,6 +2,8 @@ function Get-FolderAce {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
+        Lightweight: Does not return the Path property like Get-Acl does
+        Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
@@ -105,7 +107,7 @@ function Get-FolderAce {
         SourceAccessList  = $SourceAccessList
         Source            = 'Ownership'
         IsInherited       = $false
-        IdentityReference = $DirectorySecurity.Owner -replace '^O:', ''
+        IdentityReference = $DirectorySecurity.Owner.Replace('O:', '')
         FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
         InheritanceFlags  = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
         PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None

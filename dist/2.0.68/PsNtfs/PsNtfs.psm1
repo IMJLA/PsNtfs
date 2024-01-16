@@ -588,7 +588,7 @@ function Get-DirectorySecurity {
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
         Lightweight: Does not return the Path property like Get-Acl does
         Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
-    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
@@ -623,7 +623,7 @@ function Get-FileSystemAccessRule {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
-    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
@@ -647,7 +647,19 @@ function Get-FileSystemAccessRule {
         [bool]$IncludeExplicitRules = $true,
 
         # Type of IdentityReference to return in each ACE
-        [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier]
+        [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier],
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
@@ -692,6 +704,8 @@ function Get-FolderAce {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
+        Lightweight: Does not return the Path property like Get-Acl does
+        Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
@@ -795,7 +809,7 @@ function Get-FolderAce {
         SourceAccessList  = $SourceAccessList
         Source            = 'Ownership'
         IsInherited       = $false
-        IdentityReference = $DirectorySecurity.Owner -replace '^O:', ''
+        IdentityReference = $DirectorySecurity.Owner.Replace('O:', '')
         FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
         InheritanceFlags  = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
         PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
@@ -1108,6 +1122,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

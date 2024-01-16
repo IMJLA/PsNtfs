@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.67
+Help Version: 2.0.68
 Locale: en-US
 ---
 
@@ -39,14 +39,16 @@ Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
     Lightweight: Does not return the Path property like Get-Acl does
     Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
-TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
 
 ### [Get-FileSystemAccessRule](Get-FileSystemAccessRule.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
-TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
 
 ### [Get-FolderAce](Get-FolderAce.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
+    Lightweight: Does not return the Path property like Get-Acl does
+    Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
 
 ### [Get-Subfolder](Get-Subfolder.md)
 

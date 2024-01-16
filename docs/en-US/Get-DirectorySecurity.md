@@ -14,7 +14,7 @@ Alternative to Get-Acl designed to be as lightweight and flexible as possible
 Was it long paths? 
 DFS? 
 Can't remember what didn't work with Get-Acl
-TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
 
 ## SYNTAX
 

@@ -4,7 +4,7 @@ function Get-DirectorySecurity {
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
         Lightweight: Does not return the Path property like Get-Acl does
         Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
-    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter

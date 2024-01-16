@@ -2,7 +2,7 @@ function Get-FileSystemAccessRule {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
-    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule replaces Get-FolderACE
+    TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
     .DESCRIPTION
     Returns an object for each access control entry instead of a single object for the ACL
     Excludes inherited permissions by default but allows them to be included with the -IncludeInherited switch parameter
@@ -26,7 +26,19 @@ function Get-FileSystemAccessRule {
         [bool]$IncludeExplicitRules = $true,
 
         # Type of IdentityReference to return in each ACE
-        [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier]
+        [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier],
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Silent',
+
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$TodaysHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
 
