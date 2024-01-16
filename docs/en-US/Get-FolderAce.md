@@ -14,8 +14,8 @@ Alternative to Get-Acl designed to be as lightweight and flexible as possible
 
 ```
 Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
- [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,21 @@ Aliases:
 Required: False
 Position: 4
 Default value: System.Security.Principal.SecurityIdentifier
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DebugOutputStream
+Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: Silent
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -93,21 +108,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ProgressAction
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: System.Management.Automation.ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Sections
 Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement
 
@@ -124,8 +124,35 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+### -TodaysHostname
+Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoAmI
+Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: (whoami.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## INPUTS
 
