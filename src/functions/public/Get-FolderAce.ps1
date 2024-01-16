@@ -88,7 +88,7 @@ function Get-FolderAce {
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
             SourceAccessList = $SourceAccessList
-            Source           = 'DACL'
+            Source           = 'Discretionary Access Control List'
         }
         ForEach ($ThisProperty in $ACEPropertyNames) {
             $ACEProperties[$ThisProperty] = $ThisAccessRule.$ThisProperty
