@@ -767,18 +767,19 @@ function Get-FolderAce {
     }
 
     <#
-    Get-Acl would have already populated the Path property on the Access List so we will too
-    Creating new PSCustomObjects with all the original properties is faster than using Add-Member
+    Get-Acl would have already populated the Path property on the Access List, but [System.Security.AccessControl.DirectorySecurity] has a null Path property instead
+    Creating new PSCustomObjects with all the original properties then manually setting the Path is faster than using Add-Member
     #>
-    $AclProperties = @{
-        'Path' = $LiteralPath
-    }
+    $AclProperties = @{}
     ForEach (
         $ThisProperty in
         (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ) {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
+    $AclProperties['Path'] = $LiteralPath
+
+
     $SourceAccessList = [PSCustomObject]$AclProperties
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
@@ -1149,6 +1150,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
