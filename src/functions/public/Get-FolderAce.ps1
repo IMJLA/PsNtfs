@@ -42,7 +42,10 @@ function Get-FolderAce {
         [string]$TodaysHostname = (HOSTNAME.EXE),
 
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$WhoAmI = (whoami.EXE)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Thread-safe cache of items and their owners
+        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
 
     )
 
@@ -65,14 +68,15 @@ function Get-FolderAce {
     Get-Acl would have already populated the Path property on the Access List so we will too
     Creating new PSCustomObjects with all the original properties is faster than using Add-Member
     #>
-    $AclProperties = @{}
+    $AclProperties = @{
+        'Path' = $LiteralPath
+    }
     ForEach (
         $ThisProperty in
         (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ) {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
-    $AclProperties['Path'] = $LiteralPath
     $SourceAccessList = [PSCustomObject]$AclProperties
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
@@ -101,17 +105,8 @@ function Get-FolderAce {
     Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
       READ_CONTROL: The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).
       WRITE_DAC: The right to modify the discretionary access control list (DACL) in the object's security descriptor.
-    Output an object for the Owner as well to represent that they have Full Control
+    Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
     #>
-    [PSCustomObject]@{
-        SourceAccessList  = $SourceAccessList
-        Source            = 'Ownership'
-        IsInherited       = $false
-        IdentityReference = $DirectorySecurity.Owner.Replace('O:', '')
-        FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
-        InheritanceFlags  = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
-        PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
-        AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
-    }
+    $OwnerCache['LiteralPath'] = $SourceAccessList
 
 }

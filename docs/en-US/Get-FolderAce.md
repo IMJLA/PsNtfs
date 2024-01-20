@@ -21,6 +21,7 @@ Can't remember what didn't work with Get-Acl
 Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
  [[-TodaysHostname] <String>] [[-WhoAmI] <String>]
+ [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
 ```
 
 ## DESCRIPTION
@@ -109,6 +110,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OwnerCache
+Thread-safe cache of items and their owners
+
+```yaml
+Type: System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

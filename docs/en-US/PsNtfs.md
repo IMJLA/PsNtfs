@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.69
+Help Version: 2.0.70
 Locale: en-US
 ---
 
@@ -49,6 +49,11 @@ TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basic
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
     Lightweight: Does not return the Path property like Get-Acl does
     Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
+
+### [Get-OwnerAce](Get-OwnerAce.md)
+
+Get-OwnerAce [[-Item] <string>] [[-OwnerCache] <ConcurrentDictionary[string,psobject]>]
+
 
 ### [Get-Subfolder](Get-Subfolder.md)
 

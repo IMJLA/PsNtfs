@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.70] - 2024-01-20 - add OwnerCache updating to Get-FolderAce and add Get-OwnerAce which uses it
+
 ## [2.0.69] - 2024-01-15 - updated Source in Get-FolderAce from DACL to Discretionary Access Control List
 
 ## [2.0.68] - 2024-01-15 - added owner feature to Get-FolderAce (returns object to represent Full Control for folder owner)
