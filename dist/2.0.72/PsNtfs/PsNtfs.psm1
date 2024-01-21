@@ -779,8 +779,18 @@ function Get-FolderAce {
     }
     $AclProperties['Path'] = $LiteralPath
 
+    <#
+    The creator of a folder is the Owner
+    Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
+      READ_CONTROL: The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).
+      WRITE_DAC: The right to modify the discretionary access control list (DACL) in the object's security descriptor.
+    #>
+    $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
     $SourceAccessList = [PSCustomObject]$AclProperties
+
+    # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
+    $OwnerCache[$LiteralPath] = $SourceAccessList
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
     $Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
@@ -802,15 +812,6 @@ function Get-FolderAce {
         }
         [PSCustomObject]$ACEProperties
     }
-
-    <#
-    The creator of a folder is the Owner
-    Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
-      READ_CONTROL: The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).
-      WRITE_DAC: The right to modify the discretionary access control list (DACL) in the object's security descriptor.
-    Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
-    #>
-    $OwnerCache['LiteralPath'] = $SourceAccessList
 
 }
 function Get-OwnerAce {
@@ -1150,6 +1151,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
