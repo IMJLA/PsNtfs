@@ -784,6 +784,10 @@ function Get-FolderAce {
     Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
       READ_CONTROL: The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).
       WRITE_DAC: The right to modify the discretionary access control list (DACL) in the object's security descriptor.
+
+    Previously the .Owner property was already populated with the NTAccount name of the Owner,
+    but for some reason this stopped being true and now I have to call the GetOwner method.
+    This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
     #>
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
@@ -1151,6 +1155,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
