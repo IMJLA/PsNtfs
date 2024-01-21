@@ -117,12 +117,10 @@ function Format-FolderPermission {
                 }
                 else {
                     if ($ThisUser.Group.DirectoryEntry.SchemaClassName) {
-                        $SchemaClassName = $ThisUser.Group.DirectoryEntry.SchemaClassName |
-                        Select-Object -First 1
+                        $SchemaClassName = @($ThisUser.Group.DirectoryEntry.SchemaClassName)[0]
                     }
                     else {
-                        $SchemaClassName = $ThisUser.Group.SchemaClassName |
-                        Select-Object -First 1
+                        $SchemaClassName = @($ThisUser.Group.SchemaClassName)[0]
                     }
                 }
             }

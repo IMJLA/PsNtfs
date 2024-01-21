@@ -40,7 +40,7 @@ function New-NtfsAclIssueReport {
     $FoldersWithBrokenInheritance = $FolderPermissions |
     Select-Object -Skip 1 |
     Where-Object -FilterScript {
-                ($_.Group.FolderInheritanceEnabled | Select-Object -First 1) -eq $false -and
+        @($_.Group.FolderInheritanceEnabled)[0] -eq $false -and
                 (($_.Name -replace ([regex]::Escape($TargetPath)), '' -split '\\') | Measure-Object).Count -ne 2
     }
     $Count = ($FoldersWithBrokenInheritance | Measure-Object).Count

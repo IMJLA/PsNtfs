@@ -290,14 +290,15 @@ function Find-ServerNameInPath {
     if ($LiteralPath -match '[A-Za-z]\:\\' -or $null -eq $LiteralPath -or '' -eq $LiteralPath) {
         # For local file paths, the "server" is the local computer.  Assume the same for null paths.
         hostname
-    } else {
+    }
+    else {
         # Otherwise it must be a UNC path, so the server is the first non-empty string between backwhacks (\)
-        $ThisServer = $LiteralPath -split '\\' |
-        Where-Object -FilterScript { $_ -ne '' } |
-        Select-Object -First 1
+        $ThisServer = @($LiteralPath -split '\\' |
+            Where-Object -FilterScript { $_ -ne '' })[0]
 
         $ThisServer -replace '\?', (hostname)
     }
+
 }
 function Format-FolderPermission {
 
@@ -418,12 +419,10 @@ function Format-FolderPermission {
                 }
                 else {
                     if ($ThisUser.Group.DirectoryEntry.SchemaClassName) {
-                        $SchemaClassName = $ThisUser.Group.DirectoryEntry.SchemaClassName |
-                        Select-Object -First 1
+                        $SchemaClassName = @($ThisUser.Group.DirectoryEntry.SchemaClassName)[0]
                     }
                     else {
-                        $SchemaClassName = $ThisUser.Group.SchemaClassName |
-                        Select-Object -First 1
+                        $SchemaClassName = @($ThisUser.Group.SchemaClassName)[0]
                     }
                 }
             }
@@ -979,7 +978,7 @@ function New-NtfsAclIssueReport {
     $FoldersWithBrokenInheritance = $FolderPermissions |
     Select-Object -Skip 1 |
     Where-Object -FilterScript {
-                ($_.Group.FolderInheritanceEnabled | Select-Object -First 1) -eq $false -and
+        @($_.Group.FolderInheritanceEnabled)[0] -eq $false -and
                 (($_.Name -replace ([regex]::Escape($TargetPath)), '' -split '\\') | Measure-Object).Count -ne 2
     }
     $Count = ($FoldersWithBrokenInheritance | Measure-Object).Count
@@ -1149,6 +1148,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
