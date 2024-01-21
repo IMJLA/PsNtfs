@@ -501,7 +501,8 @@ function Format-SecurityPrincipal {
                 }
                 if ("$ThisPrincipalAccount" -eq '') {
                     $_.Name
-                } else {
+                }
+                else {
                     $ThisPrincipalAccount
                 }
             }
@@ -523,18 +524,18 @@ function Format-SecurityPrincipal {
                 }
                 if ("$ThisName" -eq '') {
                     $_.Name -replace [regex]::Escape("$($_.DomainNetBios)\"), ''
-                } else {
+                }
+                else {
                     $ThisName
                 }
             }
         },
         *
 
-        # Format and output its members if it is a group
-        $ThisPrincipal.Members |
+
         <#
         # Because we have already recursively retrieved all group members, we now have all the users so we can filter out the groups from the group members.
-        Where-Object -FilterScript {
+        $ThisPrincipal.Members | Where-Object -FilterScript {
             if ($_.DirectoryEntry.Properties) {
                 $_.DirectoryEntry.Properties['objectClass'] -notcontains 'group' -and
                 $null -eq $_.DirectoryEntry.Properties['groupType'].Value
@@ -544,6 +545,9 @@ function Format-SecurityPrincipal {
             }
         } |
         #>
+
+        # Format and output its members if it is a group
+        $ThisPrincipal.Members |
         Select-Object -Property @{
             Label      = 'User'
             Expression = {
@@ -576,6 +580,10 @@ function Format-SecurityPrincipal {
         @{
             Label      = 'NtfsAccessControlEntries'
             Expression = { $ThisPrincipal.Group }
+        },
+        @{
+            Label      = 'ObjectType'
+            Expression = { $_.SchemaClassName }
         },
         *
 
@@ -1155,6 +1163,8 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
+
 
 
 

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.75] - 2024-01-21 - bugfix Format-SecurityPrincipal
+
+## [2.0.74] - 2024-01-21 - bugfix Format-SecurityPrincipal
+
 ## [2.0.73] - 2024-01-20 - updated comments get-folderace
 
 ## [2.0.72] - 2024-01-20 - bugfix owner feature in get-folderace
