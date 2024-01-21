@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.78] - 2024-01-21 - https://github.com/IMJLA/Export-Permission/issues/61
+
 ## [2.0.77] - 2024-01-21 - enhancement-performance remove usage of select-object -first
 
 ## [2.0.76] - 2024-01-21 - bugfix Format-SecurityPrincipal

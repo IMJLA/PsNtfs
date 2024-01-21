@@ -81,8 +81,7 @@ function Format-SecurityPrincipal {
         @{
             Label      = 'IdentityReference'
             Expression = {
-                $ThisPrincipal.Group.IdentityReferenceResolved |
-                Sort-Object -Unique
+                @($ThisPrincipal.Group.IdentityReferenceResolved)[0]
             }
         },
         @{

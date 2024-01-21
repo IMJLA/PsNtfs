@@ -397,14 +397,14 @@ function Format-FolderPermission {
                         $SchemaClassName = 'user'
                     }
                 }
-                $Name = $Names | Sort-Object -Unique
-                $Dept = $Depts | Sort-Object -Unique
-                $Title = $Titles | Sort-Object -Unique
+                $Name = @($Names)[0]
+                $Dept = @($Depts)[0]
+                $Title = @($Titles)[0]
             }
             else {
-                $Name = $ThisUser.Group.name | Sort-Object -Unique
-                $Dept = $ThisUser.Group.department | Sort-Object -Unique
-                $Title = $ThisUser.Group.title | Sort-Object -Unique
+                $Name = @($ThisUser.Group.name)[0]
+                $Dept = @($ThisUser.Group.department)[0]
+                $Title = @($ThisUser.Group.title)[0]
 
                 if ($ThisUser.Group.Properties) {
                     if (
@@ -558,8 +558,7 @@ function Format-SecurityPrincipal {
         @{
             Label      = 'IdentityReference'
             Expression = {
-                $ThisPrincipal.Group.IdentityReferenceResolved |
-                Sort-Object -Unique
+                @($ThisPrincipal.Group.IdentityReferenceResolved)[0]
             }
         },
         @{
@@ -1148,6 +1147,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
