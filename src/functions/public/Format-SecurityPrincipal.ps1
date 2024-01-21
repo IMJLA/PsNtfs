@@ -54,20 +54,6 @@ function Format-SecurityPrincipal {
         },
         *
 
-
-        <#
-        # Because we have already recursively retrieved all group members, we now have all the users so we can filter out the groups from the group members.
-        $ThisPrincipal.Members | Where-Object -FilterScript {
-            if ($_.DirectoryEntry.Properties) {
-                $_.DirectoryEntry.Properties['objectClass'] -notcontains 'group' -and
-                $null -eq $_.DirectoryEntry.Properties['groupType'].Value
-            } else {
-                $_.Properties['objectClass'] -notcontains 'group' -and
-                $null -eq $_.Properties['groupType'].Value
-            }
-        } |
-        #>
-
         # Format and output its members if it is a group
         $ThisPrincipal.Members |
         Select-Object -Property @{
