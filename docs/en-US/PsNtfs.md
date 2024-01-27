@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.78
+Help Version: 2.0.79
 Locale: en-US
 ---
 
@@ -67,7 +67,7 @@ Get-Win32MappedLogicalDisk [[-ComputerName] <string>] [[-ThisHostName] <string>]
 
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
 
-New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNamingConvention] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
+New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNameRule] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
 
 
 ### [Resolve-Folder](Resolve-Folder.md)

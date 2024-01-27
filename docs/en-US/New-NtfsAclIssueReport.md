@@ -14,8 +14,7 @@ schema: 2.0.0
 
 ```
 New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>]
- [[-GroupNamingConvention] <ScriptBlock>] [[-ThisHostName] <String>] [[-WhoAmI] <String>]
- [[-LogMsgCache] <Hashtable>]
+ [[-GroupNameRule] <ScriptBlock>] [[-ThisHostName] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -47,8 +46,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -GroupNamingConvention
-{{ Fill GroupNamingConvention Description }}
+### -GroupNameRule
+{{ Fill GroupNameRule Description }}
 
 ```yaml
 Type: System.Management.Automation.ScriptBlock

@@ -11,7 +11,7 @@ function New-NtfsAclIssueReport {
         The naming format that will be used for the users is CONTOSO\User1 where CONTOSO is the NetBIOS name of the domain, and User1 is the samAccountName of the user
         By default, this is a scriptblock that always evaluates to $true so it doesn't evaluate any naming convention compliance
         #>
-        [scriptblock]$GroupNamingConvention = { $true },
+        [scriptblock]$GroupNameRule = { $true },
 
         <#
         Hostname of the computer running this function.
@@ -55,7 +55,7 @@ function New-NtfsAclIssueReport {
 
     # List of ACEs for groups that do not match the specified naming convention
     # Invert the naming convention scriptblock (because we actually want to identify groups that do NOT follow the convention)
-    $ViolatesNamingConvention = [scriptblock]::Create("!($GroupNamingConvention)")
+    $ViolatesNamingConvention = [scriptblock]::Create("!($GroupNameRule)")
     $NonCompliantGroups = $SecurityPrincipals |
     Where-Object -FilterScript { $_.ObjectType -contains 'Group' } |
     Where-Object -FilterScript $ViolatesNamingConvention |
