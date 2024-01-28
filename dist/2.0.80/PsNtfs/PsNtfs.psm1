@@ -8,12 +8,29 @@ function GetDirectories {
 
         [System.IO.SearchOption]$SearchOption = [System.IO.SearchOption]::AllDirectories
     )
+
+    # Try to run the command as instructed
     Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGetDirectories`t[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
     try {
-        [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, $SearchOption)
-    } catch {
+        $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, $SearchOption)
+        return $result
+    }
+    catch {
         Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
     }
+
+    # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
+    try {
+        $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
+    }
+    catch {
+        Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
+        return
+    }
+    ForEach ($Child in $result) {
+        GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption
+    }
+
 }
 function ConvertTo-SimpleProperty {
     param (
@@ -746,7 +763,7 @@ function Get-FolderAce {
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
     $Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
 
-    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.ScriptLineNumber)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
             $Sections
@@ -754,7 +771,7 @@ function Get-FolderAce {
     } 2>$null
 
     if ($null -eq $DirectorySecurity) {
-        Write-Warning "$Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.ScriptLineNumber)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t# Found no ACL for '$LiteralPath'" -Type Warning @LogParams
+        Write-Warning "$Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t# Found no ACL for '$LiteralPath'" -Type Warning @LogParams
         return
     }
 
@@ -780,7 +797,9 @@ function Get-FolderAce {
     Previously the .Owner property was already populated with the NTAccount name of the Owner,
     but for some reason this stopped being true and now I have to call the GetOwner method.
     This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
-    #>
+    #>$Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
+
+    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
     $SourceAccessList = [PSCustomObject]$AclProperties
@@ -839,6 +858,30 @@ function Get-OwnerAce {
             Source            = 'Ownership'
         }
 
+    }
+
+}
+function Get-ServerFromFilePath {
+    param (
+        [string]$FilePath,
+
+        <#
+        FQDN of the computer running this function.
+
+        Can be provided as a string to avoid calls to HOSTNAME.EXE and [System.Net.Dns]::GetHostByName()
+        #>
+        [string]$ThisFqdn = ([System.Net.Dns]::GetHostByName((HOSTNAME.EXE)).HostName)
+    )
+
+    if ($FilePath[1] -eq '\') {
+        #UNC
+        $SkippedFirstTwoChars = $FilePath.Substring(2, $FilePath.Length - 2)
+        $NextSlashIndex = $SkippedFirstTwoChars.IndexOf('\')
+        $SkippedFirstTwoChars.Substring(0, $NextSlashIndex)
+    }
+    else {
+        #Local
+        $ThisFqdn
     }
 
 }
@@ -1146,7 +1189,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

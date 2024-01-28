@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.80] - 2024-01-28 - Add more debug output to Get-FolderAce. Also add Get-ServerFromFilePath although it is not in use
+
 ## [2.0.79] - 2024-01-27 - shortened param name
 
 ## [2.0.78] - 2024-01-21 - https://github.com/IMJLA/Export-Permission/issues/61

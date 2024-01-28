@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.79
+Help Version: 2.0.80
 Locale: en-US
 ---
 
@@ -53,6 +53,11 @@ Alternative to Get-Acl designed to be as lightweight and flexible as possible
 ### [Get-OwnerAce](Get-OwnerAce.md)
 
 Get-OwnerAce [[-Item] <string>] [[-OwnerCache] <ConcurrentDictionary[string,psobject]>]
+
+
+### [Get-ServerFromFilePath](Get-ServerFromFilePath.md)
+
+Get-ServerFromFilePath [[-FilePath] <string>] [[-ThisFqdn] <string>]
 
 
 ### [Get-Subfolder](Get-Subfolder.md)
