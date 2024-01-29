@@ -31,7 +31,7 @@ function Get-Subfolder {
 
     $LogParams = @{
         ThisHostname = $ThisHostname
-        Type         = 'Debug'
+        Type         = $DebugOutputStream
         LogMsgCache  = $LogMsgCache
         WhoAmI       = $WhoAmI
     }

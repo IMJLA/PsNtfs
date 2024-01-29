@@ -954,7 +954,7 @@ function Get-Subfolder {
 
     $LogParams = @{
         ThisHostname = $ThisHostname
-        Type         = 'Debug'
+        Type         = $DebugOutputStream
         LogMsgCache  = $LogMsgCache
         WhoAmI       = $WhoAmI
     }
@@ -1254,6 +1254,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
