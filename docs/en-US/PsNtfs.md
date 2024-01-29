@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.81
+Help Version: 2.0.82
 Locale: en-US
 ---
 
@@ -62,7 +62,7 @@ Get-ServerFromFilePath [[-FilePath] <string>] [[-ThisFqdn] <string>]
 
 ### [Get-Subfolder](Get-Subfolder.md)
 
-Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [<CommonParameters>]
+Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [[-DebugOutputStream] <string>] [[-ThisHostname] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>] [<CommonParameters>]
 
 
 ### [Get-Win32MappedLogicalDisk](Get-Win32MappedLogicalDisk.md)

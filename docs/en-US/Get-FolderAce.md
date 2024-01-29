@@ -20,7 +20,7 @@ Can't remember what didn't work with Get-Acl
 ```
 Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [[-WhoAmI] <String>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
 ```
 
@@ -64,7 +64,7 @@ Aliases:
 
 Required: False
 Position: 5
-Default value: Silent
+Default value: Debug
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -145,7 +145,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -TodaysHostname
+### -ThisHostname
 Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
 
 ```yaml

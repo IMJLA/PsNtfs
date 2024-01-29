@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.82] - 2024-01-28 - reduce calls to external executables
+
 ## [2.0.81] - 2024-01-28 - made Find-ServerNameInPath more efficient (no regex, single char comparison instead)
 
 ## [2.0.80] - 2024-01-28 - Add more debug output to Get-FolderAce. Also add Get-ServerFromFilePath although it is not in use

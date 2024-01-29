@@ -36,10 +36,10 @@ function Get-FolderAce {
         [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier],
 
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
-        [string]$DebugOutputStream = 'Silent',
+        [string]$DebugOutputStream = 'Debug',
 
         # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$TodaysHostname = (HOSTNAME.EXE),
+        [string]$ThisHostname = (HOSTNAME.EXE),
 
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
@@ -49,10 +49,14 @@ function Get-FolderAce {
 
     )
 
-    # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
-    $Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
+    $LogParams = @{
+        ThisHostname = $ThisHostname
+        Type         = $DebugOutputStream
+        LogMsgCache  = $LogMsgCache
+        WhoAmI       = $WhoAmI
+    }
 
-    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
             $Sections
@@ -60,7 +64,7 @@ function Get-FolderAce {
     } 2>$null
 
     if ($null -eq $DirectorySecurity) {
-        Write-Warning "$Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t# Found no ACL for '$LiteralPath'" -Type Warning @LogParams
+        Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'" -Type Warning @LogParams
         return
     }
 
@@ -86,9 +90,9 @@ function Get-FolderAce {
     Previously the .Owner property was already populated with the NTAccount name of the Owner,
     but for some reason this stopped being true and now I have to call the GetOwner method.
     This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
-    #>$Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
+    #>
 
-    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
+    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
     $SourceAccessList = [PSCustomObject]$AclProperties
@@ -97,11 +101,10 @@ function Get-FolderAce {
     $OwnerCache[$LiteralPath] = $SourceAccessList
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
-    $Timestamp = Get-Date -Format 'yyyy-MM-ddThh:mm:ss.ffff'
-    Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($MyInvocation.InvocationName)`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
+    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     if ($AccessRules.Count -lt 1) {
-        Write-Debug "  $Timestamp`t$TodaysHostname`t$WhoAmI`t$($($MyInvocation.ScriptLineNumber))`tGet-FolderAce`t$($MyInvocation.ScriptLineNumber)`tDebug`t# Found no matching access rules for '$LiteralPath'"
+        Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
         return
     }
 

@@ -5,17 +5,36 @@ function GetDirectories {
 
         [string]$SearchPattern = '*',
 
-        [System.IO.SearchOption]$SearchOption = [System.IO.SearchOption]::AllDirectories
+        [System.IO.SearchOption]$SearchOption = [System.IO.SearchOption]::AllDirectories,
+
+        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+        [string]$DebugOutputStream = 'Debug',
+
+        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$ThisHostname = (HOSTNAME.EXE),
+
+        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
+        [string]$WhoAmI = (whoami.EXE),
+
+        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [hashtable]$LogMsgCache = $Global:LogMessages
     )
 
+    $LogParams = @{
+        ThisHostname = $ThisHostname
+        Type         = $DebugOutputStream
+        LogMsgCache  = $LogMsgCache
+        WhoAmI       = $WhoAmI
+    }
+
     # Try to run the command as instructed
-    Write-Debug "  $(Get-Date -Format s)`t$(hostname)`tGetDirectories`t[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
+    Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
     try {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, $SearchOption)
         return $result
     }
     catch {
-        Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
+        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message
     }
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
@@ -23,11 +42,19 @@ function GetDirectories {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
     }
     catch {
-        Write-Warning "$(Get-Date -Format s)`t$(hostname)`tGetDirectories`t$($_.Exception.Message)"
+        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message
         return
     }
+
+    $GetSubfolderParams = @{
+        LogMsgCache       = $LogMsgCache
+        ThisHostname      = $TodaysHostname
+        DebugOutputStream = $DebugOutputStream
+        WhoAmI            = $WhoAmI
+    }
+
     ForEach ($Child in $result) {
-        GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption
+        GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption @GetSubfolderParams
     }
 
 }
