@@ -72,8 +72,8 @@ function Get-FolderAce {
     Creating new PSCustomObjects with all the original properties then manually setting the Path is faster than using Add-Member
     #>
     $AclProperties = @{}
-    $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     return
+    $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ForEach ($ThisProperty in $AclPropertyNames) {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
