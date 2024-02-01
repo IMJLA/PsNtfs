@@ -64,7 +64,7 @@ function Get-FolderAce {
     } 2>$null
 
     if ($null -eq $DirectorySecurity) {
-        Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'" -Type Warning @LogParams
+        Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'"
         return
     }
 
@@ -102,7 +102,7 @@ function Get-FolderAce {
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
-    $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
+    $AccessRules = @($DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType))
     if ($AccessRules.Count -lt 1) {
         Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
         return
