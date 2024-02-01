@@ -411,7 +411,7 @@ function Format-FolderPermission {
                     PercentComplete  = $NewPercentComplete
                     Status           = $statusMsg
                 }
-                Write-Progress -Activity @Progress
+                Write-Progress @Progress
             }
             if ($ThisUser.Group.DirectoryEntry.Properties) {
                 if (
@@ -1266,6 +1266,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

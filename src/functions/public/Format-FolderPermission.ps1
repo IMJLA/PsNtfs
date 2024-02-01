@@ -59,7 +59,7 @@ function Format-FolderPermission {
                     PercentComplete  = $NewPercentComplete
                     Status           = $statusMsg
                 }
-                Write-Progress -Activity @Progress
+                Write-Progress @Progress
             }
             if ($ThisUser.Group.DirectoryEntry.Properties) {
                 if (
