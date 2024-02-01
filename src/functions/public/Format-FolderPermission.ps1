@@ -181,7 +181,7 @@ function Format-FolderPermission {
     }
 
     end {
-        Write-Progress -Activity $Activity
+        Write-Progress -Activity $Activity -Completed
     }
 
 }
