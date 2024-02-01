@@ -837,13 +837,13 @@ function Get-FolderAce {
     ) {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
+    return
     $AclProperties['Path'] = $LiteralPath
     Write-Information $x
     $x++
 
 
 
-    return
     <#
     The creator of a folder is the Owner
     Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
@@ -1284,6 +1284,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
