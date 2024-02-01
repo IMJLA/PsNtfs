@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.108] - 2024-01-31 - bug get-folderace
+
 ## [2.0.107] - 2024-01-31 - bug get-folderace
 
 ## [2.0.106] - 2024-01-31 - bug get-folderace
