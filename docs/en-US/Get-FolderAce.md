@@ -22,6 +22,7 @@ Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <Access
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
  [[-ThisHostname] <String>] [[-WhoAmI] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
+ [[-LogMsgCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -110,6 +111,21 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogMsgCache
+Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: $Global:LogMessages
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

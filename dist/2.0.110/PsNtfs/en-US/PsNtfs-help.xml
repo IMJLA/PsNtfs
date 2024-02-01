@@ -1236,6 +1236,18 @@ Expand-Acl</dev:code>
           </dev:type>
           <dev:defaultValue>[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>LogMsgCache</maml:name>
+          <maml:description>
+            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
+        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>IncludeInherited</maml:name>
           <maml:description>
@@ -1309,6 +1321,18 @@ Expand-Acl</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+        <maml:name>LogMsgCache</maml:name>
+        <maml:description>
+          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Collections.Hashtable</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>$Global:LogMessages</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>OwnerCache</maml:name>
