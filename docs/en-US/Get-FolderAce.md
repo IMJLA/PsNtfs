@@ -124,7 +124,7 @@ Aliases:
 
 Required: False
 Position: 8
-Default value: [hashtable]::Synchronized(@{})
+Default value: ([hashtable]::Synchronized(@{}))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

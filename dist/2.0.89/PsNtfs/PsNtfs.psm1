@@ -802,7 +802,7 @@ function Get-FolderAce {
 
         # Thread-safe cache of items and their owners
         #[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
-        [hashtable]$OwnerCache = [hashtable]::Synchronized(@{})
+        [hashtable]$OwnerCache = ([hashtable]::Synchronized(@{}))
     )
 
     $LogParams = @{
@@ -1266,6 +1266,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

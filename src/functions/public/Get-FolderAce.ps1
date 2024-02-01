@@ -46,7 +46,7 @@ function Get-FolderAce {
 
         # Thread-safe cache of items and their owners
         #[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
-        [hashtable]$OwnerCache = [hashtable]::Synchronized(@{})
+        [hashtable]$OwnerCache = ([hashtable]::Synchronized(@{}))
     )
 
     $LogParams = @{

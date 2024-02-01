@@ -1234,7 +1234,7 @@ Expand-Acl</dev:code>
             <maml:name>System.Collections.Hashtable</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>[hashtable]::Synchronized(@{})</dev:defaultValue>
+          <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>IncludeInherited</maml:name>
@@ -1320,7 +1320,7 @@ Expand-Acl</dev:code>
           <maml:name>System.Collections.Hashtable</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>[hashtable]::Synchronized(@{})</dev:defaultValue>
+        <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Sections</maml:name>
