@@ -108,7 +108,7 @@ function Get-FolderAce {
         return
     }
 
-    $ACEPropertyNames = (Get-Member -InputObject $AccessRules -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{

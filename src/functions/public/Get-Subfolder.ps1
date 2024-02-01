@@ -49,7 +49,7 @@ function Get-Subfolder {
     else {
         $DepthString = $FolderRecursionDepth
     }
-    Write-Progress -Activity ("Retrieving subfolders...") -Status ("Enumerating all subfolders of '$TargetPath' to a depth of $DepthString levels of recursion") -PercentComplete 50
+    Write-Progress -Activity 'Retrieving subfolders...' -Status ("Enumerating all subfolders of '$TargetPath' to a depth of $DepthString levels of recursion") -PercentComplete 50
     if ($Host.Version.Major -gt 2) {
         switch ($FolderRecursionDepth) {
             -1 {
@@ -70,5 +70,5 @@ function Get-Subfolder {
         Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Recurse"
         Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
     }
-    Write-Progress -Activity ("Retrieving subfolders...") -Completed
+    Write-Progress -Activity 'Retrieving subfolders...' -Completed
 }

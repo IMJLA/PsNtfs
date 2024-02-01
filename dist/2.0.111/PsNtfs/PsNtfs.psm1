@@ -864,7 +864,7 @@ function Get-FolderAce {
         return
     }
 
-    $ACEPropertyNames = (Get-Member -InputObject $AccessRules -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
@@ -984,7 +984,7 @@ function Get-Subfolder {
     else {
         $DepthString = $FolderRecursionDepth
     }
-    Write-Progress -Activity ("Retrieving subfolders...") -Status ("Enumerating all subfolders of '$TargetPath' to a depth of $DepthString levels of recursion") -PercentComplete 50
+    Write-Progress -Activity 'Retrieving subfolders...' -Status ("Enumerating all subfolders of '$TargetPath' to a depth of $DepthString levels of recursion") -PercentComplete 50
     if ($Host.Version.Major -gt 2) {
         switch ($FolderRecursionDepth) {
             -1 {
@@ -1005,7 +1005,7 @@ function Get-Subfolder {
         Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Recurse"
         Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
     }
-    Write-Progress -Activity ("Retrieving subfolders...") -Completed
+    Write-Progress -Activity 'Retrieving subfolders...' -Completed
 }
 function Get-Win32MappedLogicalDisk {
     param (
@@ -1266,6 +1266,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
