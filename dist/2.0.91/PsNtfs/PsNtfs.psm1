@@ -801,8 +801,7 @@ function Get-FolderAce {
         [string]$WhoAmI = (whoami.EXE),
 
         # Thread-safe cache of items and their owners
-        #[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
-        [hashtable]$OwnerCache = ([hashtable]::Synchronized(@{}))
+        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
     )
 
     $LogParams = @{
@@ -858,13 +857,13 @@ function Get-FolderAce {
 
     # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
-    $AccessRules = @($DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType))
+    $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     if ($AccessRules.Count -lt 1) {
         Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
         return
     }
 
-    $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    $ACEPropertyNames = (Get-Member -InputObject $AccessRules -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
             SourceAccessList = $SourceAccessList
@@ -885,8 +884,7 @@ function Get-OwnerAce {
         [string]$Item,
 
         # Thread-safe cache of items and their owners
-        #[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
-        [hashtable]$OwnerCache = ([hashtable]::Synchronized(@{}))
+        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
     )
 
     # ToDo - Confirm the logic for selecting this to make sure it accurately represents NTFS ownership behavior, then replace this comment with that confirmation and an explanation
@@ -1266,6 +1264,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

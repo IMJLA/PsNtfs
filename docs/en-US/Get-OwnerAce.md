@@ -13,7 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-OwnerAce [[-Item] <String>] [[-OwnerCache] <Hashtable>]
+Get-OwnerAce [[-Item] <String>]
+ [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +50,7 @@ Accept wildcard characters: False
 {{ Fill OwnerCache Description }}
 
 ```yaml
-Type: System.Collections.Hashtable
+Type: System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]
 Parameter Sets: (All)
 Aliases:
 

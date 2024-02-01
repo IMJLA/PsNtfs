@@ -1227,14 +1227,14 @@ Expand-Acl</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
           <maml:name>OwnerCache</maml:name>
           <maml:description>
-            <maml:para>Thread-safe cache of items and their owners [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</maml:para>
+            <maml:para>Thread-safe cache of items and their owners</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
           <dev:type>
-            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
+          <dev:defaultValue>[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
           <maml:name>IncludeInherited</maml:name>
@@ -1313,14 +1313,14 @@ Expand-Acl</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>OwnerCache</maml:name>
         <maml:description>
-          <maml:para>Thread-safe cache of items and their owners [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</maml:para>
+          <maml:para>Thread-safe cache of items and their owners</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
         <dev:type>
-          <maml:name>System.Collections.Hashtable</maml:name>
+          <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>([hashtable]::Synchronized(@{}))</dev:defaultValue>
+        <dev:defaultValue>[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Sections</maml:name>
@@ -1427,9 +1427,9 @@ Expand-Acl</dev:code>
           <maml:description>
             <maml:para>{{ Fill OwnerCache Description }}</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
           <dev:type>
-            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -1454,9 +1454,9 @@ Expand-Acl</dev:code>
         <maml:description>
           <maml:para>{{ Fill OwnerCache Description }}</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
         <dev:type>
-          <maml:name>System.Collections.Hashtable</maml:name>
+          <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
