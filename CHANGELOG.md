@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.84] - 2024-01-31 - bugfix progress bar format-folderpermission
+
 ## [2.0.83] - 2024-01-28 - bugfix get-subfolder logparams type
 
 ## [2.0.82] - 2024-01-28 - reduce calls to external executables

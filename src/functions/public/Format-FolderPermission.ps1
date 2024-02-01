@@ -32,23 +32,35 @@ function Format-FolderPermission {
             LogMsgCache  = $LogMsgCache
             WhoAmI       = $WhoAmI
         }
+
+        $Activity = "Format-FolderPermission -FileSystemRightsToIgnore @('$($FileSystemRightsToIgnore -join "','")')"
+
     }
     process {
 
+        $Count = ($UserPermission | Measure-Object).Count
+
         ForEach ($ThisUser in $UserPermission) {
 
-            $i++
             #Calculate the completion percentage, and format it to show 0 decimal places
-            $percentage = "{0:N0}" -f (($i / ($UserPermission.Count)) * 100)
+            $i++
+            $NewPercentComplete = $i / $Count * 100
 
             #Update the log with the current status
-            [string]$statusMsg = "Status: $percentage% - Processing user permission $i of " + $UserPermission.Count + ": " + $ThisUser.Name
+            [string]$statusMsg = "$([int]$NewPercentComplete)% ($($Count - $i) of $Count remain) Formatting user permission $i of $Count`: $($ThisUser.Name)"
             Write-LogMsg @LogParams -Text $statusMsg
 
-            #Display the progress bar
-            $status = "$(Get-Date -Format s)`t$ThisHostName`tFormat-FolderPermission`t$statusMsg"
-            Write-Progress -Activity ("Total Users: " + $UserPermission.Count) -Status $status -PercentComplete $percentage
-
+            # Update the progress bar if at least 1% has completed since last loop iteration
+            if (($NewPercentComplete - $OldPercentComplete) -ge 1) {
+                $OldPercentComplete = $NewPercentComplete
+                $Progress = @{
+                    Activity         = $Activity
+                    CurrentOperation = $statusMsg
+                    PercentComplete  = $NewPercentComplete
+                    Status           = $statusMsg
+                }
+                Write-Progress -Activity @Progress
+            }
             if ($ThisUser.Group.DirectoryEntry.Properties) {
                 if (
                     (
@@ -169,7 +181,7 @@ function Format-FolderPermission {
     }
 
     end {
-        Write-Progress -Activity ("Total User Permissions: " + $UserPermission.Count) -Completed
+        Write-Progress -Activity $Activity
     }
 
 }
