@@ -67,26 +67,19 @@ function Get-FolderAce {
         return
     }
 
-    $x = 0
-    Write-Information $x
-    $x++
     <#
     Get-Acl would have already populated the Path property on the Access List, but [System.Security.AccessControl.DirectorySecurity] has a null Path property instead
     Creating new PSCustomObjects with all the original properties then manually setting the Path is faster than using Add-Member
     #>
-    [hashtable]$AclProperties = @{}
+    $AclProperties = @{}
     ForEach (
         $ThisProperty in
         (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ) {
+        return
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
-    return
     $AclProperties['Path'] = $LiteralPath
-    Write-Information $x
-    $x++
-
-
 
     <#
     The creator of a folder is the Owner
@@ -101,18 +94,11 @@ function Get-FolderAce {
 
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
-    Write-Information $x
-    $x++
 
     $SourceAccessList = [PSCustomObject]$AclProperties
-    Write-Information $x
-    $x++
-
 
     # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
     $OwnerCache[$LiteralPath] = $SourceAccessList
-    Write-Information $x
-    $x++
 
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
@@ -120,13 +106,8 @@ function Get-FolderAce {
         Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
         return
     }
-    Write-Information $x
-    $x++
-
 
     $ACEPropertyNames = (Get-Member -InputObject $AccessRules -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
-    Write-Information $x
-    $x++
 
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
