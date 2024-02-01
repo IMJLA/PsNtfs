@@ -55,8 +55,6 @@ function Get-FolderAce {
         WhoAmI       = $WhoAmI
     }
 
-    return
-
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
@@ -88,6 +86,8 @@ function Get-FolderAce {
     $x++
 
 
+
+    return
     <#
     The creator of a folder is the Owner
     Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
