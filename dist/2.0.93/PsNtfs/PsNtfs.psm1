@@ -804,97 +804,7 @@ function Get-FolderAce {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
     )
 
-    $LogParams = @{
-        ThisHostname = $ThisHostname
-        Type         = $DebugOutputStream
-        LogMsgCache  = $LogMsgCache
-        WhoAmI       = $WhoAmI
-    }
-
-    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
-    $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
-            $LiteralPath,
-            $Sections
-        )
-    } 2>$null
-
-    if ($null -eq $DirectorySecurity) {
-        Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'"
-        return
-    }
-
-    $x = 0
-    Write-Information $x
-    $x++
-    <#
-    Get-Acl would have already populated the Path property on the Access List, but [System.Security.AccessControl.DirectorySecurity] has a null Path property instead
-    Creating new PSCustomObjects with all the original properties then manually setting the Path is faster than using Add-Member
-    #>
-    $AclProperties = @{}
-    ForEach (
-        $ThisProperty in
-        (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
-    ) {
-        $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
-    }
-    $AclProperties['Path'] = $LiteralPath
-    Write-Information $x
-    $x++
-
-
-    <#
-    The creator of a folder is the Owner
-    Unless S-1-3-4 (Owner Rights) is in the DACL, the Owner is implicitly granted two standard access rights defined in WinNT.h of the Win32 API:
-      READ_CONTROL: The right to read the information in the object's security descriptor, not including the information in the system access control list (SACL).
-      WRITE_DAC: The right to modify the discretionary access control list (DACL) in the object's security descriptor.
-
-    Previously the .Owner property was already populated with the NTAccount name of the Owner,
-    but for some reason this stopped being true and now I have to call the GetOwner method.
-    This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
-    #>
-
-    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
-    $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
-    Write-Information $x
-    $x++
-
-
-    $SourceAccessList = [PSCustomObject]$AclProperties
-    Write-Information $x
-    $x++
-
-
-    # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
-    $OwnerCache[$LiteralPath] = $SourceAccessList
-    Write-Information $x
-    $x++
-
-
-    # Use the same timestamp twice for efficiency through reduced calls to Get-Date, and for easy matching of the corresponding log entries
-    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
-    $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
-    if ($AccessRules.Count -lt 1) {
-        Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
-        return
-    }
-    Write-Information $x
-    $x++
-
-
-    $ACEPropertyNames = (Get-Member -InputObject $AccessRules -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
-    Write-Information $x
-    $x++
-
-    ForEach ($ThisAccessRule in $AccessRules) {
-        $ACEProperties = @{
-            SourceAccessList = $SourceAccessList
-            Source           = 'Discretionary Access Control List'
-        }
-        ForEach ($ThisProperty in $ACEPropertyNames) {
-            $ACEProperties[$ThisProperty] = $ThisAccessRule.$ThisProperty
-        }
-        [PSCustomObject]$ACEProperties
-    }
+    return
 
 }
 function Get-OwnerAce {
@@ -908,24 +818,7 @@ function Get-OwnerAce {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
     )
 
-    # ToDo - Confirm the logic for selecting this to make sure it accurately represents NTFS ownership behavior, then replace this comment with that confirmation and an explanation
-    $InheritanceFlags = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
-
-    $SourceAccessList = $OwnerCache[$Item]
-    $ThisParent = $Item.Substring(0, [math]::Max($Item.LastIndexOf('\'), 0)) # ToDo - This method of finding the parent path is faster than Split-Path -Parent but it has a dependency on a folder path not containing a trailing \ which is not currently what I am seeing in my simple test but should be supported in the future (possibly default)
-    if ($SourceAccessList.Owner -ne $OwnerCache[$ThisParent].Owner) {
-        [PSCustomObject]@{
-            SourceAccessList  = $SourceAccessList
-            IdentityReference = $SourceAccessList.Owner
-            AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
-            FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
-            InheritanceFlags  = $InheritanceFlags
-            IsInherited       = $false
-            PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
-            Source            = 'Ownership'
-        }
-
-    }
+    return
 
 }
 function Get-ServerFromFilePath {
@@ -1285,6 +1178,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
