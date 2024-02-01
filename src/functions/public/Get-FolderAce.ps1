@@ -73,8 +73,8 @@ function Get-FolderAce {
     #>
     $AclProperties = @{}
     $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    return
     ForEach ($ThisProperty in $AclPropertyNames) {
-        return
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
     $AclProperties['Path'] = $LiteralPath
