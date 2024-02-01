@@ -55,6 +55,7 @@ function Get-FolderAce {
         WhoAmI       = $WhoAmI
     }
 
+    return
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
@@ -62,7 +63,6 @@ function Get-FolderAce {
         )
     } 2>$null
 
-    return
     if ($null -eq $DirectorySecurity) {
         Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'"
         return
