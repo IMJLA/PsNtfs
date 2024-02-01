@@ -55,8 +55,8 @@ function Get-FolderAce {
         WhoAmI       = $WhoAmI
     }
 
-    return
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    return
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
             $Sections
