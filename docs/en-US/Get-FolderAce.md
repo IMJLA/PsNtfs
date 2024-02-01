@@ -20,8 +20,7 @@ Can't remember what didn't work with Get-Acl
 ```
 Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>]
- [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-OwnerCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -116,15 +115,16 @@ Accept wildcard characters: False
 
 ### -OwnerCache
 Thread-safe cache of items and their owners
+\[System.Collections.Concurrent.ConcurrentDictionary\[String, PSCustomObject\]\]$OwnerCache = \[System.Collections.Concurrent.ConcurrentDictionary\[String, PSCustomObject\]\]::new()
 
 ```yaml
-Type: System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]
+Type: System.Collections.Hashtable
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 8
-Default value: [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
+Default value: [hashtable]::Synchronized(@{})
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
