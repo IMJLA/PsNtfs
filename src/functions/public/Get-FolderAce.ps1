@@ -62,6 +62,7 @@ function Get-FolderAce {
         )
     } 2>$null
 
+    return
     if ($null -eq $DirectorySecurity) {
         Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'"
         return
@@ -71,7 +72,6 @@ function Get-FolderAce {
     Get-Acl would have already populated the Path property on the Access List, but [System.Security.AccessControl.DirectorySecurity] has a null Path property instead
     Creating new PSCustomObjects with all the original properties then manually setting the Path is faster than using Add-Member
     #>
-    return
     $AclProperties = @{}
     $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
     ForEach ($ThisProperty in $AclPropertyNames) {
