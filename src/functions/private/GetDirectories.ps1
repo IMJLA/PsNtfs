@@ -38,6 +38,7 @@ function GetDirectories {
     }
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
+    Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
     try {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
     }
