@@ -20,6 +20,8 @@ function GetDirectories {
         [hashtable]$LogMsgCache = $Global:LogMessages
     )
 
+    Write-Progress -Activity 'GetDirectories' -Status '0% Initializing...' -CurrentOperation $TargetPath -PercentComplete 0
+
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
@@ -34,7 +36,7 @@ function GetDirectories {
         return $result
     }
     catch {
-        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message
+        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
     }
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
@@ -43,7 +45,7 @@ function GetDirectories {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
     }
     catch {
-        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message
+        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
         return
     }
 
@@ -55,7 +57,10 @@ function GetDirectories {
     }
 
     ForEach ($Child in $result) {
+        Write-LogMsg @LogParams -Text "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption @GetSubfolderParams
     }
+
+    Write-Progress -Activity 'GetDirectories' -Completed
 
 }
