@@ -1,5 +1,14 @@
 function Format-FolderPermission {
 
+    <#
+     Format the objects
+
+     * SchemaClassName
+     * Name,Dept,Title (TODO: Param to work with any specified props)
+     * InheritanceFlags
+     * Access Rights
+    #>
+
     Param (
 
         # Expects ACEs grouped using Group-Object
