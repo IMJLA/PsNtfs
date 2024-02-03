@@ -47,7 +47,7 @@ function GetDirectories {
     $ActiveProgressIdList[$ProgressId] = $true
     do {
         $ProgressChildId = [System.Random]::new().Next(0, [int]::MaxValue)
-    } until (-not $ActiveProgressIdList.ContainsKey($ProgressId))
+    } until (-not $ActiveProgressIdList.ContainsKey($ProgressChildId))
     Write-Host "Progress Child ID $ProgressChildId"
     $ActiveProgressIdList[$ProgressChildId] = $true
     $ProgressParams['Id'] = $ProgressId
