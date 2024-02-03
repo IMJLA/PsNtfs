@@ -48,6 +48,7 @@ function GetDirectories {
     do {
         $ProgressChildId = [System.Random]::new().Next(0, [int]::MaxValue)
     } until (-not $ActiveProgressIdList.ContainsKey($ProgressId))
+    $ActiveProgressIdList[$ProgressChildId] = $true
     $ProgressParams['Id'] = $ProgressId
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
     Start-Sleep -Seconds 1
@@ -81,13 +82,14 @@ function GetDirectories {
     Start-Sleep -Seconds 1
 
     $GetSubfolderParams = @{
-        LogMsgCache       = $LogMsgCache
-        ThisHostname      = $ThisHostname
-        DebugOutputStream = $DebugOutputStream
-        WhoAmI            = $WhoAmI
-        ProgressParentId  = $ProgressId
-        SearchOption      = $SearchOption
-        SearchPattern     = $SearchPattern
+        LogMsgCache          = $LogMsgCache
+        ThisHostname         = $ThisHostname
+        DebugOutputStream    = $DebugOutputStream
+        WhoAmI               = $WhoAmI
+        ProgressParentId     = $ProgressId
+        SearchOption         = $SearchOption
+        SearchPattern        = $SearchPattern
+        ActiveProgressIdList = $ActiveProgressIdList
     }
 
     $Count = $result.Count
@@ -99,7 +101,6 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
-            $ActiveProgressIdList[$ProgressChildId] = $true
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressId -Id $ProgressChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
@@ -110,7 +111,9 @@ function GetDirectories {
     }
 
     Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ProgressChildId
+    $ActiveProgressIdList.Remove($ProgressChildId)
     Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressId
+    $ActiveProgressIdList.Remove($ProgressId)
     Start-Sleep -Seconds 1
 
 }
@@ -1321,6 +1324,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
