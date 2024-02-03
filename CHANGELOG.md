@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.130] - 2024-02-02 - troubleshoot fancy new prog bars getdirectories
+
 ## [2.0.129] - 2024-02-02 - troubleshoot fancy new prog bars getdirectories
 
 ## [2.0.128] - 2024-02-02 - bugfix fancy new prog bars getdirectories
