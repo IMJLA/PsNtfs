@@ -90,6 +90,7 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
+            Write-Host "There are $($ProgressChildId.Count) ProgressChildIds: $($ProgressChildId -join ' and ')"
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressId -Id $ProgressChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0

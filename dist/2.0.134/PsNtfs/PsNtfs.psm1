@@ -91,6 +91,7 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
+            Write-Host "There are $($ProgressChildId.Count) ProgressChildIds: $($ProgressChildId -join ' and ')"
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressId -Id $ProgressChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
@@ -1316,6 +1317,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

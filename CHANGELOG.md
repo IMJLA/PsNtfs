@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.134] - 2024-02-02 - troubleshoot recursive prog bar
+
 ## [2.0.133] - 2024-02-02 - crash during build again...
 
 ## [2.0.132] - 2024-02-02 - rebuild due to crash during build
