@@ -37,7 +37,7 @@ function GetDirectories {
     }
     if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
         $ProgressParams['ParentId'] = $ProgressParentId
-        $ProgressParams['Id'] = $ProgressParentId + 1
+        $ProgressParams['Id'] = [int]($ProgressParentId + 1)
     }
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
     Start-Sleep -Seconds 1
@@ -1311,6 +1311,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
