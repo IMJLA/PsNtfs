@@ -22,7 +22,7 @@ function GetDirectories {
         [int]$ProgressParentId,
 
         # List of currently active progress bar IDs to avoid conflicts.
-        [hashtable]$ActiveProgressIdList = ([hashtable]::Synchronized())
+        [hashtable]$ActiveProgressIdList = ([hashtable]::Synchronized(@{}))
     )
 
     $LogParams = @{

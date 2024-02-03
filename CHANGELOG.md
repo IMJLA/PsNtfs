@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.141] - 2024-02-02 - bugfix aftiveprogressidlist param
+
 ## [2.0.140] - 2024-02-02 - added randomization to progress bar id generation
 
 ## [2.0.139] - 2024-02-02 - added randomization to progress bar id generation

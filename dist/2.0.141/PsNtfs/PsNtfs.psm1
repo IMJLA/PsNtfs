@@ -23,7 +23,7 @@ function GetDirectories {
         [int]$ProgressParentId,
 
         # List of currently active progress bar IDs to avoid conflicts.
-        [hashtable]$ActiveProgressIdList = ([hashtable]::Synchronized())
+        [hashtable]$ActiveProgressIdList = ([hashtable]::Synchronized(@{}))
     )
 
     $LogParams = @{
@@ -1324,6 +1324,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
