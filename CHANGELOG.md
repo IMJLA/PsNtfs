@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.112] - 2024-02-02 - bugfix get-subfolder calling getdirectories param thishostname vs todayshostname
+
 ## [2.0.111] - 2024-01-31 - bugfix accessrules get-member must target first obj not entire coll
 
 ## [2.0.110] - 2024-01-31 - ad logmsgcache param to get-folderace
