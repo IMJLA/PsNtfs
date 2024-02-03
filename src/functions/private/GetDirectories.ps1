@@ -74,7 +74,7 @@ function GetDirectories {
         ThisHostname      = $ThisHostname
         DebugOutputStream = $DebugOutputStream
         WhoAmI            = $WhoAmI
-        ParentProgressId  = $ProgressParams['Id']
+        ProgressParentId  = $ProgressParams['Id']
         SearchOption      = $SearchOption
         SearchPattern     = $SearchPattern
     }
