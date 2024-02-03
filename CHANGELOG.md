@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.118] - 2024-02-02 - nested prog bars getdirectories
+
 ## [2.0.117] - 2024-02-02 - testing progress bars in getdirectories
 
 ## [2.0.116] - 2024-02-02 - testing progress bars in getdirectories

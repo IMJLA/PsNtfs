@@ -30,7 +30,7 @@ function GetDirectories {
         WhoAmI       = $WhoAmI
     }
 
-    [string]$ProgressGuid = [guid]::new()
+    [string]$ProgressGuid = [guid]::NewGuid()
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
     $ProgressParams = @{
         Activity = 'GetDirectories'
@@ -71,10 +71,13 @@ function GetDirectories {
     Start-Sleep -Seconds 1
 
     $GetSubfolderParams = @{
-        LogMsgCache       = $LogMsgCache
-        ThisHostname      = $ThisHostname
-        DebugOutputStream = $DebugOutputStream
-        WhoAmI            = $WhoAmI
+        LogMsgCache        = $LogMsgCache
+        ThisHostname       = $ThisHostname
+        DebugOutputStream  = $DebugOutputStream
+        WhoAmI             = $WhoAmI
+        ParentProgressGuid = $ProgressGuid
+        SearchOption       = $SearchOption
+        SearchPattern      = $SearchPattern
     }
 
     $Count = $result.Count
@@ -94,7 +97,7 @@ function GetDirectories {
         Start-Sleep -Seconds 1
         $i++
         Write-LogMsg @LogParams -Text $CurrentOperation
-        GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption @GetSubfolderParams
+        GetDirectories -TargetPath $Child @GetSubfolderParams
     }
 
     Write-Progress -Activity 'GetDirectories' -Completed
@@ -1308,6 +1311,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
