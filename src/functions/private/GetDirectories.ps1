@@ -92,14 +92,17 @@ function GetDirectories {
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressParams['Id'] -Id $ChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
+            $ChildProgressStarted = $true
         }
-        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ChildId
         Start-Sleep -Seconds 1
         $i++
         Write-LogMsg @LogParams -Text $CurrentOperation
         GetDirectories -TargetPath $Child @GetSubfolderParams
     }
 
+    if ($ChildProgressStarted) {
+        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ChildId
+    }
     Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressParams['Id']
     Start-Sleep -Seconds 1
 
