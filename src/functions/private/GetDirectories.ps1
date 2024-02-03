@@ -93,14 +93,14 @@ function GetDirectories {
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
         }
-        Write-Progress -Activity 'GetDirectories recursion' -Completed
+        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ChildId
         Start-Sleep -Seconds 1
         $i++
         Write-LogMsg @LogParams -Text $CurrentOperation
         GetDirectories -TargetPath $Child @GetSubfolderParams
     }
 
-    Write-Progress -Activity 'GetDirectories' -Completed
+    Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressParams['Id']
     Start-Sleep -Seconds 1
 
 }
