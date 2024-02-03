@@ -17,10 +17,10 @@ function GetDirectories {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
-    )
+        [hashtable]$LogMsgCache = $Global:LogMessages,
 
-    Write-Progress -Activity 'GetDirectories' -Status '0% Initializing...' -CurrentOperation $TargetPath -PercentComplete 0
+        [string]$ProgressParentId
+    )
 
     $LogParams = @{
         ThisHostname = $ThisHostname
@@ -29,8 +29,20 @@ function GetDirectories {
         WhoAmI       = $WhoAmI
     }
 
+    [string]$ProgressGuid = [guid]::new()
+    $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
+    $ProgressParams = @{
+        Activity = 'GetDirectories'
+        Id       = $ProgressGuid
+    }
+    if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+        $ProgressParams['ParentId'] = $ProgressParentId
+    }
+    Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
+    Start-Sleep -Seconds 1
+
     # Try to run the command as instructed
-    Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
+    Write-LogMsg @LogParams -Text $CurrentOperation
     try {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, $SearchOption)
         return $result
@@ -38,6 +50,10 @@ function GetDirectories {
     catch {
         Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
     }
+
+    $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
+    Write-Progress @ProgressParams -Status '33% (step 2 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 33
+    Start-Sleep -Seconds 1
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
     Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
@@ -49,6 +65,10 @@ function GetDirectories {
         return
     }
 
+    $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
+    Write-Progress @ProgressParams -Status '66% (step 3 of 3)' -CurrentOperation 'Recursing through children' -PercentComplete 66
+    Start-Sleep -Seconds 1
+
     $GetSubfolderParams = @{
         LogMsgCache       = $LogMsgCache
         ThisHostname      = $ThisHostname
@@ -56,11 +76,27 @@ function GetDirectories {
         WhoAmI            = $WhoAmI
     }
 
+    $Count = $result.Count
+    [int]$ProgressInterval = [math]::max(($Count / 100), 1)
+    $ProgressCounter = 0
+    $i = 0
     ForEach ($Child in $result) {
-        Write-LogMsg @LogParams -Text "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
+        $ProgressCounter++
+        $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
+        if ($ProgressCounter -eq $ProgressInterval) {
+            [int]$PercentComplete = $i / $Count * 100
+            Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressGuid
+            Start-Sleep -Seconds 1
+            $ProgressCounter = 0
+        }
+        Write-Progress -Activity 'GetDirectories recursion' -Completed
+        Start-Sleep -Seconds 1
+        $i++
+        Write-LogMsg @LogParams -Text $CurrentOperation
         GetDirectories -TargetPath $Child -SearchPattern $SearchPattern -SearchOption $SearchOption @GetSubfolderParams
     }
 
     Write-Progress -Activity 'GetDirectories' -Completed
+    Start-Sleep -Seconds 1
 
 }
