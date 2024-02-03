@@ -102,9 +102,9 @@ function GetDirectories {
     }
 
     if ($ChildProgressStarted) {
-        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ChildId
+        Write-Progress -Activity 'GetDirectories recursion' -Completed #-Id $ChildId
     }
-    Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressParams['Id']
+    Write-Progress -Activity 'GetDirectories' -Completed #-Id $ProgressParams['Id']
     Start-Sleep -Seconds 1
 
 }
@@ -1315,6 +1315,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 

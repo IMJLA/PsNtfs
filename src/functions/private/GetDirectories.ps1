@@ -101,9 +101,9 @@ function GetDirectories {
     }
 
     if ($ChildProgressStarted) {
-        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ChildId
+        Write-Progress -Activity 'GetDirectories recursion' -Completed #-Id $ChildId
     }
-    Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressParams['Id']
+    Write-Progress -Activity 'GetDirectories' -Completed #-Id $ProgressParams['Id']
     Start-Sleep -Seconds 1
 
 }
