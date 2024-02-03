@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.150] - 2024-02-03 - bugfix prog bar
+
 ## [2.0.149] - 2024-02-03 - format-folderpermission moved to permission module
 
 ## [2.0.148] - 2024-02-02 - format-folderpermission moved to permission module

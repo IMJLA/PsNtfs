@@ -780,8 +780,23 @@ function Get-Subfolder {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        # ID of the parent progress bar under which to show progres
+        [int]$ProgressParentId
+
     )
+
+    $Progress = @{
+        Activity = 'Get-Subfolder'
+    }
+    if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+        $Progress['ParentId'] = $ProgressParentId
+        $Progress['Id'] = $ProgressParentId + 1
+    }
+    else {
+        $Progress['Id'] = 0
+    }
 
     $LogParams = @{
         ThisHostname = $ThisHostname
@@ -803,8 +818,11 @@ function Get-Subfolder {
     else {
         $DepthString = $FolderRecursionDepth
     }
-    Write-Progress -Activity 'Retrieving subfolders...' -Status ("Enumerating all subfolders of '$TargetPath' to a depth of $DepthString levels of recursion") -PercentComplete 50
+
+    Write-Progress @Progress -Status '0% (step 1 of 1)' -CurrentOperation "Get subfolders of '$TargetPath' to a depth of $DepthString levels of recursion" -PercentComplete 50
+
     if ($Host.Version.Major -gt 2) {
+
         switch ($FolderRecursionDepth) {
             -1 {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories) @GetSubfolderParams
@@ -819,12 +837,17 @@ function Get-Subfolder {
                 (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $FolderRecursionDepth).FullName
             }
         }
+
     }
     else {
+
         Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Recurse"
         Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
+
     }
-    Write-Progress -Activity 'Retrieving subfolders...' -Completed
+
+    Write-Progress @Progress -Completed
+
 }
 function Get-Win32MappedLogicalDisk {
     param (
@@ -1085,6 +1108,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
