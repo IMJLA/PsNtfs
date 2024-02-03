@@ -30,14 +30,14 @@ function GetDirectories {
         WhoAmI       = $WhoAmI
     }
 
-    [string]$ProgressGuid = [guid]::NewGuid()
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
     $ProgressParams = @{
         Activity = 'GetDirectories'
-        Id       = $ProgressGuid
+        Id       = 0
     }
     if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
         $ProgressParams['ParentId'] = $ProgressParentId
+        $ProgressParams['Id'] = $ProgressParentId + 1
     }
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
     Start-Sleep -Seconds 1
@@ -71,13 +71,13 @@ function GetDirectories {
     Start-Sleep -Seconds 1
 
     $GetSubfolderParams = @{
-        LogMsgCache        = $LogMsgCache
-        ThisHostname       = $ThisHostname
-        DebugOutputStream  = $DebugOutputStream
-        WhoAmI             = $WhoAmI
-        ParentProgressGuid = $ProgressGuid
-        SearchOption       = $SearchOption
-        SearchPattern      = $SearchPattern
+        LogMsgCache       = $LogMsgCache
+        ThisHostname      = $ThisHostname
+        DebugOutputStream = $DebugOutputStream
+        WhoAmI            = $WhoAmI
+        ParentProgressId  = $ProgressParams['Id']
+        SearchOption      = $SearchOption
+        SearchPattern     = $SearchPattern
     }
 
     $Count = $result.Count
@@ -89,7 +89,7 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
-            Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressGuid
+            Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressParams['Id']
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
         }
@@ -1311,6 +1311,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
