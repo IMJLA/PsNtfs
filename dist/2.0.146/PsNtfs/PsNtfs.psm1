@@ -51,7 +51,7 @@ function GetDirectories {
     $ActiveProgressIdList[$ProgressChildId] = $true
     $ProgressParams['Id'] = $ProgressId
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
-    Start-Sleep -Seconds 1
+
 
     # Try to run the command as instructed
     Write-LogMsg @LogParams -Text $CurrentOperation
@@ -65,7 +65,7 @@ function GetDirectories {
 
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
     Write-Progress @ProgressParams -Status '33% (step 2 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 33
-    Start-Sleep -Seconds 1
+
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
     Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
@@ -79,14 +79,14 @@ function GetDirectories {
 
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
     Write-Progress @ProgressParams -Status '66% (step 3 of 3)' -CurrentOperation 'Recursing through children' -PercentComplete 66
-    Start-Sleep -Seconds 1
+
 
     $GetSubfolderParams = @{
         LogMsgCache          = $LogMsgCache
         ThisHostname         = $ThisHostname
         DebugOutputStream    = $DebugOutputStream
         WhoAmI               = $WhoAmI
-        ProgressParentId     = $ProgressId
+        ProgressParentId     = $ProgressChildId
         SearchOption         = $SearchOption
         SearchPattern        = $SearchPattern
         ActiveProgressIdList = $ActiveProgressIdList
@@ -102,7 +102,7 @@ function GetDirectories {
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressId -Id $ProgressChildId
-            Start-Sleep -Seconds 1
+
             $ProgressCounter = 0
         }
         $i++
@@ -114,7 +114,7 @@ function GetDirectories {
     $ActiveProgressIdList.Remove($ProgressChildId)
     Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressId
     $ActiveProgressIdList.Remove($ProgressId)
-    Start-Sleep -Seconds 1
+
 
 }
 function ConvertTo-SimpleProperty {
@@ -1324,6 +1324,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
