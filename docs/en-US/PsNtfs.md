@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.148
+Help Version: 2.0.149
 Locale: en-US
 ---
 
@@ -24,11 +24,6 @@ Expand an Access Control List into its constituent Access Control Entries
 
 ### [Find-ServerNameInPath](Find-ServerNameInPath.md)
 Parse a literal path to find its server
-
-### [Format-FolderPermission](Format-FolderPermission.md)
-
-Format-FolderPermission [[-UserPermission] <Object>] [[-FileSystemRightsToIgnore] <string[]>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
-
 
 ### [Format-SecurityPrincipal](Format-SecurityPrincipal.md)
 
