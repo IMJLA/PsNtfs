@@ -19,7 +19,10 @@ function GetDirectories {
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
         [hashtable]$LogMsgCache = $Global:LogMessages,
 
-        [int]$ProgressParentId
+        [int]$ProgressParentId,
+
+        # List of currently active progress bar IDs to avoid conflicts.
+        [hashtable]$ActiveProgressIdList = ([hashtable]::Synchronized())
     )
 
     $LogParams = @{
@@ -30,15 +33,20 @@ function GetDirectories {
     }
 
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
-    $ProgressId = 0
     $ProgressParams = @{
         Activity = 'GetDirectories'
     }
     if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
+        $ActiveProgressIdList[$ProgressParentId] = $true
         $ProgressParams['ParentId'] = $ProgressParentId
-        $ProgressId = $ProgressParentId + 1
     }
-    $ProgressChildId = $ProgressId + 1
+    do {
+        $ProgressId = [System.Random]::new().Next(0, [int]::MaxValue)
+    } until (-not $ActiveProgressIdList.ContainsKey($ProgressId))
+    $ActiveProgressIdList[$ProgressId] = $true
+    do {
+        $ProgressChildId = [System.Random]::new().Next(0, [int]::MaxValue)
+    } until (-not $ActiveProgressIdList.ContainsKey($ProgressId))
     $ProgressParams['Id'] = $ProgressId
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
     Start-Sleep -Seconds 1
@@ -90,6 +98,7 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
+            $ActiveProgressIdList[$ProgressChildId] = $true
             Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressId -Id $ProgressChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
