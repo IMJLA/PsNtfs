@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.144] - 2024-02-02 - fix infinite loop
+
 ## [2.0.143] - 2024-02-02 - fix infinite loop
 
 ## [2.0.142] - 2024-02-02 - troubleshoot prog bar ids
