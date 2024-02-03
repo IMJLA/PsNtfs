@@ -780,23 +780,9 @@ function Get-Subfolder {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
-
-        # ID of the parent progress bar under which to show progres
-        [int]$ProgressParentId
+        [hashtable]$LogMsgCache = $Global:LogMessages
 
     )
-
-    $Progress = @{
-        Activity = 'Get-Subfolder'
-    }
-    if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
-        $Progress['ParentId'] = $ProgressParentId
-        $Progress['Id'] = $ProgressParentId + 1
-    }
-    else {
-        $Progress['Id'] = 0
-    }
 
     $LogParams = @{
         ThisHostname = $ThisHostname
@@ -818,8 +804,6 @@ function Get-Subfolder {
     else {
         $DepthString = $FolderRecursionDepth
     }
-
-    Write-Progress @Progress -Status '0% (step 1 of 1)' -CurrentOperation "Get subfolders of '$TargetPath' to a depth of $DepthString levels of recursion" -PercentComplete 50
 
     if ($Host.Version.Major -gt 2) {
 
@@ -845,8 +829,6 @@ function Get-Subfolder {
         Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
 
     }
-
-    Write-Progress @Progress -Completed
 
 }
 function Get-Win32MappedLogicalDisk {
@@ -1108,6 +1090,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
