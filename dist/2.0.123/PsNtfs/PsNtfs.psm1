@@ -38,6 +38,7 @@ function GetDirectories {
     if ($PSBoundParameters.ContainsKey('ProgressParentId')) {
         $ProgressParams['ParentId'] = $ProgressParentId
         $ProgressParams['Id'] = $ProgressParentId + 1
+        [int]$ChildId = $ProgressParentId + 2
     }
     Write-Progress @ProgressParams -Status '0% (step 1 of 3)' -CurrentOperation $CurrentOperation -PercentComplete 0
     Start-Sleep -Seconds 1
@@ -89,7 +90,7 @@ function GetDirectories {
         $CurrentOperation = "GetDirectories -TargetPath '$Child' -SearchPattern '$SearchPattern' -SearchOption '$SearchOption'"
         if ($ProgressCounter -eq $ProgressInterval) {
             [int]$PercentComplete = $i / $Count * 100
-            Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressParams['Id'] -Id ($ProgressParams['Id'] + 1)
+            Write-Progress -Activity 'GetDirectories recursion' -Status "$PercentComplete% (child $i of $Count)" -CurrentOperation $CurrentOperation -PercentComplete $PercentComplete -ParentId $ProgressParams['Id'] -Id $ChildId
             Start-Sleep -Seconds 1
             $ProgressCounter = 0
         }
@@ -1311,6 +1312,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
