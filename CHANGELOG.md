@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.133] - 2024-02-02 - crash during build again...
+
+## [2.0.132] - 2024-02-02 - rebuild due to crash during build
+
 ## [2.0.131] - 2024-02-02 - troubleshoot fancy new prog bars getdirectories
 
 ## [2.0.130] - 2024-02-02 - troubleshoot fancy new prog bars getdirectories
