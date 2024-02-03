@@ -32,6 +32,7 @@ function GetDirectories {
 
     $CurrentOperation = "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
     [int]$ProgressId = 0
+    [int]$ProgressChildId = 1
     $ProgressParams = @{
         Activity = 'GetDirectories'
     }
@@ -104,7 +105,7 @@ function GetDirectories {
     }
 
     if ($ChildProgressStarted) {
-        Write-Progress -Activity 'GetDirectories recursion' -Completed
+        Write-Progress -Activity 'GetDirectories recursion' -Completed -Id $ProgressChildId
     }
     Write-Progress -Activity 'GetDirectories' -Completed -Id $ProgressId
     Start-Sleep -Seconds 1
@@ -1317,6 +1318,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-FolderPermission','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','Get-Win32MappedLogicalDisk','New-NtfsAclIssueReport','Resolve-Folder')
+
 
 
 
