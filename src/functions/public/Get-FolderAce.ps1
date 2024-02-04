@@ -67,7 +67,9 @@ function Get-FolderAce {
     } 2>$null
 
     if ($null -eq $DirectorySecurity) {
-        Write-LogMsg @LogParams -Type Warning -Text "# Found no ACL for '$LiteralPath'"
+        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg @LogParams -Text "# Found no ACL for '$LiteralPath'"
+        $LogParams['Type'] = $DebugOutputStream
         return
     }
 

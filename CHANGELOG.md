@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.152] - 2024-02-03 - ps 5.1 workaround
+
 ## [2.0.151] - 2024-02-03 - move progress bar to expand-folder in permission module
 
 ## [2.0.150] - 2024-02-03 - bugfix prog bar

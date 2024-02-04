@@ -36,7 +36,9 @@ function GetDirectories {
         return $result
     }
     catch {
-        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+        $LogParams['Type'] = $DebugOutputStream
     }
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
@@ -45,7 +47,8 @@ function GetDirectories {
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
     }
     catch {
-        Write-LogMsg @LogParams -Type Warning -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
         return
     }
 
