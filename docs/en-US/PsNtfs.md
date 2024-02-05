@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.153
+Help Version: 2.0.154
 Locale: en-US
 ---
 
@@ -60,17 +60,9 @@ Get-ServerFromFilePath [[-FilePath] <string>] [[-ThisFqdn] <string>]
 Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [[-DebugOutputStream] <string>] [[-ThisHostname] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>] [<CommonParameters>]
 
 
-### [Get-Win32MappedLogicalDisk](Get-Win32MappedLogicalDisk.md)
-{{ Fill in the Description }}
-
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
 
 New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNameRule] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
-
-
-### [Resolve-Folder](Resolve-Folder.md)
-
-Resolve-Folder [[-TargetPath] <string>] [[-CimCache] <hashtable>] [[-DebugOutputStream] <string>] [[-ThisHostname] <string>] [[-ThisFqdn] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
 
 
 

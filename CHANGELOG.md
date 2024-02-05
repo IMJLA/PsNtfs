@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.154] - 2024-02-04 - move resolve-folder to permission module where it fits better due to interaction with psdfs and pslogmessage and pscim modules
+
 ## [2.0.153] - 2024-02-04 - move cim functionality to permission module temporarily; eventually pscim module?
 
 ## [2.0.152] - 2024-02-03 - ps 5.1 workaround
