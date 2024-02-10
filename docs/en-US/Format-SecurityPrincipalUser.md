@@ -5,7 +5,7 @@ online version:
 schema: 2.0.0
 ---
 
-# Format-SecurityPrincipal
+# Format-SecurityPrincipalUser
 
 ## SYNOPSIS
 {{ Fill in the Synopsis }}
@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Format-SecurityPrincipal [[-SecurityPrincipal] <Object[]>]
+Format-SecurityPrincipalUser [[-InputObject] <Object>]
 ```
 
 ## DESCRIPTION
@@ -30,11 +30,11 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -SecurityPrincipal
-{{ Fill SecurityPrincipal Description }}
+### -InputObject
+{{ Fill InputObject Description }}
 
 ```yaml
-Type: System.Object[]
+Type: System.Object
 Parameter Sets: (All)
 Aliases:
 

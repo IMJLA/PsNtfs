@@ -367,96 +367,106 @@ function Format-SecurityPrincipal {
     param (
 
         # Security Principals received from Expand-IdentityReference in the Adsi module
-        $SecurityPrincipal
+        [object[]]$SecurityPrincipal
 
     )
 
+
+    # Get any existing properties for inclusion later
+    $InputProperties = (Get-Member -InputObject $SecurityPrincipal[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+
     ForEach ($ThisPrincipal in $SecurityPrincipal) {
 
-        # Format and output the security principal
-        $ThisPrincipal |
-        Select-Object -ExcludeProperty Name -Property @{
-            Label      = 'User'
-            Expression = {
-                $ThisPrincipalAccount = $null
-                if ($_.Properties) {
-                    $ThisPrincipalAccount = $_.Properties['sAmAccountName']
-                }
-                if ("$ThisPrincipalAccount" -eq '') {
-                    $_.Name
-                }
-                else {
-                    $ThisPrincipalAccount
-                }
-            }
-        },
-        @{
-            Label      = 'IdentityReference'
-            Expression = { $null }
-        },
-        @{
-            Label      = 'NtfsAccessControlEntries'
-            Expression = { $_.Group }
-        },
-        @{
-            Label      = 'Name'
-            Expression = {
-                $ThisName = $null
-                if ($_.DirectoryEntry.Properties) {
-                    $ThisName = $_.DirectoryEntry.Properties['name']
-                }
-                if ("$ThisName" -eq '') {
-                    $_.Name -replace [regex]::Escape("$($_.DomainNetBios)\"), ''
-                }
-                else {
-                    $ThisName
-                }
-            }
-        },
-        *
+        # Format the security principal
+        # Include specific desired properties
+        $OutputProperties = @{
+            User                     = Format-SecurityPrincipalUser -InputObject $ThisPrincipal
+            IdentityReference        = $null
+            NtfsAccessControlEntries = $ThisPrincipal.Group
+            Name                     = Format-SecurityPrincipalName -InputObject $ThisPrincipal
+        }
+
+        # Include any existing properties found earlier
+        ForEach ($ThisProperty in $InputProperties) {
+            $OutputProperties[$ThisProperty] = $ThisPrincipal.$ThisProperty
+        }
+
+        # Output the object
+        [PSCustomObject]$OutputProperties
 
         # Format and output its members if it is a group
-        $ThisPrincipal.Members |
-        Select-Object -Property @{
-            Label      = 'User'
-            Expression = {
-                $ThisPrincipalAccount = $null
-                if ($_.Properties) {
-                    $ThisPrincipalAccount = $_.Properties['sAmAccountName']
-                    if ("$ThisPrincipalAccount" -eq '') {
-                        $ThisPrincipalAccount = $_.Properties['Name']
-                    }
-                }
-
-                if ("$ThisPrincipalAccount" -eq '') {
-                    # This code should never execute
-                    # but if we are somehow not dealing with a DirectoryEntry,
-                    # it will not have sAmAcountName or Name properties
-                    # However it may have a direct Name attribute on the PSObject itself
-                    # We will attempt that as a last resort in hopes of avoiding a null Account name
-                    $ThisPrincipalAccount = $_.Name
-                }
-                "$($_.Domain.Netbios)\$ThisPrincipalAccount"
-            }
-        },
-        @{
-            Label      = 'IdentityReference'
-            Expression = {
-                @($ThisPrincipal.Group.IdentityReferenceResolved)[0]
-            }
-        },
-        @{
-            Label      = 'NtfsAccessControlEntries'
-            Expression = { $ThisPrincipal.Group }
-        },
-        @{
-            Label      = 'ObjectType'
-            Expression = { $_.SchemaClassName }
-        },
-        *
+        Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members
 
     }
 
+}
+function Format-SecurityPrincipalMember {
+    param ([object[]]$InputObject)
+
+    ForEach ($ThisObject in $InputObject) {
+
+        # Include specific desired properties
+        $OutputProperties = @{
+            User                     = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
+            IdentityReference        = @($ThisObject.Group.IdentityReferenceResolved)[0]
+            NtfsAccessControlEntries = $ThisObject.Group
+            ObjectType               = $ThisObject.SchemaClassName
+        }
+
+        # Include any existing properties
+        $InputProperties = (Get-Member -InputObject $InputObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+
+        ForEach ($ThisProperty in $InputProperties) {
+            $OutputProperties[$ThisProperty] = $ThisObject.$ThisProperty
+        }
+
+        [PSCustomObject]$OutputProperties
+
+    }
+}
+function Format-SecurityPrincipalMemberUser {
+    param ([object]$InputObject)
+    if ($InputObject.Properties) {
+        $sAmAccountName = $InputObject.Properties['sAmAccountName']
+        if ("$sAmAccountName" -eq '') {
+            $sAmAccountName = $InputObject.Properties['Name']
+        }
+    }
+
+    if ("$sAmAccountName" -eq '') {
+        # This code should never execute
+        # but if we are somehow not dealing with a DirectoryEntry,
+        # it will not have sAmAcountName or Name properties
+        # However it may have a direct Name attribute on the PSObject itself
+        # We will attempt that as a last resort in hopes of avoiding a null Account name
+        $sAmAccountName = $InputObject.Name
+    }
+    "$($InputObject.Domain.Netbios)\$sAmAccountName"
+}
+function Format-SecurityPrincipalName {
+    param ([object]$InputObject)
+    if ($InputObject.DirectoryEntry.Properties) {
+        $ThisName = $InputObject.DirectoryEntry.Properties['name']
+    }
+    if ("$ThisName" -eq '') {
+        $InputObject.Name -replace [regex]::Escape("$($InputObject.DomainNetBios)\"), ''
+    }
+    else {
+        $ThisName
+    }
+}
+function Format-SecurityPrincipalUser {
+    param ([object]$InputObject)
+
+    if ($InputObject.Properties) {
+        $sAmAccountName = $InputObject.Properties['sAmAccountName']
+    }
+    if ("$sAmAccountName" -eq '') {
+        $InputObject.Name
+    }
+    else {
+        $sAmAccountName
+    }
 }
 function Get-DirectorySecurity {
     <#
@@ -972,7 +982,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.154
+Help Version: 2.0.155
 Locale: en-US
 ---
 
@@ -27,7 +27,27 @@ Parse a literal path to find its server
 
 ### [Format-SecurityPrincipal](Format-SecurityPrincipal.md)
 
-Format-SecurityPrincipal [[-SecurityPrincipal] <Object>]
+Format-SecurityPrincipal [[-SecurityPrincipal] <Object[]>]
+
+
+### [Format-SecurityPrincipalMember](Format-SecurityPrincipalMember.md)
+
+Format-SecurityPrincipalMember [[-InputObject] <Object[]>]
+
+
+### [Format-SecurityPrincipalMemberUser](Format-SecurityPrincipalMemberUser.md)
+
+Format-SecurityPrincipalMemberUser [[-InputObject] <Object>]
+
+
+### [Format-SecurityPrincipalName](Format-SecurityPrincipalName.md)
+
+Format-SecurityPrincipalName [[-InputObject] <Object>]
+
+
+### [Format-SecurityPrincipalUser](Format-SecurityPrincipalUser.md)
+
+Format-SecurityPrincipalUser [[-InputObject] <Object>]
 
 
 ### [Get-DirectorySecurity](Get-DirectorySecurity.md)
