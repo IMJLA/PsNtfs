@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.160] - 2024-02-11 - troubleshoot get-folderace
+
 ## [2.0.159] - 2024-02-11 - troubleshoot get-folderace
 
 ## [2.0.158] - 2024-02-11 - implement cache of acls keyed by path
