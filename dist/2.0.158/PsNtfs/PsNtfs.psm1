@@ -636,7 +636,10 @@ function Get-FolderAce {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        # Cache of access control lists keyed by path
+        [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
 
     )
 
@@ -667,9 +670,11 @@ function Get-FolderAce {
     #>
     $AclProperties = @{}
     $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+
     ForEach ($ThisProperty in $AclPropertyNames) {
         $AclProperties[$ThisProperty] = $DirectorySecurity.$ThisProperty
     }
+
     $AclProperties['Path'] = $LiteralPath
 
     <#
@@ -682,27 +687,24 @@ function Get-FolderAce {
     but for some reason this stopped being true and now I have to call the GetOwner method.
     This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
     #>
-
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
-    $SourceAccessList = [PSCustomObject]$AclProperties
-
-    # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
-    $OwnerCache[$LiteralPath] = $SourceAccessList
-
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
-    $AccessRules = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
-    if ($AccessRules.Count -lt 1) {
-        Write-LogMsg @LogParams -Text "# Found no matching access rules for '$LiteralPath'"
-        return
-    }
+    $AclProperties['Access'] = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
+
+    $ACLsByPath[$LiteralPath] = [PSCustomObject]$AclProperties
+
+    <#
+    $ACL = [PSCustomObject]$AclProperties
+    # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
+    $OwnerCache[$LiteralPath] = $ACL
 
     $ACEPropertyNames = (Get-Member -InputObject $AccessRules[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     ForEach ($ThisAccessRule in $AccessRules) {
         $ACEProperties = @{
-            SourceAccessList = $SourceAccessList
+            SourceAccessList = $ACL
             Source           = 'Discretionary Access Control List'
         }
         ForEach ($ThisProperty in $ACEPropertyNames) {
@@ -710,6 +712,7 @@ function Get-FolderAce {
         }
         [PSCustomObject]$ACEProperties
     }
+    #>
 
 }
 function Get-OwnerAce {
@@ -720,7 +723,10 @@ function Get-OwnerAce {
         [string]$Item,
 
         # Thread-safe cache of items and their owners
-        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
+        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
+
+        # Cache of access control lists keyed by path
+        [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
     )
 
     # ToDo - Confirm the logic for selecting this to make sure it accurately represents NTFS ownership behavior, then replace this comment with that confirmation and an explanation
@@ -983,6 +989,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

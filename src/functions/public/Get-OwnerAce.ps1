@@ -6,7 +6,10 @@ function Get-OwnerAce {
         [string]$Item,
 
         # Thread-safe cache of items and their owners
-        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
+        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
+
+        # Cache of access control lists keyed by path
+        [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
     )
 
     # ToDo - Confirm the logic for selecting this to make sure it accurately represents NTFS ownership behavior, then replace this comment with that confirmation and an explanation

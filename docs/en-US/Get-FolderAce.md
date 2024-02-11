@@ -22,7 +22,7 @@ Get-FolderAce [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <Access
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
  [[-ThisHostname] <String>] [[-WhoAmI] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
- [[-LogMsgCache] <Hashtable>]
+ [[-LogMsgCache] <Hashtable>] [[-ACLsByPath] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -51,6 +51,21 @@ Aliases:
 Required: False
 Position: 4
 Default value: System.Security.Principal.SecurityIdentifier
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ACLsByPath
+Cache of access control lists keyed by path
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: [hashtable]::Synchronized(@{})
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

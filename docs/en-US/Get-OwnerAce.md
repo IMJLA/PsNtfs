@@ -15,6 +15,7 @@ schema: 2.0.0
 ```
 Get-OwnerAce [[-Item] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
+ [[-ACLsByPath] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -30,6 +31,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -ACLsByPath
+{{ Fill ACLsByPath Description }}
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Item
 {{ Fill Item Description }}
