@@ -105,7 +105,7 @@ function Get-FolderAce {
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AclProperties['Access'] = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     $ACLsByPath[$LiteralPath] = [PSCustomObject]$AclProperties
-    pause
+
     <#
     $ACL = [PSCustomObject]$AclProperties
     # Update the OwnerCache with the Source Access List, so that Get-OwnerAce can output an object for the Owner to represent that they have Full Control
