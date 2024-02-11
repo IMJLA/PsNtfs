@@ -12,7 +12,7 @@
     RootModule        = 'PsNtfs.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '2.0.158'
+    ModuleVersion     = '2.0.159'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()

@@ -104,7 +104,7 @@ function Get-FolderAce {
 
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AclProperties['Access'] = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
-
+    pause
     $ACLsByPath[$LiteralPath] = [PSCustomObject]$AclProperties
 
     <#
