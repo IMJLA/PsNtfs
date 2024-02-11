@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.157] - 2024-02-11 - update format-securityprincipal
+
 ## [2.0.156] - 2024-02-11 - implement caching format-securityprincipa
 
 ## [2.0.155] - 2024-02-10 - bugfix format-securityprincipal

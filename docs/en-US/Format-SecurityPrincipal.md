@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Format-SecurityPrincipal [[-ResolvedID] <String[]>] [[-PrincipalsByResolvedID] <Hashtable>]
+Format-SecurityPrincipal [[-ResolvedID] <String>] [[-PrincipalsByResolvedID] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -49,7 +49,7 @@ Accept wildcard characters: False
 {{ Fill ResolvedID Description }}
 
 ```yaml
-Type: System.String[]
+Type: System.String
 Parameter Sets: (All)
 Aliases:
 
