@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.155
+Help Version: 2.0.156
 Locale: en-US
 ---
 
@@ -27,7 +27,7 @@ Parse a literal path to find its server
 
 ### [Format-SecurityPrincipal](Format-SecurityPrincipal.md)
 
-Format-SecurityPrincipal [[-SecurityPrincipal] <Object[]>]
+Format-SecurityPrincipal [[-ResolvedID] <string[]>] [[-PrincipalsByResolvedID] <hashtable>]
 
 
 ### [Format-SecurityPrincipalMember](Format-SecurityPrincipalMember.md)

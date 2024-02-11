@@ -6,15 +6,19 @@ function Format-SecurityPrincipal {
     param (
 
         # Security Principals received from Expand-IdentityReference in the Adsi module
-        [object[]]$SecurityPrincipal
+        [string[]]$ResolvedID,
+
+        # Thread-safe hashtable to use for caching directory entries and avoiding duplicate directory queries
+        [hashtable]$PrincipalsByResolvedID = ([hashtable]::Synchronized(@{}))
 
     )
 
-
     # Get any existing properties for inclusion later
-    $InputProperties = (Get-Member -InputObject $SecurityPrincipal[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+    $InputProperties = (Get-Member -InputObject $PrincipalsByResolvedID.Values[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
-    ForEach ($ThisPrincipal in $SecurityPrincipal) {
+    ForEach ($ThisID in $ResolvedID) {
+
+        $ThisPrincipal = $PrincipalsByResolvedID[$ThisID]
 
         # Format the security principal
         # Include specific desired properties

@@ -522,13 +522,25 @@ Expand-Acl</dev:code>
       <command:syntaxItem>
         <maml:name>Format-SecurityPrincipal</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-          <maml:name>SecurityPrincipal</maml:name>
+          <maml:name>ResolvedID</maml:name>
           <maml:description>
-            <maml:para>{{ Fill SecurityPrincipal Description }}</maml:para>
+            <maml:para>{{ Fill ResolvedID Description }}</maml:para>
           </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
+          <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
           <dev:type>
-            <maml:name>System.Object[]</maml:name>
+            <maml:name>System.String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>PrincipalsByResolvedID</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill PrincipalsByResolvedID Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Collections.Hashtable</maml:name>
             <maml:uri />
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
@@ -536,14 +548,26 @@ Expand-Acl</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-        <maml:name>SecurityPrincipal</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>PrincipalsByResolvedID</maml:name>
         <maml:description>
-          <maml:para>{{ Fill SecurityPrincipal Description }}</maml:para>
+          <maml:para>{{ Fill PrincipalsByResolvedID Description }}</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
         <dev:type>
-          <maml:name>System.Object[]</maml:name>
+          <maml:name>System.Collections.Hashtable</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>ResolvedID</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ResolvedID Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>System.String[]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>

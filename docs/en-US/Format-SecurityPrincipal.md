@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Format-SecurityPrincipal [[-SecurityPrincipal] <Object[]>]
+Format-SecurityPrincipal [[-ResolvedID] <String[]>] [[-PrincipalsByResolvedID] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -30,11 +30,26 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -SecurityPrincipal
-{{ Fill SecurityPrincipal Description }}
+### -PrincipalsByResolvedID
+{{ Fill PrincipalsByResolvedID Description }}
 
 ```yaml
-Type: System.Object[]
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResolvedID
+{{ Fill ResolvedID Description }}
+
+```yaml
+Type: System.String[]
 Parameter Sets: (All)
 Aliases:
 
