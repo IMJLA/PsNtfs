@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.162] - 2024-02-11 - bugfix get-ownerace
+
 ## [2.0.161] - 2024-02-11 - removed troubleshooting pause
 
 ## [2.0.160] - 2024-02-11 - troubleshoot get-folderace

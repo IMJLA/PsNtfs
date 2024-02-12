@@ -13,9 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-OwnerAce [[-Item] <String>]
- [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
- [[-ACLsByPath] <Hashtable>]
+Get-OwnerAce [[-Item] <String>] [[-ACLsByPath] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -41,7 +39,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -57,21 +55,6 @@ Aliases:
 
 Required: False
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OwnerCache
-{{ Fill OwnerCache Description }}
-
-```yaml
-Type: System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

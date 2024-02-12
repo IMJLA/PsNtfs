@@ -716,13 +716,15 @@ function Get-FolderAce {
 }
 function Get-OwnerAce {
 
+    # Simulate ACEs for item owners who differ from the parent owner
+
     param (
 
         # Path to the parent item whose owners to export
         [string]$Item,
 
         # Thread-safe cache of items and their owners
-        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
+        #[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
 
         # Cache of access control lists keyed by path
         [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
@@ -731,20 +733,23 @@ function Get-OwnerAce {
     # ToDo - Confirm the logic for selecting this to make sure it accurately represents NTFS ownership behavior, then replace this comment with that confirmation and an explanation
     $InheritanceFlags = [System.Security.AccessControl.InheritanceFlags]::ContainerInherit -bor [System.Security.AccessControl.InheritanceFlags]::ObjectInherit
 
-    $SourceAccessList = $OwnerCache[$Item]
+    $SourceAccessList = $ACLsByPath[$Item]
     $ThisParent = $Item.Substring(0, [math]::Max($Item.LastIndexOf('\'), 0)) # ToDo - This method of finding the parent path is faster than Split-Path -Parent but it has a dependency on a folder path not containing a trailing \ which is not currently what I am seeing in my simple test but should be supported in the future (possibly default)
-    if ($SourceAccessList.Owner -ne $OwnerCache[$ThisParent].Owner) {
-        [PSCustomObject]@{
-            SourceAccessList  = $SourceAccessList
+
+    if ($SourceAccessList.Owner -ne $ACLsByPath[$ThisParent].Owner) {
+
+        $ACLsByPath[$Item].Owner = [PSCustomObject]@{
             IdentityReference = $SourceAccessList.Owner
             AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
             FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
             InheritanceFlags  = $InheritanceFlags
             IsInherited       = $false
             PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
-            Source            = 'Ownership'
         }
 
+    }
+    else {
+        $ACLsByPath[$Item].Owner = $null
     }
 
 }
@@ -988,6 +993,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

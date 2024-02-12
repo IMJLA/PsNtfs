@@ -1636,18 +1636,6 @@ Expand-Acl</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>OwnerCache</maml:name>
-          <maml:description>
-            <maml:para>{{ Fill OwnerCache Description }}</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
-          <dev:type>
-            <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>None</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>ACLsByPath</maml:name>
           <maml:description>
             <maml:para>{{ Fill ACLsByPath Description }}</maml:para>
@@ -1662,7 +1650,7 @@ Expand-Acl</dev:code>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
         <maml:name>ACLsByPath</maml:name>
         <maml:description>
           <maml:para>{{ Fill ACLsByPath Description }}</maml:para>
@@ -1682,18 +1670,6 @@ Expand-Acl</dev:code>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
           <maml:name>System.String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>OwnerCache</maml:name>
-        <maml:description>
-          <maml:para>{{ Fill OwnerCache Description }}</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
-        <dev:type>
-          <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
