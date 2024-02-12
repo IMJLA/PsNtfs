@@ -1,14 +1,14 @@
 function Format-SecurityPrincipalMember {
+
     param ([object[]]$InputObject)
 
     ForEach ($ThisObject in $InputObject) {
 
         # Include specific desired properties
         $OutputProperties = @{
-            User                     = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
-            IdentityReference        = @($ThisObject.Group.IdentityReferenceResolved)[0]
-            NtfsAccessControlEntries = $ThisObject.Group
-            ObjectType               = $ThisObject.SchemaClassName
+            User              = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
+            IdentityReference = @($ThisObject.Group.IdentityReferenceResolved)[0]
+            ObjectType        = $ThisObject.SchemaClassName
         }
 
         # Include any existing properties
@@ -21,4 +21,5 @@ function Format-SecurityPrincipalMember {
         [PSCustomObject]$OutputProperties
 
     }
+
 }

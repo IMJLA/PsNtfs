@@ -13,8 +13,9 @@ function Format-SecurityPrincipal {
 
     )
 
-
+    # Get the principal from the cache
     $ThisPrincipal = $PrincipalsByResolvedID[$ResolvedID]
+
     # Get any existing properties for inclusion later
     $InputProperties = (Get-Member -InputObject $ThisPrincipal -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
@@ -34,7 +35,7 @@ function Format-SecurityPrincipal {
     # Output the object
     [PSCustomObject]$OutputProperties
 
-    # Format and output its members if it is a group
+    # Format and output any group members
     Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members
 
 }

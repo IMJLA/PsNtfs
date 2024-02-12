@@ -374,8 +374,9 @@ function Format-SecurityPrincipal {
 
     )
 
-
+    # Get the principal from the cache
     $ThisPrincipal = $PrincipalsByResolvedID[$ResolvedID]
+
     # Get any existing properties for inclusion later
     $InputProperties = (Get-Member -InputObject $ThisPrincipal -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
@@ -395,21 +396,21 @@ function Format-SecurityPrincipal {
     # Output the object
     [PSCustomObject]$OutputProperties
 
-    # Format and output its members if it is a group
+    # Format and output any group members
     Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members
 
 }
 function Format-SecurityPrincipalMember {
+
     param ([object[]]$InputObject)
 
     ForEach ($ThisObject in $InputObject) {
 
         # Include specific desired properties
         $OutputProperties = @{
-            User                     = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
-            IdentityReference        = @($ThisObject.Group.IdentityReferenceResolved)[0]
-            NtfsAccessControlEntries = $ThisObject.Group
-            ObjectType               = $ThisObject.SchemaClassName
+            User              = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
+            IdentityReference = @($ThisObject.Group.IdentityReferenceResolved)[0]
+            ObjectType        = $ThisObject.SchemaClassName
         }
 
         # Include any existing properties
@@ -422,6 +423,7 @@ function Format-SecurityPrincipalMember {
         [PSCustomObject]$OutputProperties
 
     }
+
 }
 function Format-SecurityPrincipalMemberUser {
     param ([object]$InputObject)
@@ -992,6 +994,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
