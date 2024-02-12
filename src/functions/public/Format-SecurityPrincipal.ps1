@@ -13,24 +13,23 @@ function Format-SecurityPrincipal {
 
     )
 
-    # Get any existing properties for inclusion later
-    $InputProperties = (Get-Member -InputObject $PrincipalsByResolvedID.Values[0] -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     $ThisPrincipal = $PrincipalsByResolvedID[$ResolvedID]
+    # Get any existing properties for inclusion later
+    $InputProperties = (Get-Member -InputObject $ThisPrincipal -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     # Format the security principal
     # Include specific desired properties
     $OutputProperties = @{
-        User                     = Format-SecurityPrincipalUser -InputObject $ThisPrincipal
-        IdentityReference        = $null
-        NtfsAccessControlEntries = $ThisPrincipal.Group
-        Name                     = Format-SecurityPrincipalName -InputObject $ThisPrincipal
+        User = Format-SecurityPrincipalUser -InputObject $ThisPrincipal
+        Name = Format-SecurityPrincipalName -InputObject $ThisPrincipal
     }
 
     # Include any existing properties found earlier
     ForEach ($ThisProperty in $InputProperties) {
         $OutputProperties[$ThisProperty] = $ThisPrincipal.$ThisProperty
     }
+    $OutputProperties['IdentityReference'] = $null
 
     # Output the object
     [PSCustomObject]$OutputProperties
