@@ -1,5 +1,7 @@
 function Format-SecurityPrincipalMemberUser {
+
     param ([object]$InputObject)
+
     if ($InputObject.Properties) {
         $sAmAccountName = $InputObject.Properties['sAmAccountName']
         if ("$sAmAccountName" -eq '') {
@@ -16,4 +18,5 @@ function Format-SecurityPrincipalMemberUser {
         $sAmAccountName = $InputObject.Name
     }
     "$($InputObject.Domain.Netbios)\$sAmAccountName"
+
 }

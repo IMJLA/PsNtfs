@@ -13,7 +13,7 @@ function Format-SecurityPrincipal {
 
     )
 
-    # Get the principal from the cache
+    # Get the security principal from the cache
     $ThisPrincipal = $PrincipalsByResolvedID[$ResolvedID]
 
     # Get any existing properties for inclusion later
@@ -32,7 +32,7 @@ function Format-SecurityPrincipal {
     }
     $OutputProperties['IdentityReference'] = $null
 
-    # Output the object
+    # Output the security principal
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members

@@ -374,7 +374,7 @@ function Format-SecurityPrincipal {
 
     )
 
-    # Get the principal from the cache
+    # Get the security principal from the cache
     $ThisPrincipal = $PrincipalsByResolvedID[$ResolvedID]
 
     # Get any existing properties for inclusion later
@@ -393,7 +393,7 @@ function Format-SecurityPrincipal {
     }
     $OutputProperties['IdentityReference'] = $null
 
-    # Output the object
+    # Output the security principal
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members
@@ -414,7 +414,7 @@ function Format-SecurityPrincipalMember {
         }
 
         # Include any existing properties
-        $InputProperties = (Get-Member -InputObject $InputObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+        $InputProperties = (Get-Member -InputObject $ThisObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
         ForEach ($ThisProperty in $InputProperties) {
             $OutputProperties[$ThisProperty] = $ThisObject.$ThisProperty
@@ -426,7 +426,9 @@ function Format-SecurityPrincipalMember {
 
 }
 function Format-SecurityPrincipalMemberUser {
+
     param ([object]$InputObject)
+
     if ($InputObject.Properties) {
         $sAmAccountName = $InputObject.Properties['sAmAccountName']
         if ("$sAmAccountName" -eq '') {
@@ -443,6 +445,7 @@ function Format-SecurityPrincipalMemberUser {
         $sAmAccountName = $InputObject.Name
     }
     "$($InputObject.Domain.Netbios)\$sAmAccountName"
+
 }
 function Format-SecurityPrincipalName {
     param ([object]$InputObject)
@@ -994,6 +997,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

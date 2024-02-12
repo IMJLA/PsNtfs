@@ -12,7 +12,7 @@ function Format-SecurityPrincipalMember {
         }
 
         # Include any existing properties
-        $InputProperties = (Get-Member -InputObject $InputObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+        $InputProperties = (Get-Member -InputObject $ThisObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
         ForEach ($ThisProperty in $InputProperties) {
             $OutputProperties[$ThisProperty] = $ThisObject.$ThisProperty
