@@ -13,7 +13,7 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Format-SecurityPrincipalMember [[-InputObject] <Object[]>]
+Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <String>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +29,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -IdentityReference
+{{ Fill IdentityReference Description }}
+
+```yaml
+Type: System.String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -InputObject
 {{ Fill InputObject Description }}

@@ -1,13 +1,13 @@
 function Format-SecurityPrincipalMember {
 
-    param ([object[]]$InputObject)
+    param ([object[]]$InputObject, [string]$IdentityReference)
 
     ForEach ($ThisObject in $InputObject) {
 
         # Include specific desired properties
         $OutputProperties = @{
             User              = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
-            IdentityReference = @($ThisObject.Group.IdentityReferenceResolved)[0]
+            IdentityReference = $IdentityReference
             ObjectType        = $ThisObject.SchemaClassName
         }
 

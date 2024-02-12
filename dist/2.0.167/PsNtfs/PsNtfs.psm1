@@ -397,19 +397,19 @@ function Format-SecurityPrincipal {
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members
-    Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members
+    Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members -IdentityReference $ResolvedID
 
 }
 function Format-SecurityPrincipalMember {
 
-    param ([object[]]$InputObject)
+    param ([object[]]$InputObject, [string]$IdentityReference)
 
     ForEach ($ThisObject in $InputObject) {
 
         # Include specific desired properties
         $OutputProperties = @{
             User              = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
-            IdentityReference = @($ThisObject.Group.IdentityReferenceResolved)[0]
+            IdentityReference = $IdentityReference
             ObjectType        = $ThisObject.SchemaClassName
         }
 
@@ -997,6 +997,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
