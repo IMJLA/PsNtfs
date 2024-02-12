@@ -735,8 +735,11 @@ function Get-OwnerAce {
 
     $SourceAccessList = $ACLsByPath[$Item]
     $ThisParent = $Item.Substring(0, [math]::Max($Item.LastIndexOf('\'), 0)) # ToDo - This method of finding the parent path is faster than Split-Path -Parent but it has a dependency on a folder path not containing a trailing \ which is not currently what I am seeing in my simple test but should be supported in the future (possibly default)
-
-    if ($SourceAccessList.Owner -ne $ACLsByPath[$ThisParent].Owner) {
+    $ParentOwner = $ACLsByPath[$ThisParent].Owner
+    if (
+        $SourceAccessList.Owner -ne $ParentOwner -and
+        $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
+    ) {
 
         $ACLsByPath[$Item].Owner = [PSCustomObject]@{
             IdentityReference = $SourceAccessList.Owner
@@ -747,9 +750,6 @@ function Get-OwnerAce {
             PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
         }
 
-    }
-    else {
-        $ACLsByPath[$Item].Owner = $null
     }
 
 }
@@ -993,6 +993,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
