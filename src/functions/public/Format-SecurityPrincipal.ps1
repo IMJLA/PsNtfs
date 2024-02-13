@@ -29,7 +29,7 @@ function Format-SecurityPrincipal {
         }
     }
 
-    $Access = $ACEsByGUID[$AceGUIDsByResolvedID[$ID]]
+    $Access = $ACEsByGUID[$AceGUIDsByResolvedID[$ResolvedID]]
 
     # Format the security principal
     # Include specific desired properties

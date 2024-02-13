@@ -390,7 +390,7 @@ function Format-SecurityPrincipal {
         }
     }
 
-    $Access = $ACEsByGUID[$AceGUIDsByResolvedID[$ID]]
+    $Access = $ACEsByGUID[$AceGUIDsByResolvedID[$ResolvedID]]
 
     # Format the security principal
     # Include specific desired properties
@@ -1043,6 +1043,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
