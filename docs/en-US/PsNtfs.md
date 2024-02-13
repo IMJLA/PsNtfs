@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.173
+Help Version: 2.0.174
 Locale: en-US
 ---
 
@@ -32,7 +32,7 @@ Format-SecurityPrincipal [[-ResolvedID] <string>] [[-PrincipalsByResolvedID] <ha
 
 ### [Format-SecurityPrincipalMember](Format-SecurityPrincipalMember.md)
 
-Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <string>] [[-Access] <Object[]>]
+Format-SecurityPrincipalMember [[-ResolvedID] <Object[]>] [[-ParentIdentityReference] <string>] [[-Access] <Object[]>] [[-PrincipalsByResolvedID] <hashtable>]
 
 
 ### [Format-SecurityPrincipalMemberUser](Format-SecurityPrincipalMemberUser.md)

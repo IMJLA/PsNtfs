@@ -422,40 +422,43 @@ function Format-SecurityPrincipal {
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members
-    Format-SecurityPrincipalMember -InputObject $PrincipalsByResolvedID[$ThisPrincipal.Members] -IdentityReference $ResolvedID -Access $Access
+    Format-SecurityPrincipalMember -ResolvedID $ThisPrincipal.Members -ParentIdentityReference $ResolvedID -Access $Access -PrincipalsByResolvedID $PrincipalsByResolvedID
 
 }
 function Format-SecurityPrincipalMember {
 
     param (
-        [object[]]$InputObject,
-        [string]$IdentityReference,
-        [object[]]$Access
+        [object[]]$ResolvedID,
+        [string]$ParentIdentityReference,
+        [object[]]$Access,
+        [hashtable]$PrincipalsByResolvedID = ([hashtable]::Synchronized(@{}))
     )
 
-    ForEach ($ThisObject in $InputObject) {
+    ForEach ($ID in $ResolvedID) {
+
+        $Principal = $PrincipalsByResolvedID[$ID]
 
         # Include specific desired properties
         $OutputProperties = @{
             Access                          = $Access
-            ParentIdentityReferenceResolved = $IdentityReference
+            ParentIdentityReferenceResolved = $ParentIdentityReference
         }
 
-        if ($ThisObject.DirectoryEntry) {
+        if ($Principal.DirectoryEntry) {
 
-            $InputProperties = (Get-Member -InputObject $ThisObject.DirectoryEntry -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+            $InputProperties = (Get-Member -InputObject $Principal.DirectoryEntry -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
             ForEach ($ThisProperty in $InputProperties) {
-                $OutputProperties[$ThisProperty] = $ThisObject.DirectoryEntry.$ThisProperty
+                $OutputProperties[$ThisProperty] = $Principal.DirectoryEntry.$ThisProperty
             }
 
         }
 
         # Include any existing properties
-        $InputProperties = (Get-Member -InputObject $ThisObject -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+        $InputProperties = (Get-Member -InputObject $Principal -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
         ForEach ($ThisProperty in $InputProperties) {
-            $OutputProperties[$ThisProperty] = $ThisObject.$ThisProperty
+            $OutputProperties[$ThisProperty] = $Principal.$ThisProperty
         }
 
         [PSCustomObject]$OutputProperties
@@ -1035,6 +1038,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

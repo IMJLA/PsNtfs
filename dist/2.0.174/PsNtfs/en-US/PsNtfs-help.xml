@@ -673,9 +673,9 @@ Expand-Acl</dev:code>
       <command:syntaxItem>
         <maml:name>Format-SecurityPrincipalMember</maml:name>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-          <maml:name>InputObject</maml:name>
+          <maml:name>ResolvedID</maml:name>
           <maml:description>
-            <maml:para>{{ Fill InputObject Description }}</maml:para>
+            <maml:para>{{ Fill ResolvedID Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
           <dev:type>
@@ -685,9 +685,9 @@ Expand-Acl</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-          <maml:name>IdentityReference</maml:name>
+          <maml:name>ParentIdentityReference</maml:name>
           <maml:description>
-            <maml:para>{{ Fill IdentityReference Description }}</maml:para>
+            <maml:para>{{ Fill ParentIdentityReference Description }}</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
           <dev:type>
@@ -708,6 +708,18 @@ Expand-Acl</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+          <maml:name>PrincipalsByResolvedID</maml:name>
+          <maml:description>
+            <maml:para>{{ Fill PrincipalsByResolvedID Description }}</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
       </command:syntaxItem>
     </command:syntax>
     <command:parameters>
@@ -724,9 +736,9 @@ Expand-Acl</dev:code>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
-        <maml:name>IdentityReference</maml:name>
+        <maml:name>ParentIdentityReference</maml:name>
         <maml:description>
-          <maml:para>{{ Fill IdentityReference Description }}</maml:para>
+          <maml:para>{{ Fill ParentIdentityReference Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
         <dev:type>
@@ -735,10 +747,22 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
-        <maml:name>InputObject</maml:name>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
+        <maml:name>PrincipalsByResolvedID</maml:name>
         <maml:description>
-          <maml:para>{{ Fill InputObject Description }}</maml:para>
+          <maml:para>{{ Fill PrincipalsByResolvedID Description }}</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+        <dev:type>
+          <maml:name>System.Collections.Hashtable</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>ResolvedID</maml:name>
+        <maml:description>
+          <maml:para>{{ Fill ResolvedID Description }}</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Object[]</command:parameterValue>
         <dev:type>

@@ -13,8 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <String>]
- [[-Access] <Object[]>]
+Format-SecurityPrincipalMember [[-ResolvedID] <Object[]>] [[-ParentIdentityReference] <String>]
+ [[-Access] <Object[]>] [[-PrincipalsByResolvedID] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -46,8 +46,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IdentityReference
-{{ Fill IdentityReference Description }}
+### -ParentIdentityReference
+{{ Fill ParentIdentityReference Description }}
 
 ```yaml
 Type: System.String
@@ -61,8 +61,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InputObject
-{{ Fill InputObject Description }}
+### -PrincipalsByResolvedID
+{{ Fill PrincipalsByResolvedID Description }}
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResolvedID
+{{ Fill ResolvedID Description }}
 
 ```yaml
 Type: System.Object[]
