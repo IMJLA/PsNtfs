@@ -8,18 +8,28 @@ function Format-SecurityPrincipalMember {
 
     ForEach ($ThisObject in $InputObject) {
 
-        if ($ThisObject.sAmAccountName) {
-            $AccountName = $ThisObject.sAmAccountName
-        }
-        else {
-            $AccountName = $ThisObject.Name
-        }
-
         # Include specific desired properties
         $OutputProperties = @{
             AccountName                     = "$($ThisObject.Domain.Netbios)\$AccountName"
             Access                          = $Access
             ParentIdentityReferenceResolved = $IdentityReference
+        }
+
+        if ($ThisObject.DirectoryEntry) {
+
+            $InputProperties = (Get-Member -InputObject $ThisObject.DirectoryEntry -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
+
+            ForEach ($ThisProperty in $InputProperties) {
+                $OutputProperties[$ThisProperty] = $ThisObject.DirectoryEntry.$ThisProperty
+            }
+
+        }
+
+        if ($ThisObject.sAmAccountName) {
+            $OutputProperties['AccountName'] = $ThisObject.sAmAccountName
+        }
+        else {
+            $OutputProperties['AccountName'] = $ThisObject.Name
         }
 
         # Include any existing properties
