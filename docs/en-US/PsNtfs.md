@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.167
+Help Version: 2.0.168
 Locale: en-US
 ---
 
@@ -26,13 +26,11 @@ Expand an Access Control List into its constituent Access Control Entries
 Parse a literal path to find its server
 
 ### [Format-SecurityPrincipal](Format-SecurityPrincipal.md)
-
-Format-SecurityPrincipal [[-ResolvedID] <string>] [[-PrincipalsByResolvedID] <hashtable>]
-
+{{ Fill in the Description }}
 
 ### [Format-SecurityPrincipalMember](Format-SecurityPrincipalMember.md)
 
-Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <string>]
+Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <string>] [[-Access] <Object[]>]
 
 
 ### [Format-SecurityPrincipalMemberUser](Format-SecurityPrincipalMemberUser.md)

@@ -14,6 +14,7 @@ schema: 2.0.0
 
 ```
 Format-SecurityPrincipalMember [[-InputObject] <Object[]>] [[-IdentityReference] <String>]
+ [[-Access] <Object[]>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +30,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -Access
+{{ Fill Access Description }}
+
+```yaml
+Type: System.Object[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -IdentityReference
 {{ Fill IdentityReference Description }}

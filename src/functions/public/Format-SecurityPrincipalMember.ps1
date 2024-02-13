@@ -1,14 +1,25 @@
 function Format-SecurityPrincipalMember {
 
-    param ([object[]]$InputObject, [string]$IdentityReference)
+    param (
+        [object[]]$InputObject,
+        [string]$IdentityReference,
+        [object[]]$Access
+    )
 
     ForEach ($ThisObject in $InputObject) {
 
+        if ($ThisObject.sAmAccountName) {
+            $AccountName = $ThisObject.sAmAccountName
+        }
+        else {
+            $AccountName = $ThisObject.Name
+        }
+
         # Include specific desired properties
         $OutputProperties = @{
-            User              = Format-SecurityPrincipalMemberUser -InputObject $ThisObject
-            IdentityReference = $IdentityReference
-            ObjectType        = $ThisObject.SchemaClassName
+            AccountName                     = "$($ThisObject.Domain.Netbios)\$AccountName"
+            Access                          = $Access
+            ParentIdentityReferenceResolved = $IdentityReference
         }
 
         # Include any existing properties
