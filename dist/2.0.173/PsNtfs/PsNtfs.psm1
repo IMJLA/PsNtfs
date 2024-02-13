@@ -437,7 +437,6 @@ function Format-SecurityPrincipalMember {
 
         # Include specific desired properties
         $OutputProperties = @{
-            AccountName                     = "$($ThisObject.Domain.Netbios)\$AccountName"
             Access                          = $Access
             ParentIdentityReferenceResolved = $IdentityReference
         }
@@ -450,13 +449,6 @@ function Format-SecurityPrincipalMember {
                 $OutputProperties[$ThisProperty] = $ThisObject.DirectoryEntry.$ThisProperty
             }
 
-        }
-
-        if ($ThisObject.sAmAccountName) {
-            $OutputProperties['AccountName'] = $ThisObject.sAmAccountName
-        }
-        else {
-            $OutputProperties['AccountName'] = $ThisObject.Name
         }
 
         # Include any existing properties
@@ -1043,6 +1035,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

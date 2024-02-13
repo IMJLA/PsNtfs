@@ -10,7 +10,6 @@ function Format-SecurityPrincipalMember {
 
         # Include specific desired properties
         $OutputProperties = @{
-            AccountName                     = "$($ThisObject.Domain.Netbios)\$AccountName"
             Access                          = $Access
             ParentIdentityReferenceResolved = $IdentityReference
         }
@@ -23,13 +22,6 @@ function Format-SecurityPrincipalMember {
                 $OutputProperties[$ThisProperty] = $ThisObject.DirectoryEntry.$ThisProperty
             }
 
-        }
-
-        if ($ThisObject.sAmAccountName) {
-            $OutputProperties['AccountName'] = $ThisObject.sAmAccountName
-        }
-        else {
-            $OutputProperties['AccountName'] = $ThisObject.Name
         }
 
         # Include any existing properties
