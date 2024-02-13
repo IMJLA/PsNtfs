@@ -422,7 +422,7 @@ function Format-SecurityPrincipal {
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members
-    Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members -IdentityReference $ResolvedID -Access $Access
+    Format-SecurityPrincipalMember -InputObject $PrincipalsByResolvedID[$ThisPrincipal.Members] -IdentityReference $ResolvedID -Access $Access
 
 }
 function Format-SecurityPrincipalMember {
@@ -1043,6 +1043,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

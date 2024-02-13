@@ -61,6 +61,6 @@ function Format-SecurityPrincipal {
     [PSCustomObject]$OutputProperties
 
     # Format and output any group members
-    Format-SecurityPrincipalMember -InputObject $ThisPrincipal.Members -IdentityReference $ResolvedID -Access $Access
+    Format-SecurityPrincipalMember -InputObject $PrincipalsByResolvedID[$ThisPrincipal.Members] -IdentityReference $ResolvedID -Access $Access
 
 }
