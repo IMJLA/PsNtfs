@@ -14,6 +14,7 @@ schema: 2.0.0
 
 ```
 Format-SecurityPrincipal [[-ResolvedID] <String>] [[-PrincipalsByResolvedID] <Hashtable>]
+ [[-AceGUIDsByResolvedID] <Hashtable>] [[-ACEsByGUID] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -29,6 +30,36 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -AceGUIDsByResolvedID
+{{ Fill AceGUIDsByResolvedID Description }}
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ACEsByGUID
+{{ Fill ACEsByGUID Description }}
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -PrincipalsByResolvedID
 {{ Fill PrincipalsByResolvedID Description }}

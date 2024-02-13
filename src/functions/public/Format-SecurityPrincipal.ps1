@@ -9,7 +9,13 @@ function Format-SecurityPrincipal {
         [string]$ResolvedID,
 
         # Thread-safe hashtable to use for caching directory entries and avoiding duplicate directory queries
-        [hashtable]$PrincipalsByResolvedID = ([hashtable]::Synchronized(@{}))
+        [hashtable]$PrincipalsByResolvedID = ([hashtable]::Synchronized(@{})),
+
+        # Thread-safe hashtable to use for caching directory entries and avoiding duplicate directory queries
+        [hashtable]$AceGUIDsByResolvedID = ([hashtable]::Synchronized(@{})),
+
+        # Thread-safe hashtable to use for caching directory entries and avoiding duplicate directory queries
+        [hashtable]$ACEsByGUID = ([hashtable]::Synchronized(@{}))
 
     )
 
@@ -50,7 +56,6 @@ function Format-SecurityPrincipal {
     ForEach ($ThisProperty in $InputProperties) {
         $OutputProperties[$ThisProperty] = $ThisPrincipal.$ThisProperty
     }
-    $OutputProperties['ParentIdentityReference'] = $null
 
     # Output the security principal
     [PSCustomObject]$OutputProperties
