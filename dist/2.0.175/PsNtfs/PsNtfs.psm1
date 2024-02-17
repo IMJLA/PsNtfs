@@ -197,7 +197,7 @@ function ConvertTo-SimpleProperty {
         }
     }
 
-    return $PropertyDictionary
+    #return $PropertyDictionary
 }
 function Expand-AccountPermission {
     <#
@@ -631,7 +631,7 @@ function Get-FileSystemAccessRule {
     }
 
 }
-function Get-FolderAce {
+function Get-FolderAcl {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
@@ -761,7 +761,7 @@ function Get-FolderAce {
 }
 function Get-OwnerAce {
 
-    # Simulate ACEs for item owners who differ from the parent owner
+    # Simulate ACEs for item owners who differ from the owner of the item's parent
 
     param (
 
@@ -1037,7 +1037,8 @@ ForEach ($ThisScript in $ScriptFiles) {
     . $($ThisScript.FullName)
 }
 #>
-Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAce','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAcl','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

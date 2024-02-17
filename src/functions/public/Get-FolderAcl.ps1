@@ -1,4 +1,4 @@
-function Get-FolderAce {
+function Get-FolderAcl {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible

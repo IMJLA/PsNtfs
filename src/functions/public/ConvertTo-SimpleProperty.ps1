@@ -127,5 +127,5 @@ function ConvertTo-SimpleProperty {
         }
     }
 
-    return $PropertyDictionary
+    #return $PropertyDictionary
 }

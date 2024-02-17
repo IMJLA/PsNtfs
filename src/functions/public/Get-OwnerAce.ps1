@@ -1,6 +1,6 @@
 function Get-OwnerAce {
 
-    # Simulate ACEs for item owners who differ from the parent owner
+    # Simulate ACEs for item owners who differ from the owner of the item's parent
 
     param (
 
