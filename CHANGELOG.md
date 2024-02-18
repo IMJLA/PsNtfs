@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.176] - 2024-02-18 - reduce redundant GetDirectories warning output
+
 ## [2.0.175] - 2024-02-17 - too many changes oops gl future me
 
 ## [2.0.174] - 2024-02-12 - bugfix format-securityprincipal and format-securityprincipalmember

@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.175
+Help Version: 2.0.176
 Locale: en-US
 ---
 
@@ -59,9 +59,6 @@ TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basic
 ### [Get-FileSystemAccessRule](Get-FileSystemAccessRule.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
 TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
-
-### [Get-FolderAce](Get-FolderAce.md)
-{{ Fill in the Description }}
 
 ### [Get-FolderAcl](Get-FolderAcl.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible

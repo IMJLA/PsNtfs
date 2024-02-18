@@ -20,7 +20,11 @@ function GetDirectories {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
+        [hashtable]$WarningCache = @{}
+
     )
 
     $LogParams = @{
@@ -32,25 +36,45 @@ function GetDirectories {
 
     # Try to run the command as instructed
     Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
+
     try {
+
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, $SearchOption)
         return $result
+
     }
     catch {
-        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
-        $LogParams['Type'] = $DebugOutputStream
+
+        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $null
+
     }
 
     # Sometimes access is denied to a single buried subdirectory, so we will try searching the top directory only and then recursing through results one at a time
     Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$TargetPath','$SearchPattern',[System.IO.SearchOption]::TopDirectoryOnly)"
+
     try {
+
         $result = [System.IO.Directory]::GetDirectories($TargetPath, $SearchPattern, [System.IO.SearchOption]::TopDirectoryOnly)
+
     }
     catch {
-        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+
+        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $null
+
+        # If this was not a recursive call to GetDirectories, write the warnings
+        if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
+
+            $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+
+            ForEach ($Warning in ($WarningCache.Keys | Sort-Object)) {
+
+                Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+
+            }
+        }
+
         return
+
     }
 
     $GetSubfolderParams = @{
@@ -60,11 +84,26 @@ function GetDirectories {
         WhoAmI            = $WhoAmI
         SearchOption      = $SearchOption
         SearchPattern     = $SearchPattern
+        WarningCache      = $WarningCache
     }
 
     ForEach ($Child in $result) {
+
         Write-LogMsg @LogParams -Text "[System.IO.Directory]::GetDirectories('$Child','$SearchPattern',[System.IO.SearchOption]::$SearchOption)"
         GetDirectories -TargetPath $Child @GetSubfolderParams
+
+    }
+
+    # If this was not a recursive call to GetDirectories, write the warnings
+    if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
+
+        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+
+        ForEach ($Warning in ($WarningCache.Keys | Sort-Object)) {
+
+            Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+
+        }
     }
 
 }
@@ -1038,6 +1077,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-FolderAcl','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
