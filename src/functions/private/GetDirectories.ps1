@@ -100,7 +100,7 @@ function GetDirectories {
 
         ForEach ($Warning in ($WarningCache.Keys | Sort-Object)) {
 
-            Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+            Write-LogMsg @LogParams -Text $Warning
 
         }
 
