@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.180] - 2024-02-18 - undo
+
 ## [2.0.179] - 2024-02-18 - trying to maintain order of warning messages
 
 ## [2.0.178] - 2024-02-18 - remove sorting for efficiency
