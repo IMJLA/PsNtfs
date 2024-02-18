@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.181
+Help Version: 2.0.182
 Locale: en-US
 ---
 
@@ -50,20 +50,33 @@ Format-SecurityPrincipalName [[-InputObject] <Object>]
 Format-SecurityPrincipalUser [[-InputObject] <Object>]
 
 
+### [Get-DirectorySecurity](Get-DirectorySecurity.md)
+Alternative to Get-Acl designed to be as lightweight and flexible as possible
+    Lightweight: Does not return the Path property like Get-Acl does
+    Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
+
 ### [Get-FileSystemAccessRule](Get-FileSystemAccessRule.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
 TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
 
 ### [Get-OwnerAce](Get-OwnerAce.md)
-{{ Fill in the Synopsis }}
+
+Get-OwnerAce [[-Item] <string>] [[-ACLsByPath] <hashtable>]
+
 
 ### [Get-ServerFromFilePath](Get-ServerFromFilePath.md)
-{{ Fill in the Synopsis }}
+
+Get-ServerFromFilePath [[-FilePath] <string>] [[-ThisFqdn] <string>]
+
 
 ### [Get-Subfolder](Get-Subfolder.md)
-{{ Fill in the Synopsis }}
+
+Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [[-DebugOutputStream] <string>] [[-ThisHostname] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>] [<CommonParameters>]
+
 
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
-{{ Fill in the Synopsis }}
+
+New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNameRule] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
+
 
 

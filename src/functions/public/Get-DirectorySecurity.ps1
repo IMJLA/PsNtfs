@@ -1,4 +1,4 @@
-function Get-FolderAcl {
+function Get-DirectorySecurity {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible

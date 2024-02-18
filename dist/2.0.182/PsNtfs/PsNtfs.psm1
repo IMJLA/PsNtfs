@@ -553,7 +553,7 @@ function Format-SecurityPrincipalUser {
         $sAmAccountName
     }
 }
-function Get-FolderAcl {
+function Get-DirectorySecurity {
     <#
     .SYNOPSIS
     Alternative to Get-Acl designed to be as lightweight and flexible as possible
@@ -1022,6 +1022,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-AccountPermission','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipal','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
