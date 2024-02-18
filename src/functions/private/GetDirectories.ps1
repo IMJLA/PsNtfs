@@ -65,7 +65,7 @@ function GetDirectories {
 
             $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
-            ForEach ($Warning in ($WarningCache.Keys | Sort-Object)) {
+            ForEach ($Warning in $WarningCache.Keys) {
 
                 Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
 
@@ -98,7 +98,7 @@ function GetDirectories {
 
         $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
-        ForEach ($Warning in ($WarningCache.Keys | Sort-Object)) {
+        ForEach ($Warning in $WarningCache.Keys) {
 
             Write-LogMsg @LogParams -Text $Warning
 
