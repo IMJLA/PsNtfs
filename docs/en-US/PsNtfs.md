@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.180
+Help Version: 2.0.181
 Locale: en-US
 ---
 
@@ -50,39 +50,20 @@ Format-SecurityPrincipalName [[-InputObject] <Object>]
 Format-SecurityPrincipalUser [[-InputObject] <Object>]
 
 
-### [Get-DirectorySecurity](Get-DirectorySecurity.md)
-Alternative to Get-Acl designed to be as lightweight and flexible as possible
-    Lightweight: Does not return the Path property like Get-Acl does
-    Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
-TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
-
 ### [Get-FileSystemAccessRule](Get-FileSystemAccessRule.md)
 Alternative to Get-Acl designed to be as lightweight and flexible as possible
 TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basically what Get-FolderACE does
 
-### [Get-FolderAcl](Get-FolderAcl.md)
-Alternative to Get-Acl designed to be as lightweight and flexible as possible
-    Lightweight: Does not return the Path property like Get-Acl does
-    Flexible how?  Was it long paths?  DFS?  Can't remember what didn't work with Get-Acl
-
 ### [Get-OwnerAce](Get-OwnerAce.md)
-
-Get-OwnerAce [[-Item] <string>] [[-ACLsByPath] <hashtable>]
-
+{{ Fill in the Synopsis }}
 
 ### [Get-ServerFromFilePath](Get-ServerFromFilePath.md)
-
-Get-ServerFromFilePath [[-FilePath] <string>] [[-ThisFqdn] <string>]
-
+{{ Fill in the Synopsis }}
 
 ### [Get-Subfolder](Get-Subfolder.md)
-
-Get-Subfolder [[-TargetPath] <string>] [[-FolderRecursionDepth] <int>] [[-DebugOutputStream] <string>] [[-ThisHostname] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>] [<CommonParameters>]
-
+{{ Fill in the Synopsis }}
 
 ### [New-NtfsAclIssueReport](New-NtfsAclIssueReport.md)
-
-New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>] [[-GroupNameRule] <scriptblock>] [[-ThisHostName] <string>] [[-WhoAmI] <string>] [[-LogMsgCache] <hashtable>]
-
+{{ Fill in the Synopsis }}
 
 
