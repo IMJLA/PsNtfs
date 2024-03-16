@@ -1,8 +1,8 @@
 ---
 Module Name: PsNtfs
-Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4 d2475b4e-5027-4728-ae4e-799ad4dd12e4
+Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.183
+Help Version: 2.0.184
 Locale: en-US
 ---
 
@@ -16,17 +16,11 @@ Work with the contents of NTFS volumes
 ConvertTo-SimpleProperty [[-InputObject] <Object>] [[-Property] <string>] [[-PropertyDictionary] <hashtable>] [[-Prefix] <string>]
 
 
-### [Expand-AccountPermission](Expand-AccountPermission.md)
-{{ Fill in the Description }}
-
 ### [Expand-Acl](Expand-Acl.md)
 Expand an Access Control List into its constituent Access Control Entries
 
 ### [Find-ServerNameInPath](Find-ServerNameInPath.md)
 Parse a literal path to find its server
-
-### [Format-SecurityPrincipal](Format-SecurityPrincipal.md)
-{{ Fill in the Description }}
 
 ### [Format-SecurityPrincipalMember](Format-SecurityPrincipalMember.md)
 

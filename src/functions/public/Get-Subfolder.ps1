@@ -14,7 +14,7 @@ function Get-Subfolder {
             Set to -1 (default) to recurse infinitely
             Set to any whole number to enumerate that many levels
         #>
-        [int]$FolderRecursionDepth = -1,
+        [int]$RecurseDepth = -1,
 
         # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
         [string]$DebugOutputStream = 'Debug',
