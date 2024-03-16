@@ -729,16 +729,16 @@ function Get-Subfolder {
         WhoAmI            = $WhoAmI
     }
 
-    if ($FolderRecursionDepth -eq -1) {
+    if ($RecurseDepth -eq -1) {
         $DepthString = '∞'
     }
     else {
-        $DepthString = $FolderRecursionDepth
+        $DepthString = $RecurseDepth
     }
 
     $Output[$TargetPath] = if ($Host.Version.Major -gt 2) {
 
-        switch ($FolderRecursionDepth) {
+        switch ($RecurseDepth) {
             -1 {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories) @GetSubfolderParams
             }
@@ -747,9 +747,9 @@ function Get-Subfolder {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly) @GetSubfolderParams
             }
             Default {
-                $FolderRecursionDepth = $FolderRecursionDepth - 1
-                Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $FolderRecursionDepth"
-                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $FolderRecursionDepth).FullName
+                $RecurseDepth = $RecurseDepth - 1
+                Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $RecurseDepth"
+                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $RecurseDepth).FullName
             }
         }
 
@@ -899,6 +899,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
