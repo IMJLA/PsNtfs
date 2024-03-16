@@ -26,7 +26,9 @@ function Get-Subfolder {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogMsgCache = $Global:LogMessages,
+
+        [hashtable]$Output = [hashtable]::Synchronized(@{})
 
     )
 
@@ -51,7 +53,7 @@ function Get-Subfolder {
         $DepthString = $FolderRecursionDepth
     }
 
-    if ($Host.Version.Major -gt 2) {
+    $Output[$TargetPath] = if ($Host.Version.Major -gt 2) {
 
         switch ($FolderRecursionDepth) {
             -1 {

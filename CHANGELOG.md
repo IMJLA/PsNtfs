@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.183] - 2024-03-16 - add multithreading support
+
 ## [2.0.182] - 2024-02-18 - fix funct name (file name was correct)
 
 ## [2.0.181] - 2024-02-18 - update funct names
