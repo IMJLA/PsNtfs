@@ -97,11 +97,17 @@ function GetDirectories {
     # If this was not a recursive call to GetDirectories, write the warnings
     if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
 
-        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        if ($WarningCache.Keys.Count -ge 1) {
 
-        ForEach ($Warning in $WarningCache.Keys) {
+            $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+            Write-LogMsg @LogParams -Text "$($WarningCache.Keys.Count) warnings while getting directories of '$TargetPath'.  See verbose log for details."
+            $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
-            Write-LogMsg @LogParams -Text $Warning
+            ForEach ($Warning in $WarningCache.Keys) {
+
+                Write-LogMsg @LogParams -Text $Warning
+
+            }
 
         }
 
@@ -899,6 +905,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.187] - 2024-03-24 - improve warning/verbose output
+
 ## [2.0.186] - 2024-03-16 - fix bug from param name change
 
 ## [2.0.185] - 2024-03-16 - rebuild
