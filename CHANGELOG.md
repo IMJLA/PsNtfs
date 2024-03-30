@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.189] - 2024-03-30 - update warning output verbiage
+
 ## [2.0.188] - 2024-03-24 - file cleanup
 
 ## [2.0.187] - 2024-03-24 - improve warning/verbose output

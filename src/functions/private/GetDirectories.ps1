@@ -99,7 +99,7 @@ function GetDirectories {
         if ($WarningCache.Keys.Count -ge 1) {
 
             $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-            Write-LogMsg @LogParams -Text "$($WarningCache.Keys.Count) warnings while getting directories of '$TargetPath'.  See verbose log for details."
+            Write-LogMsg @LogParams -Text "$($WarningCache.Keys.Count) errors while getting directories of '$TargetPath'.  See verbose log for details."
             $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
             ForEach ($Warning in $WarningCache.Keys) {
