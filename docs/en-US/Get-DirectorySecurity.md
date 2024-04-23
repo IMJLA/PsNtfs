@@ -22,7 +22,7 @@ Get-DirectorySecurity [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
  [[-ThisHostname] <String>] [[-WhoAmI] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
- [[-LogMsgCache] <Hashtable>] [[-ACLsByPath] <Hashtable>]
+ [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -130,7 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogMsgCache
+### -LogBuffer
 Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
 
 ```yaml
@@ -140,7 +140,7 @@ Aliases:
 
 Required: False
 Position: 9
-Default value: $Global:LogMessages
+Default value: ([hashtable]::Synchronized(@{}))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

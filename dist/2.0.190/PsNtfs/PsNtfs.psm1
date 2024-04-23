@@ -20,7 +20,7 @@ function GetDirectories {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
         [System.Collections.Specialized.OrderedDictionary]$WarningCache = [ordered]@{}
@@ -30,7 +30,7 @@ function GetDirectories {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        LogMsgCache  = $LogMsgCache
+        Buffer  = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
@@ -78,7 +78,7 @@ function GetDirectories {
     }
 
     $GetSubfolderParams = @{
-        LogMsgCache       = $LogMsgCache
+        LogBuffer       = $LogBuffer
         ThisHostname      = $ThisHostname
         DebugOutputStream = $DebugOutputStream
         WhoAmI            = $WhoAmI
@@ -484,7 +484,7 @@ function Get-DirectorySecurity {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         # Cache of access control lists keyed by path
         [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
@@ -494,7 +494,7 @@ function Get-DirectorySecurity {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        LogMsgCache  = $LogMsgCache
+        Buffer  = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
@@ -583,7 +583,7 @@ function Get-FileSystemAccessRule {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{}))
 
     )
 
@@ -715,7 +715,7 @@ function Get-Subfolder {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         [hashtable]$Output = [hashtable]::Synchronized(@{})
 
@@ -724,12 +724,12 @@ function Get-Subfolder {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        LogMsgCache  = $LogMsgCache
+        Buffer  = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
     $GetSubfolderParams = @{
-        LogMsgCache       = $LogMsgCache
+        LogBuffer       = $LogBuffer
         ThisHostname      = $ThisHostname
         DebugOutputStream = $DebugOutputStream
         WhoAmI            = $WhoAmI
@@ -794,13 +794,13 @@ function New-NtfsAclIssueReport {
         [string]$WhoAmI = (whoami.EXE),
 
         # Dictionary of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{}))
     )
 
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = 'Verbose'
-        LogMsgCache  = $LogMsgCache
+        Buffer       = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
@@ -905,6 +905,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

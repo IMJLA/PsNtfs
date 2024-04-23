@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 New-NtfsAclIssueReport [[-FolderPermissions] <Object>] [[-UserPermissions] <Object>]
- [[-GroupNameRule] <ScriptBlock>] [[-ThisHostName] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
+ [[-GroupNameRule] <ScriptBlock>] [[-ThisHostName] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -61,8 +61,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogMsgCache
-{{ Fill LogMsgCache Description }}
+### -LogBuffer
+{{ Fill LogBuffer Description }}
 
 ```yaml
 Type: System.Collections.Hashtable

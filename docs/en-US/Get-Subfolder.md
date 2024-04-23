@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 Get-Subfolder [[-TargetPath] <String>] [[-RecurseDepth] <Int32>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>] [[-Output] <Hashtable>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>] [[-Output] <Hashtable>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -47,8 +47,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogMsgCache
-{{ Fill LogMsgCache Description }}
+### -LogBuffer
+{{ Fill LogBuffer Description }}
 
 ```yaml
 Type: System.Collections.Hashtable

@@ -16,7 +16,7 @@ TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basic
 ```
 Get-FileSystemAccessRule [[-DirectorySecurity] <DirectorySecurity>] [-IncludeInherited]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogMsgCache] <Hashtable>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -109,7 +109,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogMsgCache
+### -LogBuffer
 Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
 
 ```yaml
@@ -119,7 +119,7 @@ Aliases:
 
 Required: False
 Position: 7
-Default value: $Global:LogMessages
+Default value: ([hashtable]::Synchronized(@{}))
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

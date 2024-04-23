@@ -48,7 +48,7 @@ function Get-DirectorySecurity {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogMsgCache = $Global:LogMessages,
+        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
         # Cache of access control lists keyed by path
         [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
@@ -58,7 +58,7 @@ function Get-DirectorySecurity {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        LogMsgCache  = $LogMsgCache
+        Buffer  = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
