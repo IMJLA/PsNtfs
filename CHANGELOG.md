@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.191] - 2024-05-12 - update log output for brevity and readability
+
 ## [2.0.190] - 2024-04-22 - replace logmsgcache with logbuffer
 
 ## [2.0.189] - 2024-03-30 - update warning output verbiage
