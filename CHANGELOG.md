@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.193] - 2024-05-18 - add type to acl object
+
 ## [2.0.192] - 2024-05-12 - undo previous change.  changed my mind the old way was superior
 
 ## [2.0.191] - 2024-05-12 - update log output for brevity and readability
