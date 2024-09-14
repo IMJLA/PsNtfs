@@ -65,11 +65,16 @@ function Get-DirectorySecurity {
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $eap = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
-    $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
-            $LiteralPath,
-            $Sections
-        )
-    } 2>$null
+    try {
+        $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
+                $LiteralPath,
+                $Sections
+            )
+        } 2>$null
+    }
+    catch {
+
+    }
     $ErrorActionPreference = $eap
 
     if ($null -eq $DirectorySecurity) {

@@ -501,11 +501,16 @@ function Get-DirectorySecurity {
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
     $eap = $ErrorActionPreference
     $ErrorActionPreference = 'SilentlyContinue'
-    $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
-            $LiteralPath,
-            $Sections
-        )
-    } 2>$null
+    try {
+        $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
+                $LiteralPath,
+                $Sections
+            )
+        } 2>$null
+    }
+    catch {
+
+    }
     $ErrorActionPreference = $eap
 
     if ($null -eq $DirectorySecurity) {
@@ -942,6 +947,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
