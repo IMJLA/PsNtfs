@@ -28,7 +28,7 @@ function Get-OwnerAce {
         # Avoid items which have no corresponding ACL due to an error being returned (or some other expected circumstance).
         if ($ACLsByPath[$Item]) {
 
-            $CacheResult.Owner = [PSCustomObject]@{
+            $ACLsByPath[$Item].Owner = [PSCustomObject]@{
                 IdentityReference = $SourceAccessList.Owner
                 AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
                 FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
