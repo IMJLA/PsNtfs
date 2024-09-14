@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.199] - 2024-09-14 - error suppression attempt 3
+
 ## [2.0.198] - 2024-09-14 - error suppression attempt 2 (in case of access denied...apparent change in behavior as this did not block in the past...)
 
 ## [2.0.197] - 2024-09-14 - error suppression attempt 2 (in case of access denied...apparent change in behavior as this did not block in the past...)
