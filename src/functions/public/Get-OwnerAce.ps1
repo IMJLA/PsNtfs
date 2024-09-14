@@ -24,7 +24,7 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner -and
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
-
+        pause
         $ACLsByPath[$Item].Owner = [PSCustomObject]@{
             IdentityReference = $SourceAccessList.Owner
             AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow

@@ -652,7 +652,7 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner -and
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
-
+        pause
         $ACLsByPath[$Item].Owner = [PSCustomObject]@{
             IdentityReference = $SourceAccessList.Owner
             AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
@@ -726,12 +726,12 @@ function Get-Subfolder {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        Buffer  = $LogBuffer
+        Buffer       = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
     $GetSubfolderParams = @{
-        LogBuffer       = $LogBuffer
+        LogBuffer         = $LogBuffer
         ThisHostname      = $ThisHostname
         DebugOutputStream = $DebugOutputStream
         WhoAmI            = $WhoAmI
@@ -757,7 +757,21 @@ function Get-Subfolder {
             Default {
                 $RecurseDepth = $RecurseDepth - 1
                 Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $RecurseDepth"
-                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $RecurseDepth).FullName
+                (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $RecurseDepth -ErrorVariable $GCIErrors -ErrorAction SilentlyContinue).FullName
+
+                if ($GCIErrors.Count -gt 0) {
+                    $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+                    Write-LogMsg @LogParams -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details."
+                    $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+
+                    ForEach ($Warning in $GCIErrors) {
+
+                        Write-LogMsg @LogParams -Text " # $($Warning.Exception.Message)"
+
+                    }
+
+                }
+
             }
         }
 
@@ -765,7 +779,22 @@ function Get-Subfolder {
     else {
 
         Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Recurse"
-        Get-ChildItem $TargetPath -Recurse | Where-Object -FilterScript { $_.PSIsContainer } | ForEach-Object { $_.FullName }
+        Get-ChildItem $TargetPath -Recurse -ErrorVariable $GCIErrors -ErrorAction SilentlyContinue |
+        Where-Object -FilterScript { $_.PSIsContainer } |
+        ForEach-Object { $_.FullName }
+
+        if ($GCIErrors.Count -gt 0) {
+            $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+            Write-LogMsg @LogParams -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details."
+            $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+
+            ForEach ($Warning in $GCIErrors) {
+
+                Write-LogMsg @LogParams -Text " # $($Warning.Exception.Message)"
+
+            }
+
+        }
 
     }
 
@@ -907,6 +936,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
