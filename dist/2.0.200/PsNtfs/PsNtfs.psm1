@@ -484,10 +484,13 @@ function Get-DirectorySecurity {
         [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
+        [hashtable]$LogBuffer = @{},
 
         # Cache of access control lists keyed by path
-        [hashtable]$ACLsByPath = [hashtable]::Synchronized(@{})
+        [hashtable]$ACLsByPath = @{},
+
+        # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
+        [hashtable]$WarningCache = @{}
 
     )
 
@@ -507,15 +510,11 @@ function Get-DirectorySecurity {
         } 2>$null
     }
     catch {
-        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text "# Could not get ACL for '$LiteralPath'. Error was '$($_.Exception.Message)'"
-        $LogParams['Type'] = $DebugOutputStream
-        return
-    }
 
-    if ($null -eq $DirectorySecurity) {
-        $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text "# Could not get ACL for '$LiteralPath'. No error was returned but neither was an ACL."
+        $ThisWarning = $_.Exception.Message.Replace('Exception calling ".ctor" with "2" argument(s): ', '').Replace('"', '')
+        $WarningCache[$LiteralPath] = $ThisWarning
+        $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg @LogParams -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'"
         $LogParams['Type'] = $DebugOutputStream
         return
     }
@@ -947,6 +946,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

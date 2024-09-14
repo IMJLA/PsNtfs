@@ -22,7 +22,7 @@ Get-DirectorySecurity [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
  [[-ThisHostname] <String>] [[-WhoAmI] <String>]
  [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
- [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>]
+ [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>] [[-WarningCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -65,7 +65,7 @@ Aliases:
 
 Required: False
 Position: 10
-Default value: [hashtable]::Synchronized(@{})
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -140,7 +140,7 @@ Aliases:
 
 Required: False
 Position: 9
-Default value: ([hashtable]::Synchronized(@{}))
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -187,6 +187,21 @@ Aliases:
 Required: False
 Position: 6
 Default value: (HOSTNAME.EXE)
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WarningCache
+Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
+
+```yaml
+Type: System.Collections.Hashtable
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
