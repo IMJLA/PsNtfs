@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.201] - 2024-09-14 - correct typo
+
 ## [2.0.200] - 2024-09-14 - add warningcache and error output, also eliminated unnecessary threadsafe hashtables in favor of simple hashtables
 
 ## [2.0.199] - 2024-09-14 - error suppression attempt 3

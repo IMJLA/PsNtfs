@@ -21,7 +21,7 @@ function GetDirectories {
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
         [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
 
-        # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
+        # Hashtable of warning messages to avoid writing duplicate warnings when recursive calls error while retrying a folder
         [System.Collections.Specialized.OrderedDictionary]$WarningCache = [ordered]@{}
 
     )
@@ -29,7 +29,7 @@ function GetDirectories {
     $LogParams = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
-        Buffer  = $LogBuffer
+        Buffer       = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
@@ -58,7 +58,8 @@ function GetDirectories {
     }
     catch {
 
-        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $null
+        $ThisWarning = $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+        $WarningCache[$ThisWarning] = $null
 
         # If this was not a recursive call to GetDirectories, write the warnings
         if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
@@ -67,7 +68,7 @@ function GetDirectories {
 
             ForEach ($Warning in $WarningCache.Keys) {
 
-                Write-LogMsg @LogParams -Text $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
+                Write-LogMsg @LogParams -Text $ThisWarning
 
             }
         }
@@ -77,7 +78,7 @@ function GetDirectories {
     }
 
     $GetSubfolderParams = @{
-        LogBuffer       = $LogBuffer
+        LogBuffer         = $LogBuffer
         ThisHostname      = $ThisHostname
         DebugOutputStream = $DebugOutputStream
         WhoAmI            = $WhoAmI
