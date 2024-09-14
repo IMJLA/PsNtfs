@@ -25,8 +25,10 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
 
-        try {
-            $ACLsByPath[$Item].Owner = [PSCustomObject]@{
+        # Avoid items which have no corresponding ACL due to an error being returned (or some other expected circumstance).
+        if ($ACLsByPath[$Item]) {
+
+            $CacheResult.Owner = [PSCustomObject]@{
                 IdentityReference = $SourceAccessList.Owner
                 AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
                 FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
@@ -34,8 +36,8 @@ function Get-OwnerAce {
                 IsInherited       = $false
                 PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
             }
+
         }
-        catch { pause }
 
     }
 

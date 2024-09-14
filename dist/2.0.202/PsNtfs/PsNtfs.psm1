@@ -661,8 +661,10 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
 
-        try {
-            $ACLsByPath[$Item].Owner = [PSCustomObject]@{
+        # Avoid items which have no corresponding ACL due to an error being returned (or some other expected circumstance).
+        if ($ACLsByPath[$Item]) {
+
+            $CacheResult.Owner = [PSCustomObject]@{
                 IdentityReference = $SourceAccessList.Owner
                 AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
                 FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
@@ -670,8 +672,8 @@ function Get-OwnerAce {
                 IsInherited       = $false
                 PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
             }
+
         }
-        catch { pause }
 
     }
 
@@ -947,6 +949,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
