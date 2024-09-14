@@ -63,15 +63,18 @@ function Get-DirectorySecurity {
     }
 
     Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    $eap = $ErrorActionPreference
+    $ErrorActionPreference = 'SilentlyContinue'
     $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
             $LiteralPath,
             $Sections
         )
     } 2>$null
+    $ErrorActionPreference = $eap
 
     if ($null -eq $DirectorySecurity) {
         $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text "# Found no ACL for '$LiteralPath'"
+        Write-LogMsg @LogParams -Text "# Could not get ACL for '$LiteralPath'"
         $LogParams['Type'] = $DebugOutputStream
         return
     }
