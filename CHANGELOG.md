@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.195] - 2024-09-14 - add debug pause in the right place...
+
 ## [2.0.194] - 2024-09-14 - add debug pause
 
 ## [2.0.193] - 2024-05-18 - add type to acl object

@@ -24,15 +24,18 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner -and
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
-        pause
-        $ACLsByPath[$Item].Owner = [PSCustomObject]@{
-            IdentityReference = $SourceAccessList.Owner
-            AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
-            FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
-            InheritanceFlags  = $InheritanceFlags
-            IsInherited       = $false
-            PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
+
+        try {
+            $ACLsByPath[$Item].Owner = [PSCustomObject]@{
+                IdentityReference = $SourceAccessList.Owner
+                AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
+                FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
+                InheritanceFlags  = $InheritanceFlags
+                IsInherited       = $false
+                PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
+            }
         }
+        catch { pause }
 
     }
 

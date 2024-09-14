@@ -652,15 +652,18 @@ function Get-OwnerAce {
         $SourceAccessList.Owner -ne $ParentOwner -and
         $SourceAccessList.Owner -ne $ParentOwner.IdentityReference
     ) {
-        pause
-        $ACLsByPath[$Item].Owner = [PSCustomObject]@{
-            IdentityReference = $SourceAccessList.Owner
-            AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
-            FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
-            InheritanceFlags  = $InheritanceFlags
-            IsInherited       = $false
-            PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
+
+        try {
+            $ACLsByPath[$Item].Owner = [PSCustomObject]@{
+                IdentityReference = $SourceAccessList.Owner
+                AccessControlType = [System.Security.AccessControl.AccessControlType]::Allow
+                FileSystemRights  = [System.Security.AccessControl.FileSystemRights]::FullControl
+                InheritanceFlags  = $InheritanceFlags
+                IsInherited       = $false
+                PropagationFlags  = [System.Security.AccessControl.PropagationFlags]::None
+            }
         }
+        catch { pause }
 
     }
 
@@ -936,6 +939,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
