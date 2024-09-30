@@ -841,7 +841,7 @@ Expand-Acl</dev:code>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Sections</maml:name>
           <maml:description>
-            <maml:para>Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement</maml:para>
+            <maml:para>Access Control Sections to include.  By default all Sections are included except:  - Audit because it requires admin rights if run on the local system and we want to avoid that requirement  - Group because it is a legacy Section which does not control access in Windows anymore</maml:para>
           </maml:description>
           <command:parameterValueGroup>
             <command:parameterValue required="false" command:variableLength="false">None</command:parameterValue>
@@ -856,7 +856,7 @@ Expand-Acl</dev:code>
             <maml:name>System.Security.AccessControl.AccessControlSections</maml:name>
             <maml:uri />
           </dev:type>
-          <dev:defaultValue>Access, Owner, Group</dev:defaultValue>
+          <dev:defaultValue>Access, Owner</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
           <maml:name>IncludeExplicitRules</maml:name>
@@ -1055,14 +1055,14 @@ Expand-Acl</dev:code>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Sections</maml:name>
         <maml:description>
-          <maml:para>Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement</maml:para>
+          <maml:para>Access Control Sections to include.  By default all Sections are included except:  - Audit because it requires admin rights if run on the local system and we want to avoid that requirement  - Group because it is a legacy Section which does not control access in Windows anymore</maml:para>
         </maml:description>
         <command:parameterValue required="true" variableLength="false">System.Security.AccessControl.AccessControlSections</command:parameterValue>
         <dev:type>
           <maml:name>System.Security.AccessControl.AccessControlSections</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>Access, Owner, Group</dev:defaultValue>
+        <dev:defaultValue>Access, Owner</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
         <maml:name>ThisHostname</maml:name>
@@ -1124,6 +1124,11 @@ Expand-Acl</dev:code>
     <maml:alertSet>
       <maml:alert>
         <maml:para>Currently only supports Directories but could easily be copied to support files, or Registry or AD providers</maml:para>
+        <maml:para>TODO: Performance Test Methods</maml:para>
+        <maml:para>    $test = 'c:\windows'     [System.Security.AccessControl.AccessControlSections]$Sections = (         [System.Security.AccessControl.AccessControlSections]::Access -bor         [System.Security.AccessControl.AccessControlSections]::Owner     )</maml:para>
+        <maml:para>    # Method 1     $acl = [System.IO.FileSystemAclExtensions]::GetAccessControl(         [System.IO.DirectoryInfo]::new($test)     )     # Path  Owner                       Access     # ----  -----                       ------     #       NT SERVICE\TrustedInstaller CREATOR OWNER Allow  268435456…</maml:para>
+        <maml:para>    # Method 2     $acl2 = [System.Security.AccessControl.DirectorySecurity]::new($test, $Sections)     # Path  Owner                       Access     # ----  -----                       ------     #       NT SERVICE\TrustedInstaller CREATOR OWNER Allow  268435456…</maml:para>
+        <maml:para>    # Method 3     # Get-Acl does not support long paths (&gt;256 characters)     $acl3 = Get-Acl -Path $test</maml:para>
       </maml:alert>
     </maml:alertSet>
     <command:examples>

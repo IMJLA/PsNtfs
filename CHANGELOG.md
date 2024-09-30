@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.206] - 2024-09-30 - remove deprecated Group section by default
+
+## [2.0.205] - 2024-09-30 - remove deprecated Group section by default
+
+## [2.0.204] - 2024-09-30 - remove useless deprecated Group Section by default
+
 ## [2.0.203] - 2024-09-14 - bugfix stop using nonexistent var
 
 ## [2.0.202] - 2024-09-14 - Avoid items which have no corresponding ACL due to an error being returned (or some other expected circumstance)

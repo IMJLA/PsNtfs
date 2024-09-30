@@ -161,7 +161,10 @@ Accept wildcard characters: False
 ```
 
 ### -Sections
-Include all sections except Audit because it requires admin rights if run on the local system and we want to avoid that requirement
+Access Control Sections to include. 
+By default all Sections are included except:
+ - Audit because it requires admin rights if run on the local system and we want to avoid that requirement
+ - Group because it is a legacy Section which does not control access in Windows anymore
 
 ```yaml
 Type: System.Security.AccessControl.AccessControlSections
@@ -171,7 +174,7 @@ Accepted values: None, Audit, Access, Owner, Group, All
 
 Required: False
 Position: 2
-Default value: Access, Owner, Group
+Default value: Access, Owner
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -229,5 +232,31 @@ Accept wildcard characters: False
 ### [PSCustomObject]
 ## NOTES
 Currently only supports Directories but could easily be copied to support files, or Registry or AD providers
+
+TODO: Performance Test Methods
+
+    $test = 'c:\windows'
+    \[System.Security.AccessControl.AccessControlSections\]$Sections = (
+        \[System.Security.AccessControl.AccessControlSections\]::Access -bor
+        \[System.Security.AccessControl.AccessControlSections\]::Owner
+    )
+
+    # Method 1
+    $acl = \[System.IO.FileSystemAclExtensions\]::GetAccessControl(
+        \[System.IO.DirectoryInfo\]::new($test)
+    )
+    # Path  Owner                       Access
+    # ----  -----                       ------
+    #       NT SERVICE\TrustedInstaller CREATOR OWNER Allow  268435456…
+
+    # Method 2
+    $acl2 = \[System.Security.AccessControl.DirectorySecurity\]::new($test, $Sections)
+    # Path  Owner                       Access
+    # ----  -----                       ------
+    #       NT SERVICE\TrustedInstaller CREATOR OWNER Allow  268435456…
+
+    # Method 3
+    # Get-Acl does not support long paths (\>256 characters)
+    $acl3 = Get-Acl -Path $test
 
 ## RELATED LINKS
