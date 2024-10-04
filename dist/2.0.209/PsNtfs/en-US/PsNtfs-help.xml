@@ -815,18 +815,6 @@ Expand-Acl</dev:code>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
-          <maml:name>ACLsByPath</maml:name>
-          <maml:description>
-            <maml:para>Cache of access control lists keyed by path</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
-          <dev:type>
-            <maml:name>System.Collections.Hashtable</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>@{}</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
           <maml:name>WarningCache</maml:name>
           <maml:description>
             <maml:para>Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder</maml:para>
@@ -919,21 +907,21 @@ Expand-Acl</dev:code>
           <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
         </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-          <maml:name>OwnerCache</maml:name>
-          <maml:description>
-            <maml:para>Thread-safe cache of items and their owners</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
-          <dev:type>
-            <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
           <maml:name>LogBuffer</maml:name>
           <maml:description>
             <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>@{}</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+          <maml:name>ACLsByPath</maml:name>
+          <maml:description>
+            <maml:para>Cache of access control lists keyed by path</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
           <dev:type>
@@ -968,7 +956,7 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>System.Security.Principal.SecurityIdentifier</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
         <maml:name>ACLsByPath</maml:name>
         <maml:description>
           <maml:para>Cache of access control lists keyed by path</maml:para>
@@ -1028,7 +1016,7 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
         <maml:name>LogBuffer</maml:name>
         <maml:description>
           <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
@@ -1039,18 +1027,6 @@ Expand-Acl</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>@{}</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-        <maml:name>OwnerCache</maml:name>
-        <maml:description>
-          <maml:para>Thread-safe cache of items and their owners</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</command:parameterValue>
-        <dev:type>
-          <maml:name>System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>[System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
         <maml:name>Sections</maml:name>
@@ -1076,7 +1052,7 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="11" aliases="none">
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
         <maml:name>WarningCache</maml:name>
         <maml:description>
           <maml:para>Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder</maml:para>

@@ -73,9 +73,6 @@ function Get-DirectorySecurity {
         # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
         [string]$WhoAmI = (whoami.EXE),
 
-        # Thread-safe cache of items and their owners
-        [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]$OwnerCache = [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new(),
-
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
         [hashtable]$LogBuffer = @{},
 

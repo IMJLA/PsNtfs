@@ -20,9 +20,8 @@ Can't remember what didn't work with Get-Acl
 ```
 Get-DirectorySecurity [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>]
- [[-OwnerCache] <System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]>]
- [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>] [[-WarningCache] <Hashtable>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>]
+ [[-WarningCache] <Hashtable>]
 ```
 
 ## DESCRIPTION
@@ -64,7 +63,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 9
 Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -139,23 +138,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
-Default value: @{}
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OwnerCache
-Thread-safe cache of items and their owners
-
-```yaml
-Type: System.Collections.Concurrent.ConcurrentDictionary`2[System.String,System.Management.Automation.PSObject]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
 Position: 8
-Default value: [System.Collections.Concurrent.ConcurrentDictionary[String, PSCustomObject]]::new()
+Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -203,7 +187,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 10
 Default value: @{}
 Accept pipeline input: False
 Accept wildcard characters: False
