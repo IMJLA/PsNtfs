@@ -96,7 +96,7 @@ FormatTaskName {
     Write-Host $taskName -ForegroundColor Blue
 }
 
-task Default -depends Publish
+task Default -depends RemoveScriptScopedVariables
 
 #Task Init -FromModule PowerShellBuild -minimumVersion 0.6.1
 
@@ -113,10 +113,12 @@ task UpdateModuleVersion -depends InitializeEnvironmentVariables -Action {
     if ($IncrementMajorVersion) {
         "`tThis is a new major version"
         $NewModuleVersion = "$($CurrentVersion.Major + 1).0.0"
-    } elseif ($IncrementMinorVersion) {
+    }
+    elseif ($IncrementMinorVersion) {
         "`tThis is a new minor version"
         $NewModuleVersion = "$($CurrentVersion.Major).$($CurrentVersion.Minor + 1).0"
-    } else {
+    }
+    else {
         "`tThis is a new build"
         $NewModuleVersion = "$($CurrentVersion.Major).$($CurrentVersion.Minor).$($CurrentVersion.Build + 1)"
     }
@@ -135,7 +137,8 @@ task InitializePowershellBuild -depends UpdateModuleVersion {
             $NewModuleVersion,
             $env:BHProjectName
         )
-    } else {
+    }
+    else {
         $env:BHBuildOutput = [IO.Path]::Combine(
             $env:BHProjectPath,
             $BuildOutDir,
@@ -221,7 +224,8 @@ task ExportPublicFunctions -depends UpdateChangeLog -Action {
     if ($ModuleContent -match 'Export-ModuleMember -Function') {
         $ModuleContent = $ModuleContent -replace 'Export-ModuleMember -Function.*' , $NewFunctionExportStatement
         $ModuleContent | Out-File -Path $ModuleFilePath -Force
-    } else {
+    }
+    else {
         $NewFunctionExportStatement | Out-File $ModuleFilePath -Append
     }
 
@@ -315,7 +319,8 @@ task BuildMarkdownHelp -depends DeleteMarkdownHelp {
             WithModulePage        = $true
         }
         New-MarkdownHelp @newMDParams
-    } finally {
+    }
+    finally {
         Remove-Module $env:BHProjectName -Force
     }
 } -description 'Generate markdown files from the module help'
@@ -387,7 +392,8 @@ task BuildUpdatableHelp -depends BuildMAMLHelp -precondition $genUpdatableHelpPr
     # Create updatable help output directory
     if (-not (Test-Path -LiteralPath $HelpUpdatableHelpOutDir)) {
         New-Item $HelpUpdatableHelpOutDir -ItemType Directory -Verbose:$VerbosePreference > $null
-    } else {
+    }
+    else {
         Write-Verbose "Removing existing directory: [$HelpUpdatableHelpOutDir]."
         Get-ChildItem $HelpUpdatableHelpOutDir | Remove-Item -Recurse -Force -Verbose:$VerbosePreference
     }
@@ -496,7 +502,32 @@ task Publish -depends SourceControl {
     }
 } -description 'Publish module to the defined PowerShell repository'
 
-task FinalTasks -depends Publish {
+task AwaitRepoUpdate -depends Publish {
+    $timer = 0
+    $timer = 30
+    do {
+        Start-Sleep -Seconds 1
+        $timer++
+        $VersionInGallery = Find-Module -Name $env:BHProjectName -Repository $PublishPSRepository
+    } while (
+        $VersionInGallery.Version -lt $NewModuleVersion -and
+        $timer -lt $timeout
+    )
+
+    if ($timer -eq $timeout) {
+        Write-Warning "Cannot retrieve version '$NewModuleVersion' of module '$env:BHProjectName' from repo '$PublishPSRepository'"
+    }
+} -description 'Await the new version in the defined PowerShell repository'
+
+task Uninstall -depends AwaitRepoUpdate {
+    Uninstall-Module -Name $env:BHProjectName -AllVersions -ErrorAction SilentlyContinue
+} -description 'Uninstall all versions of the module'
+
+task Reinstall -depends Uninstall {
+    Install-Module -Name $env:BHProjectName -Force
+} -description 'Reinstall the latest version of the module from the defined PowerShell repository'
+
+task RemoveScriptScopedVariables -depends Reinstall {
 
     # Remove script-scoped variables to avoid their accidental re-use
     Remove-Variable -Name ModuleOutDir -Scope Script -Force -ErrorAction SilentlyContinue

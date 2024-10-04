@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.208] - 2024-10-03 - update psake file
+
 ## [2.0.207] - 2024-09-30 - rebuild for fun
 
 ## [2.0.206] - 2024-09-30 - remove deprecated Group section by default
