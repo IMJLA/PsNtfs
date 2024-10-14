@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.210] - 2024-10-14 - reduce unecessary log verbosity
+
 ## [2.0.209] - 2024-10-04 - remove unused param
 
 ## [2.0.208] - 2024-10-03 - update psake file
