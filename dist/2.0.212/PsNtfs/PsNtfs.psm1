@@ -522,29 +522,33 @@ function Get-DirectorySecurity {
 
     )
 
-    $LogParams = @{
+    $Log = @{
         ThisHostname = $ThisHostname
         Type         = $DebugOutputStream
         Buffer       = $LogBuffer
         WhoAmI       = $WhoAmI
     }
 
-    Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    Write-LogMsg @Log -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+
     try {
+
         $DirectorySecurity = & { [System.Security.AccessControl.DirectorySecurity]::new(
                 $LiteralPath,
                 $Sections
             )
         } 2>$null
+
     }
     catch {
 
         $ThisWarning = $_.Exception.Message.Replace('Exception calling ".ctor" with "2" argument(s): ', '').Replace('"', '')
         $WarningCache[$LiteralPath] = $ThisWarning
-        $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @LogParams -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'"
-        $LogParams['Type'] = $DebugOutputStream
+        $Log['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg @Log -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'"
+        $Log['Type'] = $DebugOutputStream
         return
+
     }
 
     <#
@@ -572,10 +576,10 @@ function Get-DirectorySecurity {
     but for some reason this stopped being true and now I have to call the GetOwner method.
     This at least lets us specify the AccountType to match what is used when calling the GetAccessRules method.
     #>
-    #Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
+    #Write-LogMsg @Log -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetOwner([$AccountType])"
     $AclProperties['Owner'] = $DirectorySecurity.GetOwner($AccountType).Value
 
-    #Write-LogMsg @LogParams -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
+    #Write-LogMsg @Log -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AclProperties['Access'] = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
     $ACLsByPath[$LiteralPath] = [PSCustomObject]$AclProperties
 
@@ -979,6 +983,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
