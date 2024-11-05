@@ -24,7 +24,8 @@ function New-NtfsAclIssueReport {
         [string]$WhoAmI = (whoami.EXE),
 
         # Dictionary of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{}))
+        [Parameter(Mandatory)]
+        [ref]$LogBuffer
     )
 
     $LogParams = @{
@@ -106,7 +107,7 @@ function New-NtfsAclIssueReport {
     Write-LogMsg @LogParams -Text "$Count $Txt"
 
     # CREATOR OWNER access (recommend replacing with group-based access, or with explicit user access for a home folder.)
-    $FoldersWithCreatorOwner = ($UserPermissions | ? { $_.Name -match 'CREATOR OWNER' }).Group.NtfsAccessControlEntries.Path | Sort -Unique
+    $FoldersWithCreatorOwner = ($UserPermissions | Where-Object { $_.Name -match 'CREATOR OWNER' }).Group.NtfsAccessControlEntries.Path | Sort-Object -Unique
     $Count = ($FoldersWithCreatorOwner | Measure-Object).Count
     if ($Count -gt 0) {
         $IssuesDetected = $true

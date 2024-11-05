@@ -26,7 +26,8 @@ function Get-Subfolder {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
+        [Parameter(Mandatory)]
+        [ref]$LogBuffer,
 
         [hashtable]$Output = [hashtable]::Synchronized(@{})
 

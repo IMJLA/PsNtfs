@@ -16,7 +16,8 @@ TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basic
 ```
 Get-FileSystemAccessRule [[-DirectorySecurity] <DirectorySecurity>] [-IncludeInherited]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>]
+ [[-TodaysHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -113,13 +114,28 @@ Accept wildcard characters: False
 Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
 
 ```yaml
-Type: System.Collections.Hashtable
+Type: System.Management.Automation.PSReference
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 7
-Default value: ([hashtable]::Synchronized(@{}))
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: System.Management.Automation.ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -153,6 +169,9 @@ Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 

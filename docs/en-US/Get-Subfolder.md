@@ -14,7 +14,7 @@ schema: 2.0.0
 
 ```
 Get-Subfolder [[-TargetPath] <String>] [[-RecurseDepth] <Int32>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>] [[-Output] <Hashtable>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference> [[-Output] <Hashtable>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
@@ -51,11 +51,11 @@ Accept wildcard characters: False
 {{ Fill LogBuffer Description }}
 
 ```yaml
-Type: System.Collections.Hashtable
+Type: System.Management.Automation.PSReference
 Parameter Sets: (All)
 Aliases:
 
-Required: False
+Required: True
 Position: 5
 Default value: None
 Accept pipeline input: False

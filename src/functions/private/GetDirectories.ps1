@@ -19,7 +19,8 @@ function GetDirectories {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogBuffer = ([hashtable]::Synchronized(@{})),
+        [Parameter(Mandatory)]
+        [ref]$LogBuffer,
 
         # Hashtable of warning messages to avoid writing duplicate warnings when recursive calls error while retrying a folder
         [System.Collections.Specialized.OrderedDictionary]$WarningCache = [ordered]@{}
