@@ -20,7 +20,7 @@ Can't remember what didn't work with Get-Acl
 ```
 Get-DirectorySecurity [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
  [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <Hashtable>] [[-ACLsByPath] <Hashtable>]
+ [[-ThisHostname] <String>] [[-WhoAmI] <String>] [[-LogBuffer] <PSReference>] [[-ACLsByPath] <Hashtable>]
  [[-WarningCache] <Hashtable>]
 ```
 
@@ -133,13 +133,13 @@ Accept wildcard characters: False
 Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
 
 ```yaml
-Type: System.Collections.Hashtable
+Type: System.Management.Automation.PSReference
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 8
-Default value: @{}
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.213] - 2024-11-05 - change logbuffer to ref var
+
 ## [2.0.212] - 2024-11-05 - change splat name
 
 ## [2.0.211] - 2024-11-04 - convert logbuffer to a reference variable

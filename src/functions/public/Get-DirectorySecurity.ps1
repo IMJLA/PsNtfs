@@ -74,7 +74,7 @@ function Get-DirectorySecurity {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [hashtable]$LogBuffer = @{},
+        [ref]$LogBuffer = $null,
 
         # Cache of access control lists keyed by path
         [hashtable]$ACLsByPath = @{},
