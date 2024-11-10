@@ -74,10 +74,12 @@ function Get-DirectorySecurity {
         [string]$WhoAmI = (whoami.EXE),
 
         # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
+        [Parameter(Mandatory)]
         [ref]$LogBuffer = $null,
 
         # Cache of access control lists keyed by path
-        [hashtable]$ACLsByPath = @{},
+        [Parameter(Mandatory)]
+        [ref]$AclByPath,
 
         # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
         [hashtable]$WarningCache = @{}
@@ -120,6 +122,7 @@ function Get-DirectorySecurity {
     $AclProperties = @{
         PSTypeName = 'Permission.Item'
     }
+
     $AclPropertyNames = (Get-Member -InputObject $DirectorySecurity -MemberType Property, CodeProperty, ScriptProperty, NoteProperty).Name
 
     ForEach ($ThisProperty in $AclPropertyNames) {
@@ -143,6 +146,6 @@ function Get-DirectorySecurity {
 
     #Write-LogMsg @Log -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections').GetAccessRules(`$$IncludeExplicitRules, `$$IncludeInherited, [$AccountType])"
     $AclProperties['Access'] = $DirectorySecurity.GetAccessRules($IncludeExplicitRules, $IncludeInherited, $AccountType)
-    $ACLsByPath[$LiteralPath] = [PSCustomObject]$AclProperties
+    $AclByPath.Value[$LiteralPath] = [PSCustomObject]$AclProperties
 
 }
