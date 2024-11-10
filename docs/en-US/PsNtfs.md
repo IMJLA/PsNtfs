@@ -2,7 +2,7 @@
 Module Name: PsNtfs
 Module Guid: d2475b4e-5027-4728-ae4e-799ad4dd12e4
 Download Help Link: {{ Update Download Link }}
-Help Version: 2.0.214
+Help Version: 2.0.215
 Locale: en-US
 ---
 
@@ -53,7 +53,7 @@ TEMP NOTE: Get-DirectorySecurity combined with Get-FileSystemAccessRule is basic
 
 ### [Get-OwnerAce](Get-OwnerAce.md)
 
-Get-OwnerAce [[-Item] <string>] [[-ACLsByPath] <hashtable>]
+Get-OwnerAce [[-Item] <string>] [-AclByPath] <ref> [<CommonParameters>]
 
 
 ### [Get-ServerFromFilePath](Get-ServerFromFilePath.md)
