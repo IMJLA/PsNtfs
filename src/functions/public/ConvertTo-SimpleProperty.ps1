@@ -43,11 +43,11 @@ function ConvertTo-SimpleProperty {
                         + CategoryInfo          : NotSpecified: (:) [format-default], NotSupportedException
                         + FullyQualifiedErrorId : System.NotSupportedException,Microsoft.PowerShell.Commands.FormatDefaultCommand
             To catch the error we will redirect the Success Stream to the Error Stream
-            Then if the Exception type matches, we will use the continue keyword to break out of the current switch statement
+            Then if the Exception type matches, we will use the return keyword to break out of the current switch statement
             #>
             $KeyCount = $Value.Keys.$KeyCount
             if (-not $KeyCount -gt 0) {
-                continue
+                return
             }
 
             ForEach ($ThisProperty in $Value.Keys) {
@@ -63,23 +63,23 @@ function ConvertTo-SimpleProperty {
 
             }
             $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
-            continue
+            return
         }
         'System.DirectoryServices.PropertyValueCollection' {
             $PropertyDictionary["$Prefix$Property"] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value
-            continue
+            return
         }
         'System.Object[]' {
             $PropertyDictionary["$Prefix$Property"] = $Value
-            continue
+            return
         }
         'System.Object' {
             $PropertyDictionary["$Prefix$Property"] = $Value
-            continue
+            return
         }
         'System.DirectoryServices.SearchResult' {
             $PropertyDictionary["$Prefix$Property"] = ConvertFrom-SearchResult -SearchResult $Value
-            continue
+            return
         }
         'System.DirectoryServices.ResultPropertyCollection' {
             $ThisObject = @{}
@@ -97,22 +97,23 @@ function ConvertTo-SimpleProperty {
 
             }
             $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
-            continue
+            return
         }
         'System.DirectoryServices.ResultPropertyValueCollection' {
             $PropertyDictionary["$Prefix$Property"] = ConvertFrom-ResultPropertyValueCollectionToString -ResultPropertyValueCollection $Value
-            continue
+            return
         }
         'System.Management.Automation.PSCustomObject' {
             $PropertyDictionary["$Prefix$Property"] = $Value
-            continue
+            return
         }
         'System.Collections.Hashtable' {
             $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$Value
-            continue
+            return
         }
         'System.Byte[]' {
             $PropertyDictionary["$Prefix$Property"] = ConvertTo-DecStringRepresentation -ByteArray $Value
+            return
         }
         default {
             <#
@@ -123,9 +124,10 @@ function ConvertTo-SimpleProperty {
                     System.Boolean
             #>
             $PropertyDictionary["$Prefix$Property"] = "$Value"
-            continue
+            return
+
         }
+
     }
 
-    #return $PropertyDictionary
 }
