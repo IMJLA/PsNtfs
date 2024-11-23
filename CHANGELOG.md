@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.218] - 2024-11-23 - bugfix schemaentry
+
 ## [2.0.217] - 2024-11-23 - efficiency improvement
 
 ## [2.0.216] - 2024-11-09 - eliminated unused param

@@ -1,4 +1,5 @@
 function ConvertTo-SimpleProperty {
+
     param (
         $InputObject,
 
@@ -9,9 +10,35 @@ function ConvertTo-SimpleProperty {
         [string]$Prefix
     )
 
-    $Value = $InputObject.$Property
+    <#
+    An occurs when:
+        A DirectoryEntry has a SchemaEntry property
+        which is a DirectoryEntry
+        which has a Properties property
+        which is a System.DirectoryServices.PropertyCollection
+        but throws the following error to the Success stream (not the error stream, so it is hard to catch):
+            PS C:\Users\Test> $ThisDirectoryEntry.Properties
+            format-default : The entry properties cannot be enumerated. Consider using the entry schema to determine what properties are available.
+                + CategoryInfo          : NotSpecified: (:) [format-default], NotSupportedException
+                + FullyQualifiedErrorId : System.NotSupportedException,Microsoft.PowerShell.Commands.FormatDefaultCommand
+    To avoid the error we will inspect the key count in the PropertyCollection and abort if there are 0 keys.
 
+    Steps to reproduce:
+    PS C:\> $InputObject = [ADSI]"LDAP://ad.contoso.com/schema/user"
+    PS C:\> $InputObject.Properties
+    format-default: The entry properties cannot be enumerated. Consider using the entry schema to determine what properties are available.
+    #>
+    if ($Property -eq 'Properties') {
+        if ($InputObject.Properties.GetType.FullName -eq 'System.DirectoryServices.PropertyCollection') {
+            if ( -not $InputObject.Properties.Keys.Count -gt 0 ) {
+                return
+            }
+        }
+    }
+
+    $Value = $InputObject.$Property
     [string]$Type = $null
+
     if ($Value) {
         # Ensure the GetType method exists to avoid this error:
         # The following exception occurred while retrieving member "GetType": "Not implemented"
@@ -31,20 +58,6 @@ function ConvertTo-SimpleProperty {
         }
         'System.DirectoryServices.PropertyCollection' {
             $ThisObject = @{}
-            <#
-            This error was happening when:
-                A DirectoryEntry has a SchemaEntry property
-                which is a DirectoryEntry
-                which has a Properties property
-                which is a System.DirectoryServices.PropertyCollection
-                but throws the following error to the Success stream (not the error stream, so it is hard to catch):
-                    PS C:\Users\Test> $ThisDirectoryEntry.Properties
-                    format-default : The entry properties cannot be enumerated. Consider using the entry schema to determine what properties are available.
-                        + CategoryInfo          : NotSpecified: (:) [format-default], NotSupportedException
-                        + FullyQualifiedErrorId : System.NotSupportedException,Microsoft.PowerShell.Commands.FormatDefaultCommand
-            To catch the error we will redirect the Success Stream to the Error Stream
-            Then if the Exception type matches, we will use the return keyword to break out of the current switch statement
-            #>
             $KeyCount = $Value.Keys.$KeyCount
             if (-not $KeyCount -gt 0) {
                 return
