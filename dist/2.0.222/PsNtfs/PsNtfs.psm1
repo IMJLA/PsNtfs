@@ -147,10 +147,8 @@ function ConvertTo-SimpleProperty {
     format-default: The entry properties cannot be enumerated. Consider using the entry schema to determine what properties are available.
     #>
     if ($Property -eq 'Properties') {
-        if ($InputObject.Properties.GetType().FullName -eq 'System.DirectoryServices.PropertyCollection') {
-            if ( -not $InputObject.Properties.Keys.Count -gt 0 ) {
-                return
-            }
+        if ( -not $InputObject.Properties.Keys.Count -gt 0 ) {
+            return
         }
     }
 
@@ -1000,6 +998,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

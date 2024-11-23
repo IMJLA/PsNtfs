@@ -29,10 +29,8 @@ function ConvertTo-SimpleProperty {
     format-default: The entry properties cannot be enumerated. Consider using the entry schema to determine what properties are available.
     #>
     if ($Property -eq 'Properties') {
-        if ($InputObject.Properties.GetType().FullName -eq 'System.DirectoryServices.PropertyCollection') {
-            if ( -not $InputObject.Properties.Keys.Count -gt 0 ) {
-                return
-            }
+        if ( -not $InputObject.Properties.Keys.Count -gt 0 ) {
+            return
         }
     }
 
