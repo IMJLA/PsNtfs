@@ -57,13 +57,11 @@ function ConvertTo-SimpleProperty {
             $PropertyDictionary["$Prefix$Property"] = ConvertFrom-DirectoryEntry -DirectoryEntry $Value
         }
         'System.DirectoryServices.PropertyCollection' {
+
             $ThisObject = @{}
-            $KeyCount = $Value.Keys.$KeyCount
-            if (-not $KeyCount -gt 0) {
-                return
-            }
 
             ForEach ($ThisProperty in $Value.Keys) {
+
                 $ThisPropertyString = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value[$ThisProperty]
                 $ThisObject[$ThisProperty] = $ThisPropertyString
 
@@ -75,8 +73,10 @@ function ConvertTo-SimpleProperty {
                 $PropertyDictionary["$Prefix$ThisProperty"] = $ThisPropertyString
 
             }
+
             $PropertyDictionary["$Prefix$Property"] = [PSCustomObject]$ThisObject
             return
+
         }
         'System.DirectoryServices.PropertyValueCollection' {
             $PropertyDictionary["$Prefix$Property"] = ConvertFrom-PropertyValueCollectionToString -PropertyValueCollection $Value

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.220] - 2024-11-23 - moved this safety check higher in the code
+
+## [2.0.219] - 2024-11-23 - moved this safety check higher in the code
+
 ## [2.0.218] - 2024-11-23 - bugfix schemaentry
 
 ## [2.0.217] - 2024-11-23 - efficiency improvement
