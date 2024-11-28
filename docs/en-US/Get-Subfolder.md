@@ -13,9 +13,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Get-Subfolder [[-TargetPath] <String>] [[-RecurseDepth] <Int32>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference> [[-Output] <Hashtable>]
- [-Cache] <PSReference> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Get-Subfolder [[-TargetPath] <String>] [[-RecurseDepth] <Int32>] [[-Output] <Hashtable>] [-Cache] <PSReference>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -41,37 +40,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DebugOutputStream
-{{ Fill DebugOutputStream Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LogBuffer
-{{ Fill LogBuffer Description }}
-
-```yaml
-Type: System.Management.Automation.PSReference
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 5
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -86,7 +55,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -132,36 +101,6 @@ Aliases:
 
 Required: False
 Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ThisHostname
-{{ Fill ThisHostname Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhoAmI
-{{ Fill WhoAmI Description }}
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

@@ -16,19 +16,6 @@ function Get-Subfolder {
         #>
         [int]$RecurseDepth = -1,
 
-        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
-        [string]$DebugOutputStream = 'Debug',
-
-        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$ThisHostname = (HOSTNAME.EXE),
-
-        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$WhoAmI = (whoami.EXE),
-
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [Parameter(Mandatory)]
-        [ref]$LogBuffer,
-
         [hashtable]$Output = [hashtable]::Synchronized(@{}),
 
         # In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs
@@ -55,11 +42,13 @@ function Get-Subfolder {
                 GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly) -Cache $Cache
             }
             Default {
+
                 $RecurseDepth = $RecurseDepth - 1
                 Write-LogMsg -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $RecurseDepth" -Cache $Cache
                 (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $RecurseDepth -ErrorVariable $GCIErrors -ErrorAction SilentlyContinue).FullName
 
                 if ($GCIErrors.Count -gt 0) {
+
                     $Cache.Value['LogType'].Value = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
                     Write-LogMsg -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details." -Cache $Cache
                     $Cache.Value['LogType'].Value = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
