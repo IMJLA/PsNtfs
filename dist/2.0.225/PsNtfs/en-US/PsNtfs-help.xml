@@ -814,18 +814,6 @@ Expand-Acl</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
-          <maml:name>WarningCache</maml:name>
-          <maml:description>
-            <maml:para>Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
-          <dev:type>
-            <maml:name>System.Collections.Hashtable</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>@{}</dev:defaultValue>
-        </command:parameter>
         <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none">
           <maml:name>Sections</maml:name>
           <maml:description>
@@ -870,46 +858,10 @@ Expand-Acl</dev:code>
           </dev:type>
           <dev:defaultValue>System.Security.Principal.SecurityIdentifier</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-          <maml:name>DebugOutputStream</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
+          <maml:name>AclByPath</maml:name>
           <maml:description>
-            <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>Debug</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-          <maml:name>ThisHostname</maml:name>
-          <maml:description>
-            <maml:para>Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-          <maml:name>WhoAmI</maml:name>
-          <maml:description>
-            <maml:para>Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)</maml:para>
-          </maml:description>
-          <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
-          <dev:type>
-            <maml:name>System.String</maml:name>
-            <maml:uri />
-          </dev:type>
-          <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
-        </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-          <maml:name>LogBuffer</maml:name>
-          <maml:description>
-            <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
+            <maml:para>Cache of access control lists keyed by path</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSReference</command:parameterValue>
           <dev:type>
@@ -918,10 +870,22 @@ Expand-Acl</dev:code>
           </dev:type>
           <dev:defaultValue>None</dev:defaultValue>
         </command:parameter>
-        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
-          <maml:name>AclByPath</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
+          <maml:name>WarningCache</maml:name>
           <maml:description>
-            <maml:para>Cache of access control lists keyed by path</maml:para>
+            <maml:para>Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">System.Collections.Hashtable</command:parameterValue>
+          <dev:type>
+            <maml:name>System.Collections.Hashtable</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>@{}</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+          <maml:name>Cache</maml:name>
+          <maml:description>
+            <maml:para>In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs</maml:para>
           </maml:description>
           <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSReference</command:parameterValue>
           <dev:type>
@@ -968,7 +932,7 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>System.Security.Principal.SecurityIdentifier</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="9" aliases="none">
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
         <maml:name>AclByPath</maml:name>
         <maml:description>
           <maml:para>Cache of access control lists keyed by path</maml:para>
@@ -980,17 +944,17 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none">
-        <maml:name>DebugOutputStream</maml:name>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
+        <maml:name>Cache</maml:name>
         <maml:description>
-          <maml:para>Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module</maml:para>
+          <maml:para>In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs</maml:para>
         </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
+        <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSReference</command:parameterValue>
         <dev:type>
-          <maml:name>System.String</maml:name>
+          <maml:name>System.Management.Automation.PSReference</maml:name>
           <maml:uri />
         </dev:type>
-        <dev:defaultValue>Debug</dev:defaultValue>
+        <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none">
         <maml:name>IncludeExplicitRules</maml:name>
@@ -1028,18 +992,6 @@ Expand-Acl</dev:code>
         </dev:type>
         <dev:defaultValue>None</dev:defaultValue>
       </command:parameter>
-      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="8" aliases="none">
-        <maml:name>LogBuffer</maml:name>
-        <maml:description>
-          <maml:para>Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.Management.Automation.PSReference</command:parameterValue>
-        <dev:type>
-          <maml:name>System.Management.Automation.PSReference</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>None</dev:defaultValue>
-      </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="proga">
         <maml:name>ProgressAction</maml:name>
         <maml:description>
@@ -1065,18 +1017,6 @@ Expand-Acl</dev:code>
         <dev:defaultValue>Access, Owner</dev:defaultValue>
       </command:parameter>
       <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none">
-        <maml:name>ThisHostname</maml:name>
-        <maml:description>
-          <maml:para>Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
-        <dev:type>
-          <maml:name>System.String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>(HOSTNAME.EXE)</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="10" aliases="none">
         <maml:name>WarningCache</maml:name>
         <maml:description>
           <maml:para>Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder</maml:para>
@@ -1087,18 +1027,6 @@ Expand-Acl</dev:code>
           <maml:uri />
         </dev:type>
         <dev:defaultValue>@{}</dev:defaultValue>
-      </command:parameter>
-      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none">
-        <maml:name>WhoAmI</maml:name>
-        <maml:description>
-          <maml:para>Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)</maml:para>
-        </maml:description>
-        <command:parameterValue required="true" variableLength="false">System.String</command:parameterValue>
-        <dev:type>
-          <maml:name>System.String</maml:name>
-          <maml:uri />
-        </dev:type>
-        <dev:defaultValue>(whoami.EXE)</dev:defaultValue>
       </command:parameter>
     </command:parameters>
     <command:inputTypes>

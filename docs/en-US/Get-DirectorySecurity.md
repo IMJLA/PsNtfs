@@ -19,9 +19,8 @@ Can't remember what didn't work with Get-Acl
 
 ```
 Get-DirectorySecurity [[-LiteralPath] <String>] [-IncludeInherited] [[-Sections] <AccessControlSections>]
- [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [[-DebugOutputStream] <String>]
- [[-ThisHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference> [-AclByPath] <PSReference>
- [[-WarningCache] <Hashtable>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-IncludeExplicitRules] <Boolean>] [[-AccountType] <Type>] [-AclByPath] <PSReference>
+ [[-WarningCache] <Hashtable>] [-Cache] <PSReference> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,23 +62,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 9
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DebugOutputStream
-Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
+### -Cache
+In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs
 
 ```yaml
-Type: System.String
+Type: System.Management.Automation.PSReference
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 5
-Default value: Debug
+Required: True
+Position: 7
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -129,21 +128,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogBuffer
-Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-
-```yaml
-Type: System.Management.Automation.PSReference
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 8
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ProgressAction
 {{ Fill ProgressAction Description }}
 
@@ -178,21 +162,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ThisHostname
-Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 6
-Default value: (HOSTNAME.EXE)
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -WarningCache
 Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
 
@@ -202,23 +171,8 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 6
 Default value: @{}
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhoAmI
-Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-
-```yaml
-Type: System.String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 7
-Default value: (whoami.EXE)
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

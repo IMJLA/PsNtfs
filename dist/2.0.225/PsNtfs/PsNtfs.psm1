@@ -499,36 +499,20 @@ function Get-DirectorySecurity {
         # Type of IdentityReference to return in each ACE
         [System.Type]$AccountType = [System.Security.Principal.SecurityIdentifier],
 
-        # Will be sent to the Type parameter of Write-LogMsg in the PsLogMessage module
-        [string]$DebugOutputStream = 'Debug',
-
-        # Hostname to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$ThisHostname = (HOSTNAME.EXE),
-
-        # Username to record in log messages (can be passed to Write-LogMsg as a parameter to avoid calling an external process)
-        [string]$WhoAmI = (whoami.EXE),
-
-        # Hashtable of log messages for Write-LogMsg (can be thread-safe if a synchronized hashtable is provided)
-        [Parameter(Mandatory)]
-        [ref]$LogBuffer = $null,
-
         # Cache of access control lists keyed by path
         [Parameter(Mandatory)]
         [ref]$AclByPath,
 
         # Hashtable of warning messages to avoid writing duplicate warnings when recurisive calls error while retrying a folder
-        [hashtable]$WarningCache = @{}
+        [hashtable]$WarningCache = @{},
+
+        # In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs
+        [Parameter(Mandatory)]
+        [ref]$Cache
 
     )
 
-    $Log = @{
-        ThisHostname = $ThisHostname
-        Type         = $DebugOutputStream
-        Buffer       = $LogBuffer
-        WhoAmI       = $WhoAmI
-    }
-
-    Write-LogMsg @Log -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')"
+    Write-LogMsg -Text "[System.Security.AccessControl.DirectorySecurity]::new('$LiteralPath', '$Sections')" -Cache $Cache
 
     try {
 
@@ -543,9 +527,10 @@ function Get-DirectorySecurity {
 
         $ThisWarning = $_.Exception.Message.Replace('Exception calling ".ctor" with "2" argument(s): ', '').Replace('"', '')
         $WarningCache[$LiteralPath] = $ThisWarning
-        $Log['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-        Write-LogMsg @Log -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'"
-        $Log['Type'] = $DebugOutputStream
+        $StartingLogType = $Cache.Value['LogType'].Value
+        $Cache.Value['LogType'].Value = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+        Write-LogMsg  -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'" -Cache $Cache
+        $Cache.Value['LogType'].Value = $StartingLogType
         return
 
     }
@@ -963,6 +948,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 
