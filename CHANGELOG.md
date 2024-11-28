@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.223] - 2024-11-27 - implement cache
+
 ## [2.0.222] - 2024-11-23 - skip type eval for Properties property.  Assume it is a PropertyCollection to avoid issues calling GetType() method
 
 ## [2.0.221] - 2024-11-23 - how to call methods for dummies

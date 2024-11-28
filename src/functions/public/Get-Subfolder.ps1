@@ -29,23 +29,13 @@ function Get-Subfolder {
         [Parameter(Mandatory)]
         [ref]$LogBuffer,
 
-        [hashtable]$Output = [hashtable]::Synchronized(@{})
+        [hashtable]$Output = [hashtable]::Synchronized(@{}),
+
+        # In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs
+        [Parameter(Mandatory)]
+        [ref]$Cache
 
     )
-
-    $LogParams = @{
-        ThisHostname = $ThisHostname
-        Type         = $DebugOutputStream
-        Buffer       = $LogBuffer
-        WhoAmI       = $WhoAmI
-    }
-
-    $GetSubfolderParams = @{
-        LogBuffer         = $LogBuffer
-        ThisHostname      = $ThisHostname
-        DebugOutputStream = $DebugOutputStream
-        WhoAmI            = $WhoAmI
-    }
 
     if ($RecurseDepth -eq -1) {
         $DepthString = '∞'
@@ -58,25 +48,25 @@ function Get-Subfolder {
 
         switch ($RecurseDepth) {
             -1 {
-                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories) @GetSubfolderParams
+                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::AllDirectories) -Cache $Cache
             }
             0 {}
             1 {
-                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly) @GetSubfolderParams
+                GetDirectories -TargetPath $TargetPath -SearchOption ([System.IO.SearchOption]::TopDirectoryOnly) -Cache $Cache
             }
             Default {
                 $RecurseDepth = $RecurseDepth - 1
-                Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $RecurseDepth"
+                Write-LogMsg -Text "Get-ChildItem '$TargetPath' -Force -Name -Recurse -Attributes Directory -Depth $RecurseDepth" -Cache $Cache
                 (Get-ChildItem $TargetPath -Force -Recurse -Attributes Directory -Depth $RecurseDepth -ErrorVariable $GCIErrors -ErrorAction SilentlyContinue).FullName
 
                 if ($GCIErrors.Count -gt 0) {
-                    $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-                    Write-LogMsg @LogParams -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details."
-                    $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+                    $Cache.Value['LogType'].Value = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+                    Write-LogMsg -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details." -Cache $Cache
+                    $Cache.Value['LogType'].Value = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
                     ForEach ($Warning in $GCIErrors) {
 
-                        Write-LogMsg @LogParams -Text " # $($Warning.Exception.Message)"
+                        Write-LogMsg -Text " # $($Warning.Exception.Message)" -Cache $Cache
 
                     }
 
@@ -88,21 +78,23 @@ function Get-Subfolder {
     }
     else {
 
-        Write-LogMsg @LogParams -Text "Get-ChildItem '$TargetPath' -Recurse"
+        Write-LogMsg -Text "Get-ChildItem '$TargetPath' -Recurse" -Cache $Cache
         Get-ChildItem $TargetPath -Recurse -ErrorVariable $GCIErrors -ErrorAction SilentlyContinue |
         Where-Object -FilterScript { $_.PSIsContainer } |
         ForEach-Object { $_.FullName }
 
         if ($GCIErrors.Count -gt 0) {
-            $LogParams['Type'] = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
-            Write-LogMsg @LogParams -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'.  See verbose log for details."
-            $LogParams['Type'] = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+
+            $StartingLogType = $Cache.Value['LogType'].Value
+            $Cache.Value['LogType'].Value = 'Warning' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
+            Write-LogMsg -Text "$($GCIErrors.Count) errors while getting directories of '$TargetPath'. See verbose log for details." -Cache $Cache
+            $Cache.Value['LogType'].Value = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
 
             ForEach ($Warning in $GCIErrors) {
-
-                Write-LogMsg @LogParams -Text " # $($Warning.Exception.Message)"
-
+                Write-LogMsg -Text " # $($Warning.Exception.Message)" -Cache $Cache
             }
+
+            $Cache.Value['LogType'].Value = $StartingLogType
 
         }
 

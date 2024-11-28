@@ -15,7 +15,7 @@ schema: 2.0.0
 ```
 Get-Subfolder [[-TargetPath] <String>] [[-RecurseDepth] <Int32>] [[-DebugOutputStream] <String>]
  [[-ThisHostname] <String>] [[-WhoAmI] <String>] [-LogBuffer] <PSReference> [[-Output] <Hashtable>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Cache] <PSReference> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -31,6 +31,21 @@ PS C:\> {{ Add example code here }}
 {{ Add example description here }}
 
 ## PARAMETERS
+
+### -Cache
+{{ Fill Cache Description }}
+
+```yaml
+Type: System.Management.Automation.PSReference
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -DebugOutputStream
 {{ Fill DebugOutputStream Description }}
