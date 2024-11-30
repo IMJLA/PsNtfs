@@ -13,7 +13,8 @@ Parse a literal path to find its server
 ## SYNTAX
 
 ```
-Find-ServerNameInPath [[-LiteralPath] <String>] [[-ThisFqdn] <String>]
+Find-ServerNameInPath [[-LiteralPath] <String>] [-Cache] <PSReference> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -37,6 +38,21 @@ Return server123 because a UNC path for a folder shared on server123 was used
 
 ## PARAMETERS
 
+### -Cache
+In-process cache to reduce calls to other processes or disk, and store repetitive parameters for better readability of code and logs
+
+```yaml
+Type: System.Management.Automation.PSReference
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -LiteralPath
 {{ Fill LiteralPath Description }}
 
@@ -52,22 +68,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ThisFqdn
-FQDN of the computer running this function.
-
-Can be provided as a string to avoid calls to HOSTNAME.EXE and \[System.Net.Dns\]::GetHostByName()
+### -ProgressAction
+{{ Fill ProgressAction Description }}
 
 ```yaml
-Type: System.String
+Type: System.Management.Automation.ActionPreference
 Parameter Sets: (All)
-Aliases:
+Aliases: proga
 
 Required: False
-Position: 2
-Default value: ([System.Net.Dns]::GetHostByName((HOSTNAME.EXE)).HostName)
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
