@@ -71,6 +71,7 @@ function GetDirectories {
 
     ForEach ($Child in $result) {
 
+        $Child
         Write-LogMsg -Text "[System.IO.Directory]::GetDirectories('$Child','$SearchPattern',[System.IO.SearchOption]::$SearchOption)" -Cache $Cache
         GetDirectories -TargetPath $Child @GetSubfolderParams
 
