@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [2.0.229] - 2025-01-20 - add errors to cache
+
 ## [2.0.228] - 2025-01-18 - bugfix only children of children were returned but not the children themselves
 
 ## [2.0.227] - 2024-11-30 - implement cache

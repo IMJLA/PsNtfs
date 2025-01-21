@@ -30,7 +30,7 @@ function GetDirectories {
     }
     catch {
 
-        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $null
+        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $TargetPath
 
     }
 
@@ -45,7 +45,8 @@ function GetDirectories {
     catch {
 
         $ThisWarning = $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
-        $WarningCache[$ThisWarning] = $null
+        $WarningCache[$ThisWarning] = $TargetPath
+        $Cache.Value['ErrorByItemPath_Enumeration'].Value[$TargetPath] = $ThisWarning
 
         # If this was not a recursive call to GetDirectories, write the warnings
         if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
@@ -531,6 +532,7 @@ function Get-DirectorySecurity {
 
         $ThisWarning = $_.Exception.Message.Replace('Exception calling ".ctor" with "2" argument(s): ', '').Replace('"', '')
         $WarningCache[$LiteralPath] = $ThisWarning
+        $Cache.Value['ErrorByItemPath_AclRetrieval'].Value[$TargetPath] = $ThisWarning
         $StartingLogType = $Cache.Value['LogType'].Value
         $Cache.Value['LogType'].Value = 'Verbose' # PS 5.1 will not allow you to override the Splat by manually calling the param, so we must update the splat
         Write-LogMsg  -Text " # Error getting ACL for '$LiteralPath': '$ThisWarning'" -Cache $Cache
@@ -952,6 +954,7 @@ ForEach ($ThisScript in $ScriptFiles) {
 }
 #>
 Export-ModuleMember -Function @('ConvertTo-SimpleProperty','Expand-Acl','Find-ServerNameInPath','Format-SecurityPrincipalMember','Format-SecurityPrincipalMemberUser','Format-SecurityPrincipalName','Format-SecurityPrincipalUser','Get-DirectorySecurity','Get-FileSystemAccessRule','Get-OwnerAce','Get-ServerFromFilePath','Get-Subfolder','New-NtfsAclIssueReport')
+
 
 
 

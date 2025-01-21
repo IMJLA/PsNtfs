@@ -29,7 +29,7 @@ function GetDirectories {
     }
     catch {
 
-        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $null
+        $WarningCache[$_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')] = $TargetPath
 
     }
 
@@ -44,7 +44,8 @@ function GetDirectories {
     catch {
 
         $ThisWarning = $_.Exception.Message.Replace('Exception calling "GetDirectories" with "3" argument(s): ', '').Replace('"', '')
-        $WarningCache[$ThisWarning] = $null
+        $WarningCache[$ThisWarning] = $TargetPath
+        $Cache.Value['ErrorByItemPath_Enumeration'].Value[$TargetPath] = $ThisWarning
 
         # If this was not a recursive call to GetDirectories, write the warnings
         if (-not $PSBoundParameters.ContainsKey('WarningCache')) {
